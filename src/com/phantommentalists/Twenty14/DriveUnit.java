@@ -5,17 +5,16 @@ package com.phantommentalists.Twenty14;
  */
 public class DriveUnit {
 
-        private Wheel front;
+    private Wheel front;
     private Wheel rear;
     private DriveMotor driveMotor;
 
-  public void slewDrive(double drivePower, double turnAngle) {
-  }
+    public void slewDrive(double drivePower, double turnAngle) {
+    }
 
-  public void crabDrive(double drivePower, double turnAngle) {
-  }
+    public void crabDrive(double drivePower, double turnAngle) {
+    }
 
-  public void axisTurn(char leftRight) {
-  }
-
+    public void axisTurn(char leftRight) {
+    }
 }

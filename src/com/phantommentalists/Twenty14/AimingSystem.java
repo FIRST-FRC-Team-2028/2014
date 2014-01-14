@@ -8,7 +8,7 @@ import java.util.Vector;
  * AimingSystem allocation
  */
 public class AimingSystem {
+
     public AxisCamera myCamera;
     public Ultrasonic myUltrasonic;
-
 }

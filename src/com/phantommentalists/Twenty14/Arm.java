@@ -6,13 +6,12 @@ import edu.wpi.first.wpilibj.Relay;
  */
 public class Arm {
 
-            public Relay inSolenoid;
+    public Relay inSolenoid;
     public Relay outSolenoid;
 
-  public void extend() {
-  }
+    public void extend() {
+    }
 
-  public void retract() {
-  }
-
+    public void retract() {
+    }
 }
