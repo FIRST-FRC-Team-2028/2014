@@ -4,9 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package com.phantommentalists.Twenty14;
-
 
 import edu.wpi.first.wpilibj.SimpleRobot;
 
@@ -18,17 +16,16 @@ import edu.wpi.first.wpilibj.SimpleRobot;
  * directory.
  */
 public class AerialAssist extends SimpleRobot {
+
     /**
      * This function is called once each time the robot enters autonomous mode.
      */
     public void autonomous() {
-        
     }
 
     /**
      * This function is called once each time the robot enters operator control.
      */
     public void operatorControl() {
-
     }
 }

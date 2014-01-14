@@ -8,20 +8,19 @@ import edu.wpi.first.wpilibj.CANJaguar;
  */
 public class ChopSticks {
 
-      public Solenoid left;
+    public Solenoid left;
     public CANJaguar rotationMotor;
     public Solenoid right;
 
-  public void deploy() {
-  }
+    public void deploy() {
+    }
 
-  public void retract() {
-  }
+    public void retract() {
+    }
 
-  public void getPosition() {
-  }
+    public void getPosition() {
+    }
 
-  public void groundPass() {
-  }
-
+    public void groundPass() {
+    }
 }

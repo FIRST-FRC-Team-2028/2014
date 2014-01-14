@@ -7,21 +7,20 @@ import edu.wpi.first.wpilibj.CANJaguar;
  */
 public class Launcher {
 
-      public CANJaguar launchMotor;
+    public CANJaguar launchMotor;
 
-  public void isShooting() {
-  }
+    public void isShooting() {
+    }
 
-  public void canReload() {
-  }
+    public void canReload() {
+    }
 
-  public void shoot(double shootVariable) {
-  }
+    public void shoot(double shootVariable) {
+    }
 
-  public void retract() {
-  }
+    public void retract() {
+    }
 
-  public void airPass() {
-  }
-
+    public void airPass() {
+    }
 }
