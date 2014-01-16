@@ -40,11 +40,12 @@ public class Catcher {
         arm4.retract();
     }
     /**
-     * isDeployed
+     * isDeployed()
      * 
-     * if true it is deployed if false it is retracted
+     * This method returns whether or not the catcher is deployed
      * 
-     * @return 
+     * @return true - the catcher is deployed
+     *         false - the catcher is not deployed
      */
     public boolean isDeployed() {
         if (arm1.isExtended() && arm2.isExtended() && arm3.isExtended() && arm4.isExtended()) {
@@ -53,9 +54,10 @@ public class Catcher {
         return false;
     }
 
-    public void isRetracted() {
+    public boolean isRetracted() {
         if (arm1.isRetracted() && arm2.isRetracted() && arm3.isRetracted() && arm4.isRetracted()){
-            
+            return true;
         }
+        return false;
     }
 }
