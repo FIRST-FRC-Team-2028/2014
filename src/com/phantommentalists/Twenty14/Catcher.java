@@ -32,7 +32,13 @@ public class Catcher {
         arm3.extend();
         arm4.extend();
     }
-
+    /**
+     * retract()
+     * 
+     * This method retracts the catcher
+     * 
+     * @return
+     */
     public void retract() {
         arm1.retract();
         arm2.retract();
@@ -53,7 +59,14 @@ public class Catcher {
         }
         return false;
     }
-
+    /**
+     * isRetracted()
+     * 
+     * This method returns whether or not the catcher is retracted
+     * 
+     * @return true - the catcher is retracted
+     *         false - the catcher is not retracted
+     */
     public boolean isRetracted() {
         if (arm1.isRetracted() && arm2.isRetracted() && arm3.isRetracted() && arm4.isRetracted()){
             return true;

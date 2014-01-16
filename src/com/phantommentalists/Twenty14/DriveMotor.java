@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Solenoid;
  */
 public class DriveMotor {
 
-    CANJaguar motor;
+    public CANJaguar motor;
     protected Solenoid shifter;
     
 
