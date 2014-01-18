@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 public class Wheel {
 
     CANJaguar steeringMotor;
-    CANJaguar driveMotor;
+    CANJaguar driveMotor; 
     private double setPoint;
     private boolean driving = false;
     private boolean steering = false;

@@ -14,14 +14,16 @@ import edu.wpi.first.wpilibj.Solenoid;
  */
 public class DriveMotor {
 
-    CANJaguar motor;
-    Solenoid shifter;
+    public CANJaguar motor;
+    protected Solenoid shifter;
+    
 
     public DriveMotor(int driveCANID, int Solenoidchannel) throws CANTimeoutException {
-        motor = new CANJaguar(driveCANID);
-        motor.configMaxOutputVoltage(12.0);
+        motor = new CANJaguar(driveCANID, CANJaguar.ControlMode.kPercentVbus);
+        motor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
         motor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
         shifter = new Solenoid(Solenoidchannel);
+        setGear(Gear.kHigh);
     }
 
     public void set(double setpoint) throws CANTimeoutException {
