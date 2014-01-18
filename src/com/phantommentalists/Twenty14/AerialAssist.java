@@ -21,14 +21,47 @@ public class AerialAssist extends SimpleRobot {
 
     public PIDController aimController;
     public PIDController turnController;
-    protected Joystick driveStick;
+    protected GamePadF310 driveStick;
     public CrabDrive drive;
+
+    public AerialAssist() {
+        try {
+            drive = new CrabDrive();
+        } catch (CANTimeoutException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public void autonomous() {
     }
 
     public void operatorControl() {
         while (isEnabled() && isOperatorControl()) {
+            double driveValue = driveStick.getAxisTrigger();
+            double turnValue = driveStick.getLeftThumbStickX();
+            double crabValue = driveStick.getRightThumbStickX();
+            try{
+            if (crabValue <= 0.05 && crabValue >= -0.05) {
+                crabValue = 0.0;
+            }
+            if (driveValue <= 0.05 && driveValue >= -0.05) {
+                driveValue = 0.0;
+            }
+            if(turnValue <= 0.05 && turnValue >= -0.05)
+            {
+                turnValue = 0.0;
+            }
+            if(crabValue != 0.0)
+            {
+                drive.crabDrive(driveValue, crabValue);
+            }
+            else
+            {
+                drive.slewDrive(driveValue, turnValue);
+            }
+            } catch (CANTimeoutException ex) {
+                ex.printStackTrace();
+            }
             Timer.delay(Parameters.TIMER_DELAY);
         }
     }

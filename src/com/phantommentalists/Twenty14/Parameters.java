@@ -5,24 +5,20 @@ package com.phantommentalists.Twenty14;
  */
 public class Parameters {
 
-    public static final int frontDriveCanId = -1;
-    public static final int frontLeftSteeringCanId = -1;
-    public static final int frontRightCanId = -1;
-    public static final int rearCanId = -1;
-    public static final int rearLeftSteeringCanId = -1;
-    public static final int rearRightSteeringCanId = -1;
+    public static final int frontRightSteeringCanId = 20;
+    public static final int frontLeftSteeringCanId = 10;
+    public static final int rightDriveCanId = 23;
+    public static final int leftDriveCanId = 14;
+    public static final int rearLeftSteeringCanId = 40;
+    public static final int rearRightSteeringCanId = 30;
     public static final int steeringProportionalValue = -1;
     public static final int steeringIntegralValue = -1;
     public static final int steeringDerivativeValue = -1;
     public static final double maxMotorVoltage = 12.0;
-    public final static int oneInSolenoidChannel = -1;
-    public final static int oneOutSolenoidChannel = -1;
-    public final static int twoInSolenoidChannel = -1;
-    public final static int twoOutSolenoidChannel = -1;
-    public final static int threeInSolenoidChannel = -1;
-    public final static int threeOutSolenoidChannel = -1;
-    public final static int fourInSolenoidChannel = -1;
-    public final static int fourOutSolenoidChannel = -1;
+    public final static int leftDriveShifterHigh = -1;
+    public final static int leftDriveShifterLow = -1;
+    public final static int rightDriveShifterHigh = -1;
+    public final static int rightDriveShifterLow = -1;
     public static final double kJoyStickDeadband = 0.05;
     public static final double TIMER_DELAY = 0.1;
     static double kJoystickDeadband;

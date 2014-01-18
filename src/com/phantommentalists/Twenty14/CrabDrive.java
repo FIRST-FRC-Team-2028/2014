@@ -13,7 +13,13 @@ public class CrabDrive {
     private DriveUnit left;
     private DriveUnit right;
     
-    public CrabDrive() {
+    public CrabDrive() throws CANTimeoutException {
+        left = new DriveUnit(Parameters.frontLeftSteeringCanId, 
+                Parameters.rearLeftSteeringCanId, Parameters.leftDriveCanId,
+                Parameters.leftDriveShifterHigh, Parameters.leftDriveShifterLow);
+        right = new DriveUnit(Parameters.frontRightSteeringCanId, 
+                Parameters.rearRightSteeringCanId, Parameters.rightDriveCanId,
+                Parameters.rightDriveShifterHigh, Parameters.rightDriveShifterLow);
         
     }
     /*   crabDrive()

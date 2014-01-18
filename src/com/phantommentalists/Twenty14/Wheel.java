@@ -19,25 +19,15 @@ public class Wheel {
     private boolean driving = false;
     private boolean steering = false;
 
-    public Wheel(Integer steerID, Integer driveID) throws CANTimeoutException {
-        int ID = 0;
-        if (steerID != null) {
-            ID = steerID.intValue();
-            steeringMotor = new CANJaguar(ID, CANJaguar.ControlMode.kPosition);
-            steeringMotor.configMaxOutputVoltage(12.0); //TODO: Replace this with a Parameter
-            steeringMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            steeringMotor.setPID(Parameters.steeringProportionalValue,
-                    Parameters.steeringIntegralValue,
-                    Parameters.steeringDerivativeValue);
-            steering = true;
-        }
-        if (driveID != null) {
-            ID = driveID.intValue();
-            driveMotor = new CANJaguar(ID, CANJaguar.ControlMode.kPercentVbus);
-            driveMotor.configMaxOutputVoltage(12.0);//TODO: Replaxce this with a Parameter
-            driveMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            driving = true;
-        }
+    public Wheel(int steerID) throws CANTimeoutException {
+        steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
+        steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
+        steeringMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+        steeringMotor.setPID(Parameters.steeringProportionalValue,
+                Parameters.steeringIntegralValue,
+                Parameters.steeringDerivativeValue);
+        steering = true;
+
     }
 
     public void enablePositionControl() throws CANTimeoutException {
@@ -53,7 +43,10 @@ public class Wheel {
     }
 
     public boolean setPosition(double outputValue) throws CANTimeoutException {
-
+        steeringMotor.setX(outputValue);
+        if (steeringMotor.getPosition() == outputValue) {
+            return true;
+        }
         return false;
     }
 

@@ -11,16 +11,19 @@ public class DriveUnit {
     private Wheel rear;
     private DriveMotor driveMotor;
 
-    public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException 
-    {
+    public DriveUnit(int frontCANID, int rearCANID, int driveMotorCANID
+            , int driveShiftHighSolenoidChannel, int driveShiftLowChannel) throws CANTimeoutException {
+        front = new Wheel(frontCANID);
+        rear = new Wheel(rearCANID);
+        driveMotor = new DriveMotor(driveMotorCANID, driveShiftHighSolenoidChannel, driveShiftLowChannel);
+    }
+
+    public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
         double frontPOS = convertJoystickToPosition(turnAngle);
         double rearPOS = 0.0;
-        if(frontPOS == 0.5)
-        {
+        if (frontPOS == 0.5) {
             rearPOS = 0.5;
-        }
-        else
-        {
+        } else {
             rearPOS = 0.5 + (0.5 - frontPOS);
         }
         driveMotor.set(drivePower);
@@ -28,8 +31,7 @@ public class DriveUnit {
         rear.setPosition(rearPOS);
     }
 
-    public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException 
-    {
+    public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
         driveMotor.set(drivePower);
         front.setPosition(convertJoystickToPosition(turnAngle));
         rear.setPosition(convertJoystickToPosition(turnAngle));
@@ -37,13 +39,10 @@ public class DriveUnit {
 
 //    public void axisTurn(char leftRight) {
 //    }
-
-    public double convertJoystickToPosition(double joystickValue) 
-    {
-        double temp = joystickValue +1;
-        temp = temp/2;
-        if(temp >= 0.48 && temp <= 0.52)
-        {
+    public double convertJoystickToPosition(double joystickValue) {
+        double temp = joystickValue + 1;
+        temp = temp / 2;
+        if (temp >= 0.48 && temp <= 0.52) {
             temp = 0.5;
         }
         return temp;
