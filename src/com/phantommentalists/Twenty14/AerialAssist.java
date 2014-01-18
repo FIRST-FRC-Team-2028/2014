@@ -22,6 +22,7 @@ public class AerialAssist extends SimpleRobot {
     public PIDController aimController;
     public PIDController turnController;
     protected Joystick driveStick;
+    public CrabDrive drive;
 
     public void autonomous() {
     }

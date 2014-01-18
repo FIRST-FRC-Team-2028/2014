@@ -1,5 +1,7 @@
 package com.phantommentalists.Twenty14;
 
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
+
 /*
  *       CrabDrive allocation:
  *               Hunter Lawrence
@@ -7,33 +9,37 @@ package com.phantommentalists.Twenty14;
  *               Hunter Lawrence
  */
 public class CrabDrive {
-
+    
     private DriveUnit left;
     private DriveUnit right;
-
-    public CrabDrive(){
+    
+    public CrabDrive() {
         
     }
-     /*   crabDrive()
-    *   
-    *   Makes all wheels turn in the same direction.
-    */
-    public void crabDrive(double drivePower, double turnAngle) {
-      //Makes wheels move in parallel
+    /*   crabDrive()
+     *   
+     *   Makes all wheels turn in the same direction.
+     */
+
+    public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
+        left.crabDrive(drivePower, turnAngle);
+        right.crabDrive(drivePower, turnAngle);
     }
-       /*  slewDrive()
+    /*  slewDrive()
      *
      *  Makes the robot turn on its axis.
      */
-    public void slewDrive(double drivePower, double turnAngle) {
-       //Makes wheels move in Opposites of each other
+
+    public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
+        left.slewDrive(drivePower, turnAngle);
+        right.slewDrive(drivePower, turnAngle);
     }
-    public void setDrive(double drivePower){
+
+    public void setDrive(double drivePower) {
         
     }
     
-    public void setTurn(double turnAngle){
+    public void setTurn(double turnAngle) {
         
-}
-    
+    }
 }

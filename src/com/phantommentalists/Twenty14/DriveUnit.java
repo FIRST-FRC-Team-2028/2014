@@ -42,15 +42,7 @@ public class DriveUnit {
     {
         double temp = joystickValue +1;
         temp = temp/2;
-        if(temp < 0.24)
-        {
-            temp += 0.5;
-        }
-        else if(temp > 0.76)
-        {
-            temp -= 0.5;
-        }
-        else if(temp >= 0.48 && temp <= 0.52)
+        if(temp >= 0.48 && temp <= 0.52)
         {
             temp = 0.5;
         }
