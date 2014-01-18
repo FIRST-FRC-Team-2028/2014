@@ -22,14 +22,20 @@ public class CrabDrive {
     *   Makes all wheels turn in the same direction.
     */
     public void crabDrive(double drivePower, double turnAngle) {
-      //Makes wheels move in parallel
+        left.crabDrive(drivePower, turnAngle);
+        right.crabDrive(drivePower, turnAngle);
+        
+      //Make wheels move in parallel
     }
        /*  slewDrive()
      *
      *  Makes the robot turn on its axis.
      */
     public void slewDrive(double drivePower, double turnAngle) {
-       //Makes wheels move in Opposites of each other
+       //Make wheels move in Opposites of each other
+        left.slewDrive(drivePower, turnAngle);
+        right.slewDrive(drivePower, turnAngle);
+        
     }
     public void setDrive(double drivePower){
         
@@ -37,6 +43,6 @@ public class CrabDrive {
     
     public void setTurn(double turnAngle){
         
-}
+    }
     
 }
