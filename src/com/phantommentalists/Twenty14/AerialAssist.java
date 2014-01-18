@@ -12,26 +12,23 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.PIDController;
-/*
- */
+
 /**
  *
  * @author tstevens003
  */
 public class AerialAssist extends SimpleRobot {
-    
+
     public PIDController aimController;
     public PIDController turnController;
     protected Joystick driveStick;
-    protected Joystick shooterStick;
-    protected Joystick armStick;
-    boolean turning = false;
-    public AerialAssist(){
-    }
+
     public void autonomous() {
     }
-    public void operatorControl()
-    {
-    
+
+    public void operatorControl() {
+        while (isEnabled() && isOperatorControl()) {
+            Timer.delay(Parameters.TIMER_DELAY);
+        }
     }
 }

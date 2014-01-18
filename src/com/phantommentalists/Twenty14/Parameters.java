@@ -24,9 +24,8 @@ public class Parameters {
     public final static int fourInSolenoidChannel = -1;
     public final static int fourOutSolenoidChannel = -1;
     public static final double kJoyStickDeadband = 0.05;
+    public static final double TIMER_DELAY = 0.1;
     static double kJoystickDeadband;
     static int kLowGearButton;
     static int kHighGearButton;
-    
-    
 }

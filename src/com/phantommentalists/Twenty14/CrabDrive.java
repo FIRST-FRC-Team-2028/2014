@@ -1,7 +1,5 @@
 package com.phantommentalists.Twenty14;
 
-import java.util.Vector;
-
 /*
  *       CrabDrive allocation:
  *               Hunter Lawrence
@@ -12,7 +10,6 @@ public class CrabDrive {
 
     private DriveUnit left;
     private DriveUnit right;
-    public boolean isCrab;
 
     public CrabDrive(){
         

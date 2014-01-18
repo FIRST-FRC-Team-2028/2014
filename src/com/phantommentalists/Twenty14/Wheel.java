@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 public class Wheel {
 
     CANJaguar steeringMotor;
-    CANJaguar driveMotor; 
+    CANJaguar driveMotor;
     private double setPoint;
     private boolean driving = false;
     private boolean steering = false;
@@ -52,22 +52,8 @@ public class Wheel {
         }
     }
 
-    public double convertJoystickToPosition(double outputValue) {
-//        double scaled = (setPoint + 1) / 2;
-        double scaled = ((outputValue * 0.26) + 0.55);
-        return scaled;
-    }
-
     public boolean setPosition(double outputValue) throws CANTimeoutException {
-        if (steering) {
-            if (outputValue == setPoint) {
-                return true;
-            }
-            setPoint = outputValue;
-            outputValue = convertJoystickToPosition(outputValue);
-            steeringMotor.setX(outputValue);
-            return false;
-        }
+
         return false;
     }
 
