@@ -30,7 +30,7 @@ public class AerialAssist extends SimpleRobot {
     }
     public void autonomous() {
     }
-    public void operatorControl(String currentGear)
+    public void operatorControl()
     {
     
     }

@@ -61,12 +61,12 @@ public class Wheel {
     public boolean setPosition(double outputValue) throws CANTimeoutException {
         if (steering) {
             if (outputValue == setPoint) {
-                return false;
+                return true;
             }
             setPoint = outputValue;
             outputValue = convertJoystickToPosition(outputValue);
             steeringMotor.setX(outputValue);
-            return true;
+            return false;
         }
         return false;
     }
