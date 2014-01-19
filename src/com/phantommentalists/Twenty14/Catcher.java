@@ -13,10 +13,6 @@ public class Catcher {
   * 
   */
     public Catcher() {
-        arm1 = new Arm(Parameters.oneInSolenoidChannel, Parameters.oneOutSolenoidChannel);
-        arm2 = new Arm(Parameters.twoInSolenoidChannel, Parameters.twoOutSolenoidChannel);
-        arm3 = new Arm(Parameters.threeInSolenoidChannel, Parameters.threeOutSolenoidChannel);
-        arm4 = new Arm(Parameters.fourInSolenoidChannel, Parameters.fourOutSolenoidChannel);
     }
 
     /**
