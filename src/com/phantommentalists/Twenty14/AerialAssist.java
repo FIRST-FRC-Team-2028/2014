@@ -27,6 +27,7 @@ public class AerialAssist extends SimpleRobot {
     public AerialAssist() {
         try {
             drive = new CrabDrive();
+            driveStick = new GamePadF310(1);
         } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }

@@ -27,8 +27,8 @@ public class DriveUnit {
             rearPOS = 0.5 + (0.5 - frontPOS);
         }
         driveMotor.set(drivePower);
-        front.setPosition(convertJoystickToPosition(turnAngle));
-        rear.setPosition(rearPOS);
+        front.setPosition(turnAngle);
+        rear.setPosition(turnAngle * -1);           //Return to convrtjtp(turnangle) for sensor
     }
 
     public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {

@@ -20,7 +20,7 @@ public class Wheel {
     private boolean steering = false;
 
     public Wheel(int steerID) throws CANTimeoutException {
-        steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
+        steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPercentVbus);
         steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
         steeringMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
         steeringMotor.setPID(Parameters.steeringProportionalValue,
