@@ -20,38 +20,47 @@ import edu.wpi.first.wpilibj.Victor;
 public class ChopSticks {
 
     public Relay left;
-    public CANJaguar rotationMotor;
+    public Victor rotationMotor;
     public Relay right;
 
     /**
      *
+     * ChopSticks()
      *
+     * not finished public ChopSticks
      *
      */
-    public void deploy() {
+    public ChopSticks(int leftArmChannel, int rightArmChannel, int rotationChannel) {
+        left = new Relay(leftArmChannel);
+        right = new Relay(rightArmChannel);
+        rotationMotor = new Victor(rotationChannel);
     }
 
-    /**
-     *
-     *
-     *
-     */
-    public void retract() {
+    public void turnOnChopSticks() {
+        left.set(Relay.Value.kForward);
+        right.set(Relay.Value.kReverse);
     }
-
-    /**
-     *
-     *
-     *
-     */
-    public void getPosition() {
+    
+    public void turnOffChopSticks() {
+       left.set(Relay.Value.kOff);
+       right.set(Relay.Value.kOff);
     }
-
-    /**
-     *
-     *
-     *
-     */
-    public void groundPass() {
+    
+    public void setRotation(double outputValue) {
+        rotationMotor.set(outputValue);
     }
-}
+    
+    public boolean isChopSticksOn() {
+        if (left.get() != Relay.Value.kOff && right.get() != Relay.Value.kOff) {
+         return true;
+        }
+        return false;
+    }
+    
+    public boolean isChopSticksOff() {
+        if (left.get() == Relay.Value.kOff && right.get() == Relay.Value.kOff) {
+            return true;
+        }
+        return false;
+        }
+    }
