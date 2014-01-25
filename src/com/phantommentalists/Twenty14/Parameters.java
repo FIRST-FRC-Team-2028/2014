@@ -21,6 +21,8 @@ public class Parameters {
     public final static int rightDriveShifterLow = 4;
     public static final double kJoyStickDeadband = 0.05;
     public static final double TIMER_DELAY = 0.1;
+    public static final String CAMERA_IP = "10.20.28.11";
+    public static final int ULTRASONIC_ANALOG_CHANNELl = -1;
     static double kJoystickDeadband;
     static int kLowGearButton;
     static int kHighGearButton;
