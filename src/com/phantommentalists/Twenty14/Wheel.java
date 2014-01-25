@@ -8,8 +8,11 @@ import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
- *
+ * 
+ * Wheel allocation
+ * 
  * @author mburt001
+ * 
  */
 public class Wheel {
 
@@ -19,6 +22,11 @@ public class Wheel {
     private boolean driving = false;
     private boolean steering = false;
 
+    /**
+     * @param steerID
+     * 
+     * @throws CANTimeoutException 
+     */
     public Wheel(int steerID) throws CANTimeoutException {
         steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPercentVbus);
         steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
@@ -30,26 +38,52 @@ public class Wheel {
 
     }
 
+    /**
+     * enablePositionControl()
+     * 
+     * @throws CANTimeoutException 
+     */
     public void enablePositionControl() throws CANTimeoutException {
         if (steering) {
             steeringMotor.enableControl();
         }
     }
 
+    /**
+     * disablePositionControl()
+     * 
+     * @throws CANTimeoutException 
+     */
     public void disablePositionControl() throws CANTimeoutException {
         if (steering) {
             steeringMotor.disableControl();
         }
     }
 
+    /**
+     * setPosition()
+     * 
+     * @param outputValue
+     * 
+     * @return
+     * 
+     * @throws CANTimeoutException 
+     */
     public boolean setPosition(double outputValue) throws CANTimeoutException {
         steeringMotor.setX(outputValue);
         if (steeringMotor.getPosition() == outputValue) {
             return true;
         }
         return false;
-    }
+    }        
 
+    /**
+     * getPosition()
+     * 
+     * @return
+     * 
+     * @throws CANTimeoutException 
+     */
     public double getPosition() throws CANTimeoutException {
         if (steering) {
             return steeringMotor.getPosition();
@@ -57,6 +91,13 @@ public class Wheel {
         return -1;
     }
 
+    /**
+     * setSpeed()
+     * 
+     * @param outputValue
+     * 
+     * @throws CANTimeoutException 
+     */
     public void setSpeed(double outputValue) throws CANTimeoutException {
         if (driving) {
             driveMotor.setX(outputValue);
