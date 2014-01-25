@@ -15,14 +15,16 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class DriveMotor {
 
     public CANJaguar motor;
-    protected Solenoid shifter;
+    public Solenoid shiftHighSolenoid;
+    public Solenoid shiftLowSolenoid;
     
 
-    public DriveMotor(int driveCANID, int Solenoidchannel) throws CANTimeoutException {
+    public DriveMotor(int driveCANID, int shiftHighChannel, int shiftLowChannel) throws CANTimeoutException {
         motor = new CANJaguar(driveCANID, CANJaguar.ControlMode.kPercentVbus);
         motor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
         motor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-        shifter = new Solenoid(Solenoidchannel);
+        shiftHighSolenoid = new Solenoid(shiftHighChannel);
+        shiftLowSolenoid = new Solenoid(shiftLowChannel);
         setGear(Gear.kHigh);
     }
 
@@ -41,14 +43,14 @@ public class DriveMotor {
      */
     public void setGear(Gear gear) {
         if (gear == Gear.kLow) {
-            shifter.set(false);
+            shiftHighSolenoid.set(false);
         } else {
-            shifter.set(true);
+            shiftHighSolenoid.set(true);
         }
     }
 
     public boolean isLowGear() {
-        if (shifter.get() == false) //FIX ME!!! Verify true is really high gear
+        if (shiftHighSolenoid.get() == false) //FIX ME!!! Verify true is really high gear
         {
             return true;
         } else {
@@ -64,7 +66,7 @@ public class DriveMotor {
      * @return
      */
     public boolean isHighGear() {
-        if (!shifter.get()) //FIX ME!!! Verify false is really low gear
+        if (!shiftHighSolenoid.get()) //FIX ME!!! Verify false is really low gear
         {
             return false;
         } else {

@@ -23,17 +23,12 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 public class Wheel {
 
     CANJaguar steeringMotor;
-    private double setPoint = 0.0;
+    CANJaguar driveMotor;
+    private double setPoint = 0.5;
+    private boolean driving = false;
     private boolean steering = false;
 
-    /**
-     *
-     * @param steerID
-     * @throws CANTimeoutException
-     *
-     */
     public Wheel(int steerID) throws CANTimeoutException {
-
         steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
         steeringMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
         steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
@@ -42,6 +37,7 @@ public class Wheel {
                 Parameters.steeringIntegralValue,
                 Parameters.steeringDerivativeValue);
         steering = true;
+
     }
 
     /**
@@ -50,8 +46,10 @@ public class Wheel {
      *
      */
     public void enablePositionControl() throws CANTimeoutException {
-        if (steering) {
+        if (steering) 
+        {
             steeringMotor.enableControl();
+            steeringMotor.setX(setPoint);            
         }
     }
 
@@ -65,36 +63,29 @@ public class Wheel {
             steeringMotor.disableControl();
         }
     }
-
+    
     /**
-     *
+     * 
      * @param outputValue
      * @return
-     *
+     * @throws CANTimeoutException 
      */
-    public double convertJoystickToPosition(double outputValue) {
-        double scaled = (setPoint + 1) / 2;
-//      double scaled = ((outputValue * 0.26) + 0.55);
-        return scaled;
-    }
-
-    /**
-     *
-     * @param joystickPercentPower
-     * @return
-     * @throws CANTimeoutException
-     *
-     */
-    public boolean setPosition(double joystickPercentPower) throws CANTimeoutException {
-        if (steering) {
-            if (joystickPercentPower == setPoint) {
-                return false;
-            }
-            setPoint = joystickPercentPower;
-            double outputValue = convertJoystickToPosition(joystickPercentPower);
-            steeringMotor.setX(outputValue);
+    public boolean setPosition(double outputValue) throws CANTimeoutException {
+        System.out.println("\tOutput value:  " + outputValue + ", Position: " + steeringMotor.getPosition());
+        if (setPoint == outputValue) 
+        {
             return true;
         }
+        if (outputValue < 0.2)
+        {
+            outputValue = 0.2;
+        }
+        if (outputValue > 0.8)
+        {
+            outputValue =0.8;
+        }
+        steeringMotor.setX(outputValue);
+        setPoint = outputValue;
         return false;
     }
 
