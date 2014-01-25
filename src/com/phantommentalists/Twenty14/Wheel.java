@@ -1,15 +1,24 @@
 package com.phantommentalists.Twenty14;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
+/*
+ * 
+ * and open the template in the editor.   
+ * 
+ * 
+ * 
+ * (added comment)
+ * 
+ * 
+ * 
+ * 
+ */
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
  *
  * @author mburt001
+ *
  */
 public class Wheel {
 
@@ -31,6 +40,11 @@ public class Wheel {
 
     }
 
+    /**
+     *
+     * @throws CANTimeoutException
+     *
+     */
     public void enablePositionControl() throws CANTimeoutException {
         if (steering) 
         {
@@ -39,6 +53,11 @@ public class Wheel {
         }
     }
 
+    /**
+     *
+     * @throws CANTimeoutException
+     *
+     */
     public void disablePositionControl() throws CANTimeoutException {
         if (steering) {
             steeringMotor.disableControl();
@@ -70,16 +89,16 @@ public class Wheel {
         return false;
     }
 
+    /**
+     *
+     * @return @throws CANTimeoutException
+     *
+     */
     public double getPosition() throws CANTimeoutException {
         if (steering) {
             return steeringMotor.getPosition();
         }
         return -1;
-    }
 
-    public void setSpeed(double outputValue) throws CANTimeoutException {
-        if (driving) {
-            driveMotor.setX(outputValue);
-        }
     }
 }
