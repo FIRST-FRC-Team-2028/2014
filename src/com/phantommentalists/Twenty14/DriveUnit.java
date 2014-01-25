@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
  */
 public class DriveUnit {
 
-    private Wheel front;
-    private Wheel rear;
+    public Wheel front;
+    public Wheel rear;
     private DriveMotor driveMotor;
 
     public DriveUnit(int frontCANID, int rearCANID, int driveMotorCANID
@@ -16,6 +16,18 @@ public class DriveUnit {
         front = new Wheel(frontCANID);
         rear = new Wheel(rearCANID);
         driveMotor = new DriveMotor(driveMotorCANID, driveShiftHighSolenoidChannel, driveShiftLowChannel);
+    }
+    
+    public void enablePositionControl() throws CANTimeoutException
+    {
+        front.enablePositionControl();
+        rear.enablePositionControl();
+    }
+    
+    public void disablePositionControl() throws CANTimeoutException
+    {
+        front.disablePositionControl();
+        rear.disablePositionControl();
     }
 
     public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
@@ -27,14 +39,15 @@ public class DriveUnit {
             rearPOS = 0.5 + (0.5 - frontPOS);
         }
         driveMotor.set(drivePower);
-        front.setPosition(turnAngle);
-        rear.setPosition(turnAngle * -1);           //Return to convrtjtp(turnangle) for sensor
+        front.setPosition(frontPOS);
+        rear.setPosition(rearPOS);           //Return to convrtjtp(turnangle) for sensor
     }
 
     public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
         driveMotor.set(drivePower);
         front.setPosition(convertJoystickToPosition(turnAngle));
         rear.setPosition(convertJoystickToPosition(turnAngle));
+        //System.out.println(turnAngle);
     }
 
 //    public void axisTurn(char leftRight) {
@@ -46,5 +59,9 @@ public class DriveUnit {
             temp = 0.5;
         }
         return temp;
+    }
+    public double getPosition() throws CANTimeoutException
+    {
+        return rear.getPosition();
     }
 }

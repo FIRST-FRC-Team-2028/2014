@@ -10,26 +10,38 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
  */
 public class CrabDrive {
     
-    private DriveUnit left;
-    private DriveUnit right;
+    public DriveUnit left;
+    public DriveUnit right;
     
     public CrabDrive() throws CANTimeoutException {
-        left = new DriveUnit(Parameters.frontLeftSteeringCanId, 
-                Parameters.rearLeftSteeringCanId, Parameters.leftDriveCanId,
-                Parameters.leftDriveShifterHigh, Parameters.leftDriveShifterLow);
+//        left = new DriveUnit(Parameters.frontLeftSteeringCanId, 
+//                Parameters.rearLeftSteeringCanId, Parameters.leftDriveCanId,
+//                Parameters.leftDriveShifterHigh, Parameters.leftDriveShifterLow);
         right = new DriveUnit(Parameters.frontRightSteeringCanId, 
                 Parameters.rearRightSteeringCanId, Parameters.rightDriveCanId,
                 Parameters.rightDriveShifterHigh, Parameters.rightDriveShifterLow);
         
     }
+    
+    public void enablePositionControl() throws CANTimeoutException {
+        right.enablePositionControl();
+//        left.enablePositionControl();
+    }
+    
+    public void disablePositionControl() throws CANTimeoutException {
+        right.disablePositionControl();
+//        left.disablePositionControl();
+    }
+    
     /*   crabDrive()
      *   
      *   Makes all wheels turn in the same direction.
      */
 
     public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        left.crabDrive(drivePower, turnAngle);
+        //left.crabDrive(drivePower, turnAngle);
         right.crabDrive(drivePower, turnAngle);
+       // System.out.println(turnAngle);
     }
     /*  slewDrive()
      *
@@ -37,7 +49,7 @@ public class CrabDrive {
      */
 
     public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        left.slewDrive(drivePower, turnAngle);
+        //left.slewDrive(drivePower, turnAngle);
         right.slewDrive(drivePower, turnAngle);
     }
 
@@ -47,5 +59,9 @@ public class CrabDrive {
     
     public void setTurn(double turnAngle) {
         
+    }
+    public double getPosition() throws CANTimeoutException
+    {
+        return right.getPosition();
     }
 }
