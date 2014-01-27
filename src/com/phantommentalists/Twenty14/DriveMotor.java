@@ -80,7 +80,7 @@ public class DriveMotor {
     }
 
     public static class Gear {
-
+     
         private static final int kLowValue = 1;
         private static final int kHighValue = 2;
         private final int value;
