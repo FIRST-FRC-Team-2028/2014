@@ -1,8 +1,4 @@
 package com.phantommentalists.Twenty14;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
