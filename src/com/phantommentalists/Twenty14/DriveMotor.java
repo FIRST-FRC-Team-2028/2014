@@ -55,7 +55,7 @@ public class DriveMotor {
     /**
      * isHighGear
      *
-     * This method returns true if in high gear or false if in low gear
+     * This method returns true if in high gear or false if in low gear 
      *
      * @return
      */
