@@ -7,25 +7,31 @@
 package com.phantommentalists.Twenty14;
 
 import edu.wpi.first.wpilibj.SimpleRobot;
-
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
+import edu.wpi.first.wpilibj.PIDController;
+/*
+ */
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the SimpleRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ *
+ * @author tstevens003
  */
 public class AerialAssist extends SimpleRobot {
-
-    /**
-     * This function is called once each time the robot enters autonomous mode.
-     */
+    
+    public PIDController aimController;
+    public PIDController turnController;
+    protected Joystick driveStick;
+    protected Joystick shooterStick;
+    protected Joystick armStick;
+    boolean turning = false;
+    public AerialAssist(){
+    }
     public void autonomous() {
     }
-
-    /**
-     * This function is called once each time the robot enters operator control.
-     */
-    public void operatorControl() {
+    public void operatorControl(String currentGear)
+    {
+    
     }
 }
