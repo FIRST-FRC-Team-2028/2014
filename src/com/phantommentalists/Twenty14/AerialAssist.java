@@ -23,15 +23,25 @@ public class AerialAssist extends SimpleRobot {
     public PIDController aimController;
     public PIDController turnController;
     protected Joystick driveStick;
-    protected Joystick shooterStick;
-    protected Joystick armStick;
+    protected GamePadF310 shooterStick;
+    public GameMech game;
     boolean turning = false;
     public AerialAssist(){
+        game = new GameMech();
+        shooterStick = new GamePadF310(1);
     }
     public void autonomous() {
     }
-    public void operatorControl(String currentGear)
-    {
+    public void operatorControl(){
+        while(isEnabled() && isOperatorControl()){
+            if(shooterStick.getButtonB()){
+                game.deployCatcher();
+                
+            }
+            else if(shooterStick.getButtonA()){
+                game.retractCatcher();
+            }
+        }
     
     }
 }

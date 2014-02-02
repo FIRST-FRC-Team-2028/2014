@@ -20,7 +20,7 @@ public class GameMech {
      */
     public GameMech(){
         catcher = new Catcher();
-        loader = new ChopSticks();
+//        loader = new ChopSticks();
     }
     
     /**
@@ -41,23 +41,23 @@ public class GameMech {
         catcher.retract();
     }            
     
-    /**
-     * turnOnChopSticks()
-     * 
-     * This method turns on both left and right ChopSticks.
-     */
-    public void turnOnChopSticks(){
-        loader.turnOnChopSticks();
-    }
-    
-    /**
-     * turnOffChopSticks()
-     * 
-     * This method turns off both left and right ChopSticks.
-     */
-    public void turnOffChopSticks(){
-        loader.turnOffChopSticks();
-    }
+//    /**
+//     * turnOnChopSticks()
+//     * 
+//     * This method turns on both left and right ChopSticks.
+//     */
+//    public void turnOnChopSticks(){
+//        loader.turnOnChopSticks();
+//    }
+//    
+//    /**
+//     * turnOffChopSticks()
+//     * 
+//     * This method turns off both left and right ChopSticks.
+//     */
+//    public void turnOffChopSticks(){
+//        loader.turnOffChopSticks();
+//    }
 
     public void airPass() {
     }
