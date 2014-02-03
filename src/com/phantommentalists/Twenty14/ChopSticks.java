@@ -27,9 +27,9 @@ public class ChopSticks {
      *
      * not finished public ChopSticks
      */
-    public ChopSticks(int leftArmChannel, int rightArmChannel) {
-        left = new Relay(leftArmChannel);
-        right = new Relay(rightArmChannel);
+    public ChopSticks() {
+        left = new Relay(Parameters.leftChopStickRelayChannel);
+        right = new Relay(Parameters.rightChopStickRelayChannel);
         extendSolenoid = new Solenoid(-1);
         retractSolenoid = new Solenoid(-1);
         extendSolenoid.set(false);
