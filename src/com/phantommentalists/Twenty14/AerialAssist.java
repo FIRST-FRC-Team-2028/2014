@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.PIDController;
  */
 /**
  *
- * @author tstevens003
+ * @author mburt001
  */
 public class AerialAssist extends SimpleRobot {
     
