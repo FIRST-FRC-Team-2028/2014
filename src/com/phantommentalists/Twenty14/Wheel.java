@@ -18,7 +18,7 @@ public class Wheel {
 
     CANJaguar steeringMotor;
     CANJaguar driveMotor;
-    private double setPoint;
+    private double setPoint = 0.5;
     private boolean driving = false;
     private boolean steering = false;
 
@@ -28,7 +28,8 @@ public class Wheel {
      * @throws CANTimeoutException 
      */
     public Wheel(int steerID) throws CANTimeoutException {
-        steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPercentVbus);
+        steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
+        steeringMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
         steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
         steeringMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
         steeringMotor.setPID(Parameters.steeringProportionalValue,
@@ -46,8 +47,10 @@ public class Wheel {
      * This method enables the position control of the wheel.
      */
     public void enablePositionControl() throws CANTimeoutException {
-        if (steering) {
+        if (steering) 
+        {
             steeringMotor.enableControl();
+            steeringMotor.setX(setPoint);            
         }
     }
 
@@ -63,7 +66,7 @@ public class Wheel {
             steeringMotor.disableControl();
         }
     }
-
+    
     /**
      * setPosition()
      * 
@@ -80,6 +83,16 @@ public class Wheel {
         if (steeringMotor.getPosition() == outputValue) {
             return true;
         }
+        if (outputValue < 0.2)
+        {
+            outputValue = 0.2;
+        }
+        if (outputValue > 0.8)
+        {
+            outputValue =0.8;
+        }
+        steeringMotor.setX(outputValue);
+        setPoint = outputValue;
         return false;
     }        
 

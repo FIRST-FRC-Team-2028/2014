@@ -6,9 +6,7 @@ package com.phantommentalists.Twenty14;
  *
  */
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Victor;
 
 /**
  *

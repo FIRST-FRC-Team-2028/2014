@@ -4,30 +4,41 @@ package com.phantommentalists.Twenty14;
  * Parameters allocation
  */
 public class Parameters {
-
-    public static final int frontDriveCanId = -1;
-    public static final int frontLeftSteeringCanId = -1;
-    public static final int frontRightCanId = -1;
-    public static final int rearCanId = -1;
-    public static final int rearLeftSteeringCanId = -1;
-    public static final int rearRightSteeringCanId = -1;
-    public static final int steeringProportionalValue = -1;
-    public static final int steeringIntegralValue = -1;
-    public static final int steeringDerivativeValue = -1;
-    public static final double maxMotorVoltage = 12.0;
-    public final static int oneInSolenoidChannel = -1;
-    public final static int oneOutSolenoidChannel = -1;
-    public final static int twoInSolenoidChannel = -1;
-    public final static int twoOutSolenoidChannel = -1;
-    public final static int threeInSolenoidChannel = -1;
-    public final static int threeOutSolenoidChannel = -1;
-    public final static int fourInSolenoidChannel = -1;
-    public final static int fourOutSolenoidChannel = -1;
-    public static final double kJoyStickDeadband = 0.05;
-    static double kJoystickDeadband;
-    static int kLowGearButton;
-    static int kHighGearButton;
     
+    //Pneumatics
+    public final static int leftDriveShifterHigh = 1;
+    public final static int leftDriveShifterLow = 2;
+    public final static int rightDriveShifterHigh = 3;
+    public final static int rightDriveShifterLow = 4;
+    public final static int CatcherInSolenoidChannel = -1;
+    public final static int CatcherOutSolenoidChannel = -1;
+    public static final int loaderOutSolenoidChannel = -1;
+    public static final int loaderInSolenoidChannel = -1;
+    
+    //CAN IDs
+    public static final int frontRightSteeringCanId = 23;
+    public static final int frontLeftSteeringCanId = 10;
+    public static final int rightDriveCanId = 20;
+    public static final int leftDriveCanId = 14;
+    public static final int rearLeftSteeringCanId = 40;
+    public static final int rearRightSteeringCanId = 14;
+    
+    //Relays
+    public static final int leftChopStickRelayChannel = -1;
+    public static final int rightChopStickRelayChannel = -1;
+    
+    //Control
+    public static final double kJoyStickDeadband = 0.05;
+    public static final double TIMER_DELAY = 0.1;
+    static double kJoystickDeadband = -1;
+    static int kLowGearButton = -1;
+    static int kHighGearButton = -1;
+
+    //etc
+    public static final double steeringProportionalValue = -350.0;
+    public static final double steeringIntegralValue = -0.2;
+    public static final double steeringDerivativeValue = -0.05;
+    public static final double maxMotorVoltage = 12.0;
     
     
 }
