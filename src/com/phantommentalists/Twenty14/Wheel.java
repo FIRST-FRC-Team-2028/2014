@@ -1,24 +1,18 @@
 package com.phantommentalists.Twenty14;
-
 /*
- * 
- * and open the template in the editor.   
- * 
- * 
- * 
- * (added comment)
- * 
- * 
- * 
- * 
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
  */
+
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /**
- *
+ * 
+ * Wheel allocation
+ * 
  * @author mburt001
- *
+ * 
  */
 public class Wheel {
 
@@ -28,6 +22,11 @@ public class Wheel {
     private boolean driving = false;
     private boolean steering = false;
 
+    /**
+     * @param steerID
+     * 
+     * @throws CANTimeoutException 
+     */
     public Wheel(int steerID) throws CANTimeoutException {
         steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
         steeringMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
@@ -41,9 +40,9 @@ public class Wheel {
     }
 
     /**
-     *
-     * @throws CANTimeoutException
-     *
+     * enablePositionControl()
+     * 
+     * @throws CANTimeoutException 
      */
     public void enablePositionControl() throws CANTimeoutException {
         if (steering) 
@@ -54,9 +53,9 @@ public class Wheel {
     }
 
     /**
-     *
-     * @throws CANTimeoutException
-     *
+     * disablePositionControl()
+     * 
+     * @throws CANTimeoutException 
      */
     public void disablePositionControl() throws CANTimeoutException {
         if (steering) {
@@ -65,15 +64,17 @@ public class Wheel {
     }
     
     /**
+     * setPosition()
      * 
      * @param outputValue
+     * 
      * @return
+     * 
      * @throws CANTimeoutException 
      */
     public boolean setPosition(double outputValue) throws CANTimeoutException {
-        System.out.println("\tOutput value:  " + outputValue + ", Position: " + steeringMotor.getPosition());
-        if (setPoint == outputValue) 
-        {
+        steeringMotor.setX(outputValue);
+        if (steeringMotor.getPosition() == outputValue) {
             return true;
         }
         if (outputValue < 0.2)
@@ -87,18 +88,32 @@ public class Wheel {
         steeringMotor.setX(outputValue);
         setPoint = outputValue;
         return false;
-    }
+    }        
 
     /**
-     *
-     * @return @throws CANTimeoutException
-     *
+     * getPosition()
+     * 
+     * @return
+     * 
+     * @throws CANTimeoutException 
      */
     public double getPosition() throws CANTimeoutException {
         if (steering) {
             return steeringMotor.getPosition();
         }
         return -1;
+    }
 
+    /**
+     * setSpeed()
+     * 
+     * @param outputValue
+     * 
+     * @throws CANTimeoutException 
+     */
+    public void setSpeed(double outputValue) throws CANTimeoutException {
+        if (driving) {
+            driveMotor.setX(outputValue);
+        }
     }
 }
