@@ -6,9 +6,7 @@ package com.phantommentalists.Twenty14;
  *
  */
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Victor;
 
 /**
  *
@@ -21,16 +19,19 @@ public class ChopSticks {
 
     public Relay left;
     public Relay right;
+    public Solenoid extendSolenoid;
+    public Solenoid retractSolenoid;
 
     /**
      * ChopSticks()
      *
      * not finished public ChopSticks
      */
-    public ChopSticks(int leftArmChannel, int rightArmChannel, int rotationChannel) {
-        left = new Relay(leftArmChannel);
-        right = new Relay(rightArmChannel);
-    
+    public ChopSticks() {
+        left = new Relay(Parameters.leftChopStickRelayChannel);
+        right = new Relay(Parameters.rightChopStickRelayChannel);
+        extendSolenoid = new Solenoid(Parameters.loaderOutSolenoidChannel);
+        retractSolenoid = new Solenoid(Parameters.loaderInSolenoidChannel);
     }
     /**
      * 
