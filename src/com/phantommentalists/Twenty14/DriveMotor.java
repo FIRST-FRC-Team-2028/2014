@@ -1,8 +1,4 @@
 package com.phantommentalists.Twenty14;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
@@ -61,7 +57,7 @@ public class DriveMotor {
     /**
      * isHighGear
      *
-     * This method returns true if in high gear or false if in low gear
+     * This method returns true if in high gear or false if in low gear 
      *
      * @return
      */
@@ -86,7 +82,7 @@ public class DriveMotor {
     }
 
     public static class Gear {
-
+     
         private static final int kLowValue = 1;
         private static final int kHighValue = 2;
         private final int value;

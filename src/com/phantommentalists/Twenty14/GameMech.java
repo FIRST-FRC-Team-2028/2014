@@ -1,5 +1,7 @@
 package com.phantommentalists.Twenty14;
 
+import edu.wpi.first.wpilibj.Relay;
+ 
 /*
  */
 public class GameMech {
@@ -10,18 +12,51 @@ public class GameMech {
     private ChopSticks loader;
     private Catcher catcher;
     private Launcher launcher;
-
-    public boolean toggleCatcher() {
-        return false;
+    
+    /**
+     *  GameMech allocations
+     * 
+     * @authors mburt001 and jcurtiss001
+     */
+    public GameMech(){
+        catcher = new Catcher();
+        loader = new ChopSticks();
     }
-
-    public void deployChopsticks() {
+    
+    /**
+     * deployCatcher()
+     * 
+     * This method deploys the  catcher.
+     */
+    public void deployCatcher(){
+        catcher.deploy();
     }
-
-    public void retractChopsticks() {
+    
+    /**
+     * retractCatcher()
+     * 
+     * This method retracts the catcher.
+     */
+    public void retractCatcher(){
+        catcher.retract();
+    }            
+    
+    /**
+     * turnOnChopSticks()
+     * 
+     * This method turns on both left and right ChopSticks.
+     */
+    public void turnOnChopSticks(){
+        loader.turnOnChopSticks();
     }
-
-    public void groundPass() {
+    
+    /**
+     * turnOffChopSticks()
+     * 
+     * This method turns off both left and right ChopSticks.
+     */
+    public void turnOffChopSticks(){
+        loader.turnOffChopSticks();
     }
 
     public void airPass() {

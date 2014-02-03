@@ -24,4 +24,6 @@ public class Parameters {
     static double kJoystickDeadband;
     static int kLowGearButton;
     static int kHighGearButton;
+    public final static int CatcherInSolenoidChannel = -1;
+    public final static int CatcherOutSolenoidChannel = -1;
 }
