@@ -10,6 +10,8 @@ public class Catcher {
     private Solenoid extend;
     private boolean deployed;
     
+    
+    
     /* not finished public catcher
      * 
      */

@@ -65,6 +65,5 @@ public class GameMech {
     public void shoot() {
     }
 
-    public void useTheForce() {
+
     }
-}
