@@ -1,15 +1,32 @@
 package com.phantommentalists.Twenty14;
 
 import edu.wpi.first.wpilibj.Solenoid;
-
+import java.util.Timer;
+import java.util.TimerTask;
 /*
  */
 public class Catcher {
-
+    private Timer deployTimer;
+    private TimerTask TimerTask;
     private Solenoid retract;
     private Solenoid extend;
     private boolean deployed;
     
+    protected class CatcherTimerTask extends TimerTask
+    {
+        
+        private Catcher catcher;
+        
+        public CatcherTimerTask(Catcher c)
+        {
+            catcher = c;
+        }
+        
+        public void run()
+        {
+            catcher.deployed = true;
+        }
+    }
     
     
     /* not finished public catcher
@@ -18,6 +35,8 @@ public class Catcher {
     public Catcher() {
         extend = new Solenoid(Parameters.CatcherOutSolenoidChannel);
         retract = new Solenoid(Parameters.CatcherInSolenoidChannel);
+        deployTimer = null;
+        TimerTask = null;
         retract();
     }
 
@@ -31,7 +50,9 @@ public class Catcher {
     public void deploy() {
         retract.set(false);
         extend.set(true);
-        deployed = true;
+        deployTimer = new Timer();
+        TimerTask = new CatcherTimerTask(this);
+        deployTimer.schedule(TimerTask, Parameters.CatcherdeployTimeOut);
     }
 
     /**
