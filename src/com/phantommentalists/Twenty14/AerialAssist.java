@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.Compressor;
  * @author tstevens003
  */
 public class AerialAssist extends SimpleRobot {
-    
+
     public PIDController aimController;
     public PIDController turnController;
     protected Joystick driveStick;
@@ -33,6 +33,7 @@ public class AerialAssist extends SimpleRobot {
         game = new GameMech();
         shooterStick = new GamePadF310(1);
     }
+
     public void autonomous() {
     }
     public void operatorControl(){
