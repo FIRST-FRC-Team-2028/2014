@@ -6,26 +6,27 @@ package com.phantommentalists.Twenty14;
 public class Parameters {
     
     //Pneumatics
-    public final static int leftDriveShifterHigh = 1;
-    public final static int leftDriveShifterLow = 2;
-    public final static int rightDriveShifterHigh = 3;
-    public final static int rightDriveShifterLow = 4;
-    public final static int CatcherInSolenoidChannel = -1;
-    public final static int CatcherOutSolenoidChannel = -1;
-    public static final int loaderOutSolenoidChannel = -1;
-    public static final int loaderInSolenoidChannel = -1;
+    public final static int leftDriveShifter = 1;
+    public final static int rightDriveShifter = 2;
+    public final static int CatcherInSolenoidChannel = 3;
+    public final static int CatcherOutSolenoidChannel = 4;
+    public static final int loaderOutSolenoidChannel = 5;
+    public static final int loaderInSolenoidChannel = 6;
     
     //CAN IDs
-    public static final int frontRightSteeringCanId = 23;
+    public static final int frontRightSteeringCanId = 20;
     public static final int frontLeftSteeringCanId = 10;
-    public static final int rightDriveCanId = 20;
-    public static final int leftDriveCanId = 14;
+    public static final int rightFrontDriveCanId = 32;
+    public static final int rightRearDriveCanId = 23;
+    public static final int leftFrontDriveCanId = 14;
+    public static final int leftRearDriveCanId = 41;
     public static final int rearLeftSteeringCanId = 40;
-    public static final int rearRightSteeringCanId = 14;
+    public static final int rearRightSteeringCanId = 30;
     
     //Relays
-    public static final int leftChopStickRelayChannel = -1;
-    public static final int rightChopStickRelayChannel = -1;
+    public static final int compressorRelayChannel = 1;
+    public static final int leftChopStickRelayChannel = 2;
+    public static final int rightChopStickRelayChannel = 3;
     
     //Control
     public static final double kJoyStickDeadband = 0.05;
