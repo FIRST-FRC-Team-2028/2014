@@ -17,43 +17,52 @@ import edu.wpi.first.wpilibj.PIDController;
  *
  * @author tstevens003
  */
-public class AerialAssist extends SimpleRobot {
+public class AerialAssist extends SimpleRobot
+{
 
     public PIDController aimController;
     public PIDController turnController;
     protected GamePadF310 driveStick;
     public CrabDrive drive;
+    public GameMech gameMech;
 
-    public AerialAssist() {
-        try {
+    public AerialAssist()
+    {
+        try
+        {
             drive = new CrabDrive();
             driveStick = new GamePadF310(1);
-        } catch (CANTimeoutException ex) {
+        } catch (CANTimeoutException ex)
+        {
             ex.printStackTrace();
         }
     }
 
-    public void autonomous() {
+    public void autonomous()
+    {
     }
 
-    public void operatorControl() {
-        try {
+    public void operatorControl()
+    {
+        try
+        {
             drive.enablePositionControl();
-        } catch (CANTimeoutException ex) {
-            ex.printStackTrace();
-        }
-        while (isEnabled() && isOperatorControl()) {
-            double driveValue = driveStick.getAxisTrigger();
-            double turnValue = driveStick.getLeftThumbStickX();
-            double crabValue = driveStick.getRightThumbStickX();
-            try {
-                if (crabValue > 0.05 || crabValue < -0.05) {
+            while (isEnabled() && isOperatorControl())
+            {
+                double driveValue = driveStick.getAxisTrigger();
+                double turnValue = driveStick.getLeftThumbStickX();
+                double crabValue = driveStick.getRightThumbStickX();
+                if (crabValue > 0.05 || crabValue < -0.05)
+                {
                     drive.crabDrive(driveValue, crabValue);
-                } else {
+                } else
+                {
                     drive.crabDrive(driveValue, 0);
-                    if (turnValue > 0.05 || turnValue < -0.05) {
+                    if (turnValue > 0.05 || turnValue < -0.05)
+                    {
                         drive.slewDrive(driveValue, turnValue);
-                    } else {
+                    } else
+                    {
                         drive.slewDrive(driveValue, 0);
                     }
                 }
@@ -61,14 +70,13 @@ public class AerialAssist extends SimpleRobot {
                 //System.out.println(drive.getPosition());
                 // System.out.println("SetPoint");
                 // System.out.println("0.5");
-            } catch (CANTimeoutException ex) {
-                ex.printStackTrace();
+                Timer.delay(Parameters.TIMER_DELAY);
+                drive.processCrabDrive();
+                gameMech.processGameMech();
             }
-            Timer.delay(Parameters.TIMER_DELAY);
-        }
-        try {
             drive.disablePositionControl();
-        } catch (CANTimeoutException ex) {
+        } catch (CANTimeoutException ex)
+        {
             ex.printStackTrace();
         }
     }
