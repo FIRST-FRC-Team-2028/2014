@@ -13,6 +13,7 @@ public class CrabDrive {
     public DriveUnit left;
     public DriveUnit right;
     
+    
     public CrabDrive() throws CANTimeoutException {
         left = new DriveUnit(Parameters.frontLeftSteeringCanId, 
                 Parameters.rearLeftSteeringCanId, Parameters.leftDriveCanId,
@@ -84,14 +85,27 @@ public class CrabDrive {
     public void setTurn(double turnAngle) {
         
     }
-    /** getPosition()
+    /**
+     * getRearPosition()
      * 
-     * Gets the position from right driveUnit
+     * Gets the rear position of the crab drive.
+     * 
      * @return
-     * @throws CANTimeoutException 
+     * @throws CANTimeoutException
      */
-    public double getPosition() throws CANTimeoutException
-    {
-        return right.getPosition();
+    public double getRearPosition() throws CANTimeoutException {
+        return right.getRearPosition();
+    }
+    
+    /**
+     *getFrontPosition()
+     * 
+     * Gets the front position of crab drive.
+     * 
+     * @return
+     * @throws CANTimeoutException
+     */
+    public double getFrontPosition() throws CANTimeoutException {
+        return left.getFrontPosition();
     }
 }

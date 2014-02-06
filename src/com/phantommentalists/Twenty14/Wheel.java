@@ -100,7 +100,6 @@ public class Wheel {
      * getPosition()
      * 
      * @return
-     * 
      * @throws CANTimeoutException 
      * 
      * This method returns a value as to where the position of the wheel is.
@@ -125,5 +124,9 @@ public class Wheel {
         if (driving) {
             driveMotor.setX(outputValue);
         }
+    }
+    
+    public void processWheel() {
+        
     }
 }

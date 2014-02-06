@@ -1,6 +1,6 @@
 package com.phantommentalists.Twenty14;
  
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 
 /*
@@ -25,12 +25,13 @@ public class GameMech {
     /**
      *  GameMech allocations11
      * 
-     * @authors mburt001 and jcurtiss001
+     * @authors Mateo, Jeremy, and Jonathan
      */
     public GameMech(){ 
         state = new State();
         catcher = new Catcher();
-//        loader = new ChopSticks();
+        loader = new ChopSticks();
+       // launcher = new Launcher();
     }
      
     /**
@@ -69,15 +70,35 @@ public class GameMech {
 //        loader.turnOffChopSticks();
 //    }
 
-    public void airPass() {
+    public void airPass() throws CANTimeoutException {
+        
     }
 
-    public void shoot() {
+    public void shoot() throws CANTimeoutException {
+        
     }
 
     public void useTheForce() {
+        
     }
-    public void processGM(){
+    
+    public boolean isEmpty() 
+    {
+        return false;
+    }
+    
+    public boolean isCatching() 
+    {
+        return false;
+    }
+    
+    public boolean isHolding() 
+    {
+        return false;
+    }
+    
+    public void processGameMech()
+    {
         
     }
 }
