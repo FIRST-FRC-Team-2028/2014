@@ -61,14 +61,16 @@ public class DriveUnit {
         return temp;
     }
     
-    public double getFrontPosition() throws CANTimeoutException {
+    public double getFrontPosition() throws CANTimeoutException 
+    {
         return front.getPosition();
     }
     public double getRearPosition() throws CANTimeoutException
     {
         return rear.getPosition();
     }
-    public void processDriveUnit() {
+    public void processDriveUnit() 
+    {
         
     }
 }

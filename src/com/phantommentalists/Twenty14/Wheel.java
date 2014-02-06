@@ -94,7 +94,6 @@ public class Wheel {
      * getPosition()
      * 
      * @return
-     * 
      * @throws CANTimeoutException 
      */
     public double getPosition() throws CANTimeoutException {
