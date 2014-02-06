@@ -11,11 +11,11 @@ public class DriveUnit {
     public Wheel rear;
     private DriveMotor driveMotor;
 
-    public DriveUnit(int frontCANID, int rearCANID, int driveMotorCANID
-            , int driveShiftHighSolenoidChannel, int driveShiftLowChannel) throws CANTimeoutException {
+    public DriveUnit(int frontCANID, int rearCANID, int frontDriveMotorCANID, int rearDriveMotorCANID
+            , int driveShiftSolenoidChannel) throws CANTimeoutException {
         front = new Wheel(frontCANID);
         rear = new Wheel(rearCANID);
-        driveMotor = new DriveMotor(driveMotorCANID, driveShiftHighSolenoidChannel, driveShiftLowChannel);
+        driveMotor = new DriveMotor(frontDriveMotorCANID, rearDriveMotorCANID, driveShiftSolenoidChannel);
     }
     
     public void enablePositionControl() throws CANTimeoutException
@@ -60,7 +60,11 @@ public class DriveUnit {
         }
         return temp;
     }
-    public double getPosition() throws CANTimeoutException
+    
+    public double getFrontPosition() throws CANTimeoutException {
+        return front.getPosition();
+    }
+    public double getRearPosition() throws CANTimeoutException
     {
         return rear.getPosition();
     }

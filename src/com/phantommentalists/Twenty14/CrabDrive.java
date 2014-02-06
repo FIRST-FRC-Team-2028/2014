@@ -60,8 +60,27 @@ public class CrabDrive {
     public void setTurn(double turnAngle) {
         
     }
-    public double getPosition() throws CANTimeoutException
-    {
-        return right.getPosition();
+    /**
+     * getRearPosition()
+     * 
+     * Gets the rear position of the crab drive.
+     * 
+     * @return
+     * @throws CANTimeoutException
+     */
+    public double getRearPosition() throws CANTimeoutException {
+        return right.getRearPosition();
+    }
+    
+    /**
+     *getFrontPosition()
+     * 
+     * Gets the front position of crab drive.
+     * 
+     * @return
+     * @throws CANTimeoutException
+     */
+    public double getFrontPosition() throws CANTimeoutException {
+        return left.getFrontPosition();
     }
 }

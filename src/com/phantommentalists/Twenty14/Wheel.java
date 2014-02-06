@@ -116,4 +116,8 @@ public class Wheel {
             driveMotor.setX(outputValue);
         }
     }
+    
+    public void processWheel() {
+        
+    }
 }
