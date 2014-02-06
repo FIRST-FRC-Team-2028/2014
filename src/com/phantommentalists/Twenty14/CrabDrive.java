@@ -23,13 +23,7 @@ public class CrabDrive {
                 Parameters.rightDriveShifterHigh, Parameters.rightDriveShifterLow);
         
     }
-    /** ProcessCD()
-     * 
-     * Processes Crab Drive
-     */
-    public void ProcessCD(){
-        //left
-    }
+
     /** enablePositionControl()
      * 
      * enables Position Controlling
@@ -107,5 +101,11 @@ public class CrabDrive {
      */
     public double getFrontPosition() throws CANTimeoutException {
         return left.getFrontPosition();
+    }
+    
+    public void processCrabDrive()
+    {
+        left.processDriveUnit();
+        right.processDriveUnit();
     }
 }
