@@ -14,23 +14,25 @@ public class CrabDrive {
     public DriveUnit right;
     
     public CrabDrive() throws CANTimeoutException {
-//        left = new DriveUnit(Parameters.frontLeftSteeringCanId, 
-//                Parameters.rearLeftSteeringCanId, Parameters.leftDriveCanId,
-//                Parameters.leftDriveShifterHigh, Parameters.leftDriveShifterLow);
+        left = new DriveUnit(Parameters.frontLeftSteeringCanId, 
+                Parameters.rearLeftSteeringCanId, Parameters.leftDriveCanId,
+                Parameters.leftDriveShifterHigh, Parameters.leftDriveShifterLow);
         right = new DriveUnit(Parameters.frontRightSteeringCanId, 
                 Parameters.rearRightSteeringCanId, Parameters.rightDriveCanId,
                 Parameters.rightDriveShifterHigh, Parameters.rightDriveShifterLow);
         
     }
-    
+    public void ProcessCD(){
+        //left
+    }
     public void enablePositionControl() throws CANTimeoutException {
         right.enablePositionControl();
-//        left.enablePositionControl();
+        left.enablePositionControl();
     }
     
     public void disablePositionControl() throws CANTimeoutException {
         right.disablePositionControl();
-//        left.disablePositionControl();
+        left.disablePositionControl();
     }
     
     /*   crabDrive()
@@ -39,9 +41,8 @@ public class CrabDrive {
      */
 
     public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        //left.crabDrive(drivePower, turnAngle);
+        left.crabDrive(drivePower, turnAngle);
         right.crabDrive(drivePower, turnAngle);
-       // System.out.println(turnAngle);
     }
     /*  slewDrive()
      *
@@ -49,7 +50,7 @@ public class CrabDrive {
      */
 
     public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        //left.slewDrive(drivePower, turnAngle);
+        left.slewDrive(drivePower, turnAngle);
         right.slewDrive(drivePower, turnAngle);
     }
 

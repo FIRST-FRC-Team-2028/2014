@@ -77,4 +77,7 @@ public class GameMech {
 
     public void useTheForce() {
     }
+    public void processGM(){
+        
+    }
 }
