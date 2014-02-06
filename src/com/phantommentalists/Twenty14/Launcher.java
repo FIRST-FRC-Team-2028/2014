@@ -9,6 +9,18 @@ import edu.wpi.first.wpilibj.can.*;
  */
 public class Launcher {
 
+    public class State
+    {
+        public State()
+        {
+            value = kSafe;
+        }
+        public int value;
+        public static final int kSafe = 0;
+        public static final int kShooting = 1;
+        public static final int kRearming = 2;
+    }
+    public State state;
     public CANJaguar launchMotorOne;
     public CANJaguar launchMotorTwo;
     public Solenoid engageSolenoid;
@@ -46,8 +58,9 @@ public class Launcher {
      * shoots the ball
      */
     public void shoot(double shootVariable) throws CANTimeoutException {
-        if(isEngaged())
+        if(state.value == State.kSafe)
         {
+        state.value = State.kShooting;
         disengage();
         launchMotorOne.setX(shootVariable);
         launchMotorTwo.setX(shootVariable);
@@ -64,11 +77,13 @@ public class Launcher {
          */
     public void retract() throws CANTimeoutException {
         launchMotorOne.setX(-0.33);
-        launchMotorTwo.setX(-0.33);   
+        launchMotorTwo.setX(-0.33); 
+        state.value = State.kRearming;
         while(!canReload()){}
         engage();
         launchMotorOne.setX(0);
         launchMotorTwo.setX(0);
+        state.value = State.kSafe;
         }
         /*  airPass()
          * 
