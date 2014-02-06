@@ -22,14 +22,29 @@ public class CrabDrive {
                 Parameters.rightDriveShifterHigh, Parameters.rightDriveShifterLow);
         
     }
+    /** ProcessCD()
+     * 
+     * Processes Crab Drive
+     */
     public void ProcessCD(){
         //left
     }
+    /** enablePositionControl()
+     * 
+     * enables Position Controlling
+     * 
+     * @throws CANTimeoutException 
+     */
     public void enablePositionControl() throws CANTimeoutException {
         right.enablePositionControl();
         left.enablePositionControl();
     }
-    
+      /** disablePositionControl()
+     * 
+     * disables Position Controlling
+     * 
+     * @throws CANTimeoutException 
+     */
     public void disablePositionControl() throws CANTimeoutException {
         right.disablePositionControl();
         left.disablePositionControl();
@@ -53,14 +68,28 @@ public class CrabDrive {
         left.slewDrive(drivePower, turnAngle);
         right.slewDrive(drivePower, turnAngle);
     }
-
+    /** setDrive()
+     * 
+     * Not Sure yet
+     * @param drivePower 
+     */
     public void setDrive(double drivePower) {
         
     }
-    
+    /** setTurn()
+     * 
+     * Not Sure yet
+     * @param turnAngle 
+     */
     public void setTurn(double turnAngle) {
         
     }
+    /** getPosition()
+     * 
+     * Gets the position from right driveUnit
+     * @return
+     * @throws CANTimeoutException 
+     */
     public double getPosition() throws CANTimeoutException
     {
         return right.getPosition();

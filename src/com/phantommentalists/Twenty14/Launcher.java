@@ -11,6 +11,10 @@ public class Launcher {
 
     public class State
     {
+        /** State()
+         * 
+         * Sets the States the Launcher can be in
+         */
         public State()
         {
             value = kSafe;
@@ -47,6 +51,10 @@ public class Launcher {
         engageSolenoid.set(true);
         disengageSolenoid.set(false);
     }
+    /** processLaucher()
+     * 
+     * Handles Launcher
+     */
     public void processLauncher(){
         
     }
@@ -107,6 +115,10 @@ public class Launcher {
     public void airPass() {
         
     }
+    /** engage()
+     * 
+     *  Engages the locky thingy
+     */
     protected void engage()
     {
         if (!isEngaged())
@@ -115,11 +127,20 @@ public class Launcher {
             engageSolenoid.set(true);
         }
     }
+    /** isEngaged()
+     * 
+     * Asks the locky thingy if it is engaged
+     * @return 
+     */
     protected boolean isEngaged()
     {
         
         return engageSolenoid.get();
     }
+    /** disengage()
+     * 
+     * Disengages the locky thingy
+     */
     protected void disengage()
     {
         if(isEngaged())
