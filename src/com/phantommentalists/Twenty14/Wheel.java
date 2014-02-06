@@ -43,6 +43,8 @@ public class Wheel {
      * enablePositionControl()
      * 
      * @throws CANTimeoutException 
+     * 
+     * This method enables the position control of the wheel.
      */
     public void enablePositionControl() throws CANTimeoutException {
         if (steering) 
@@ -56,6 +58,8 @@ public class Wheel {
      * disablePositionControl()
      * 
      * @throws CANTimeoutException 
+     * 
+     * This method disables position control of the wheel. 
      */
     public void disablePositionControl() throws CANTimeoutException {
         if (steering) {
@@ -71,6 +75,8 @@ public class Wheel {
      * @return
      * 
      * @throws CANTimeoutException 
+     * 
+     * This method sets the starting position of the wheel.
      */
     public boolean setPosition(double outputValue) throws CANTimeoutException {
         steeringMotor.setX(outputValue);
@@ -96,6 +102,8 @@ public class Wheel {
      * @return
      * 
      * @throws CANTimeoutException 
+     * 
+     * This method returns a value as to where the position of the wheel is.
      */
     public double getPosition() throws CANTimeoutException {
         if (steering) {
@@ -110,6 +118,8 @@ public class Wheel {
      * @param outputValue
      * 
      * @throws CANTimeoutException 
+     * 
+     * This method sets the speed at which the wheel rotates.
      */
     public void setSpeed(double outputValue) throws CANTimeoutException {
         if (driving) {
