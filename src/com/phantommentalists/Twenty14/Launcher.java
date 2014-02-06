@@ -13,6 +13,7 @@ public class Launcher {
     public CANJaguar launchMotorTwo;
     public Solenoid engageSolenoid;
     public Solenoid disengageSolenoid;
+    
     public Launcher(int motorOneCanID, int motorTwoCanID) throws CANTimeoutException
     {
         launchMotorOne = new CANJaguar(motorOneCanID,CANJaguar.ControlMode.kPercentVbus);
