@@ -23,7 +23,7 @@ public class GameMech {
     public GameMech(){
         catcher = new Catcher();
         loader = new ChopSticks();
-        launcher = new Launcher();
+       // launcher = new Launcher();
     }
     
     /**
@@ -74,15 +74,18 @@ public class GameMech {
         
     }
     
-    public boolean isEmpty() {
-        return
+    public boolean isEmpty() 
+    {
+        return false;
     }
     
-    public boolean isCatching() {
-        return
+    public boolean isCatching() 
+    {
+        return false;
     }
     
-    public boolean isHolding() {
-        return
+    public boolean isHolding() 
+    {
+        return false;
     }
 }
