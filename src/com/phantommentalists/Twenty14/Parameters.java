@@ -30,6 +30,7 @@ public class Parameters {
     
     //Control
     public static final double kJoyStickDeadband = 0.05;
+    public static final double kSteeringDeadband = 0.05;    
     public static final double TIMER_DELAY = 0.1;
     static double kJoystickDeadband = -1;
     static int kLowGearButton = -1;

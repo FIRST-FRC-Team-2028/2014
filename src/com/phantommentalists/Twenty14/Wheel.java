@@ -19,26 +19,32 @@ public class Wheel {
     CANJaguar steeringMotor;
     CANJaguar driveMotor;
     private double setPoint = 0.5;
-    private boolean driving = false;
     private boolean steering = false;
+    private boolean enabled = false;
+    private String name;
 
     /**
      * @param steerID
      * 
      * @throws CANTimeoutException 
      */
-    public Wheel(int steerID) throws CANTimeoutException {
-        if ()   {
-        steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
-        steeringMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
-        steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
-        steeringMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-        steeringMotor.setPID(Parameters.steeringProportionalValue,
-                Parameters.steeringIntegralValue,
-                Parameters.steeringDerivativeValue);
-        steering = true;
+    public Wheel(int steerID, String name) throws CANTimeoutException {
+        if (steerID != 0)   
+        {
+            steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
+            steeringMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
+            steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
+            steeringMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+            steeringMotor.setPID(Parameters.steeringProportionalValue,
+                    Parameters.steeringIntegralValue,
+                    Parameters.steeringDerivativeValue);
+            steering = true;
+            this.name = name;
         }
-        
+        else
+        {
+            steeringMotor = null;
+        }   
     }
 
     /**
@@ -49,10 +55,11 @@ public class Wheel {
      * This method enables the position control of the wheel.
      */
     public void enablePositionControl() throws CANTimeoutException {
-        if (steering) 
+        if (steering && steeringMotor != null) 
         {
             steeringMotor.enableControl();
-            steeringMotor.setX(setPoint);            
+            steeringMotor.setX(setPoint);
+            enabled = true;
         }
     }
 
@@ -64,8 +71,10 @@ public class Wheel {
      * This method disables position control of the wheel. 
      */
     public void disablePositionControl() throws CANTimeoutException {
-        if (steering) {
+        if (steering && steeringMotor != null) 
+        {
             steeringMotor.disableControl();
+            enabled = false;
         }
     }
     
@@ -74,15 +83,17 @@ public class Wheel {
      * 
      * @param outputValue
      * 
-     * @return
+     * @return Returns true when the steering is already at the setpoint
      * 
      * @throws CANTimeoutException 
      * 
      * This method sets the starting position of the wheel.
      */
-    public boolean setPosition(double outputValue) throws CANTimeoutException {
-        steeringMotor.setX(outputValue);
-        if (steeringMotor.getPosition() == outputValue) {
+    public boolean setPosition(double outputValue) throws CANTimeoutException 
+    {
+        setPoint = outputValue;
+        if (isSteeringCloseEnough()) 
+        {
             return true;
         }
         if (outputValue < 0.2)
@@ -94,7 +105,6 @@ public class Wheel {
             outputValue =0.8;
         }
         steeringMotor.setX(outputValue);
-        setPoint = outputValue;
         return false;
     }        
 
@@ -107,28 +117,43 @@ public class Wheel {
      * This method returns a value as to where the position of the wheel is.
      */
     public double getPosition() throws CANTimeoutException {
-        if (steering) {
+        if (steering && steeringMotor != null) 
+        {
             return steeringMotor.getPosition();
         }
         return -1;
     }
-
-    /**
-     * setSpeed()
-     * 
-     * @param outputValue
-     * 
-     * @throws CANTimeoutException 
-     * 
-     * This method sets the speed at which the wheel rotates.
-     */
-    public void setSpeed(double outputValue) throws CANTimeoutException {
-        if (driving) {
-            driveMotor.setX(outputValue);
+    
+    public boolean isSteeringCloseEnough() throws CANTimeoutException
+    {
+        if (steeringMotor == null)
+        {
+            return false;
         }
+        double steeringDelta = FRCMath.abs(steeringMotor.getPosition() - setPoint);
+        if (steeringDelta <= Parameters.kSteeringDeadband)
+        {
+            return true;
+        }
+        return false;
     }
     
-    public void processWheel() {
-        
+    public void processWheel() throws CANTimeoutException
+    {
+        if (steeringMotor != null)
+        {
+            System.out.println("Wheel " + name + ": " + steeringMotor.getOutputCurrent());
+            if (isSteeringCloseEnough())
+            {
+                disablePositionControl();
+            }
+            else
+            {
+                if (!enabled)
+                {
+                    enablePositionControl();
+                }
+            }
+        }
     }
 }
