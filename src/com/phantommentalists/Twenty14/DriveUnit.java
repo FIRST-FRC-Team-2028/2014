@@ -12,9 +12,9 @@ public class DriveUnit {
     private DriveMotor driveMotor;
 
     public DriveUnit(String name, int frontCANID, int rearCANID, int frontDriveMotorCANID, int rearDriveMotorCANID
-            , int driveShiftSolenoidChannel) throws CANTimeoutException {
-        front = new Wheel(frontCANID, "Front" + name);
-        rear = new Wheel(rearCANID, "Rear" + name);
+            , int driveShiftSolenoidChannel, double ForwardRev, double RearRev) throws CANTimeoutException {
+        front = new Wheel(frontCANID, "Front" + name, ForwardRev);
+        rear = new Wheel(rearCANID, "Rear" + name, RearRev);
         driveMotor = new DriveMotor(frontDriveMotorCANID, rearDriveMotorCANID, driveShiftSolenoidChannel);
     }
     
@@ -55,7 +55,7 @@ public class DriveUnit {
     public double convertJoystickToPosition(double joystickValue) {
         double temp = joystickValue + 1;
         temp = temp / 2;
-        if (temp >= 0.48 && temp <= 0.52) {
+        if (temp >= 0.49 && temp <= 0.51) {
             temp = 0.5;
         }
         return temp;
@@ -75,5 +75,21 @@ public class DriveUnit {
     {
         front.processWheel();
         rear.processWheel();
+    }
+    
+    /**
+     * 
+     */
+    public double getFrontSteeringCurrent() throws CANTimeoutException
+    {
+        return front.getSteeringCurrent();
+    }
+    
+    /**
+     * 
+     */
+    public double getRearSteeringCurrent() throws CANTimeoutException
+    {
+        return rear.getSteeringCurrent();
     }
 }

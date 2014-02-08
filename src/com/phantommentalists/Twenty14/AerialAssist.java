@@ -47,6 +47,7 @@ public class AerialAssist extends SimpleRobot
 
     public void operatorControl()
     {
+        int count = 0;
         try
         {
             drive.enablePositionControl();
@@ -58,9 +59,9 @@ public class AerialAssist extends SimpleRobot
                 if (crabValue > 0.05 || crabValue < -0.05)
                 {
                     drive.crabDrive(driveValue, crabValue);
-                } else
+                } 
+                else
                 {
-                    drive.crabDrive(driveValue, 0);
                     if (turnValue > 0.05 || turnValue < -0.05)
                     {
                         drive.slewDrive(driveValue, turnValue);
@@ -73,6 +74,12 @@ public class AerialAssist extends SimpleRobot
                 //System.out.println(drive.getPosition());
                 // System.out.println("SetPoint");
                 // System.out.println("0.5");
+                count++;
+                if (count % 5 == 0)
+                {
+                    count = 0;
+                    drive.printTelemetry(); 
+                }
                 Timer.delay(Parameters.TIMER_DELAY);
                 drive.processCrabDrive();
                 if (gameMech != null)

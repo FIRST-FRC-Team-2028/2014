@@ -15,16 +15,22 @@ public class CrabDrive {
     
     
     public CrabDrive() throws CANTimeoutException {
-        left = new DriveUnit("Left", Parameters.frontLeftSteeringCanId, 
+        left = new DriveUnit("Left", 
+                Parameters.frontLeftSteeringCanId, 
                 Parameters.rearLeftSteeringCanId, 
                 Parameters.leftFrontDriveCanId, 
                 Parameters.leftRearDriveCanId,
-                Parameters.leftDriveShifter);
-        right = new DriveUnit("Right", Parameters.frontRightSteeringCanId, 
+                Parameters.leftDriveShifter,
+                Parameters.leftFrontRev,
+                Parameters.leftRearRev);
+        right = new DriveUnit("Right", 
+                Parameters.frontRightSteeringCanId, 
                 Parameters.rearRightSteeringCanId, 
                 Parameters.rightFrontDriveCanId,
                 Parameters.rightRearDriveCanId,
-                Parameters.rightDriveShifter);
+                Parameters.rightDriveShifter,
+                Parameters.rightFrontRev,
+                Parameters.rightRearRev);
         
     }
 
@@ -55,7 +61,7 @@ public class CrabDrive {
      */
 
     public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        left.crabDrive(drivePower, turnAngle);
+        left.crabDrive(drivePower, turnAngle * -1.0);
         right.crabDrive(drivePower, turnAngle);
     }
     /*  slewDrive()
@@ -64,7 +70,7 @@ public class CrabDrive {
      */
 
     public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        left.slewDrive(drivePower, turnAngle);
+        left.slewDrive(drivePower, turnAngle * -1.0);
         right.slewDrive(drivePower, turnAngle);
     }
     /** setDrive()
@@ -111,5 +117,21 @@ public class CrabDrive {
     {
         left.processDriveUnit();
         right.processDriveUnit();
+    }
+    
+    /**
+     * 
+     */
+    public void printTelemetry() throws CANTimeoutException
+    {
+        if(Parameters.debug)
+        {
+            System.out.println(
+                    Parameters.frontLeftSteeringCanId + ", " + left.getFrontSteeringCurrent() + ", " +
+                    Parameters.frontRightSteeringCanId + ", " + right.getFrontSteeringCurrent() + ", " +
+                    Parameters.rearLeftSteeringCanId + ", " + left.getRearSteeringCurrent() + ", " +
+                    Parameters.rearRightSteeringCanId + ", " + right.getRearSteeringCurrent()
+                    );
+        }
     }
 }

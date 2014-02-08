@@ -42,9 +42,13 @@ public class DriveMotor {
 
     public void set(double setpoint) throws CANTimeoutException {
         if (frontMotor != null)
-            frontMotor.setX(setpoint);
+        {
+            frontMotor.setX(setpoint * -1.0);
+        }
         if (rearMotor != null)
-        rearMotor.setX(setpoint);
+        {
+            rearMotor.setX(setpoint * -1.0);
+        }
     }
 
     /**
@@ -99,6 +103,36 @@ public class DriveMotor {
             return Gear.kHigh;
         }
         return Gear.kLow;
+    }
+    
+    /**
+     * 
+     */
+    public double getFrontMotorCurrent() throws CANTimeoutException
+    {
+        if(frontMotor != null)
+        {
+            return frontMotor.getOutputCurrent();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    
+    /**
+     * 
+     */
+    public double getRearMotorCurrent() throws CANTimeoutException
+    {
+        if(rearMotor != null)
+        {
+            return rearMotor.getOutputCurrent();
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     public static class Gear {

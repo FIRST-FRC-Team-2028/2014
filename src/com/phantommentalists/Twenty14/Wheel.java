@@ -28,16 +28,20 @@ public class Wheel {
      * 
      * @throws CANTimeoutException 
      */
-    public Wheel(int steerID, String name) throws CANTimeoutException {
+    public Wheel(int steerID, String name, double Reverse) throws CANTimeoutException {
         if (steerID != 0)   
         {
+            if (Parameters.debug)
+            {
+                System.out.println(name + " CAN ID:  " + steerID);
+            }
             steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
             steeringMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
             steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
             steeringMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-            steeringMotor.setPID(Parameters.steeringProportionalValue,
-                    Parameters.steeringIntegralValue,
-                    Parameters.steeringDerivativeValue);
+            steeringMotor.setPID(Parameters.steeringProportionalValue * Reverse,
+                    Parameters.steeringIntegralValue * Reverse,
+                    Parameters.steeringDerivativeValue * Reverse);
             steering = true;
             this.name = name;
         }
@@ -91,11 +95,6 @@ public class Wheel {
      */
     public boolean setPosition(double outputValue) throws CANTimeoutException 
     {
-        setPoint = outputValue;
-        if (isSteeringCloseEnough()) 
-        {
-            return true;
-        }
         if (outputValue < 0.2)
         {
             outputValue = 0.2;
@@ -103,8 +102,20 @@ public class Wheel {
         if (outputValue > 0.8)
         {
             outputValue =0.8;
+        }        
+        setPoint = outputValue;
+        if (isSteeringCloseEnough()) 
+        {
+            return true;
         }
-        steeringMotor.setX(outputValue);
+        if (steeringMotor != null)
+        {
+            if (!enabled)
+            {
+                enablePositionControl();
+            }
+            steeringMotor.setX(outputValue);
+        }
         return false;
     }        
 
@@ -142,7 +153,7 @@ public class Wheel {
     {
         if (steeringMotor != null)
         {
-            System.out.println("Wheel " + name + ": " + steeringMotor.getOutputCurrent());
+//            System.out.println("Wheel " + name + ": " + steeringMotor.getOutputCurrent());
             if (isSteeringCloseEnough())
             {
                 disablePositionControl();
@@ -154,6 +165,21 @@ public class Wheel {
                     enablePositionControl();
                 }
             }
+        }
+    }
+    
+    /**
+     * 
+     */
+    public double getSteeringCurrent() throws CANTimeoutException
+    {
+        if(steeringMotor != null)
+        {
+            return steeringMotor.getOutputCurrent();
+        }
+        else
+        {
+            return -1;
         }
     }
 }
