@@ -30,10 +30,11 @@ public class AerialAssist extends SimpleRobot
 
     public AerialAssist()
     {
+        driveStick = new GamePadF310(1);        
         try
         {
             drive = new CrabDrive();
-            driveStick = new GamePadF310(1);
+            gameMech = null;
         } catch (CANTimeoutException ex)
         {
             ex.printStackTrace();
@@ -74,7 +75,10 @@ public class AerialAssist extends SimpleRobot
                 // System.out.println("0.5");
                 Timer.delay(Parameters.TIMER_DELAY);
                 drive.processCrabDrive();
-                gameMech.processGameMech();
+                if (gameMech != null)
+                {
+                    gameMech.processGameMech();
+                }
             }
             drive.disablePositionControl();
         } catch (CANTimeoutException ex)

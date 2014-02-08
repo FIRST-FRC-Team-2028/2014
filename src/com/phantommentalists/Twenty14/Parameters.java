@@ -14,15 +14,22 @@ public class Parameters {
     public static final int loaderInSolenoidChannel = 6;
     
     //CAN IDs
-    public static final int frontRightSteeringCanId = 20;
-    public static final int frontLeftSteeringCanId = 10;
-    public static final int rightFrontDriveCanId = 32;
-    public static final int rightRearDriveCanId = 23;
-    public static final int leftFrontDriveCanId = 14;
-    public static final int leftRearDriveCanId = 41;
-    public static final int rearLeftSteeringCanId = 40;
-    public static final int rearRightSteeringCanId = 30;
-    
+//    public static final int frontRightSteeringCanId = 30;
+//    public static final int frontLeftSteeringCanId = 20;
+//    public static final int rightFrontDriveCanId = 43;
+//    public static final int rightRearDriveCanId = 34;
+//    public static final int leftFrontDriveCanId = 12;
+//    public static final int leftRearDriveCanId = 21;
+//    public static final int rearLeftSteeringCanId = 10;
+//    public static final int rearRightSteeringCanId = 40;
+    public static final int frontRightSteeringCanId = 0;
+    public static final int frontLeftSteeringCanId = 20;
+    public static final int rightFrontDriveCanId = 0;
+    public static final int rightRearDriveCanId = 0;
+    public static final int leftFrontDriveCanId = 0;
+    public static final int leftRearDriveCanId = 0;
+    public static final int rearLeftSteeringCanId = 0;
+    public static final int rearRightSteeringCanId = 0;    
     //Relays
     public static final int compressorRelayChannel = 1;
     public static final int leftChopStickRelayChannel = 2;
