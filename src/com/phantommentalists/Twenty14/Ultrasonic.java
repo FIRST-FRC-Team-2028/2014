@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.AnalogModule;
 
 /**
  *
- * @author David
+ * @author Hunter
  */
 public class Ultrasonic {
 

@@ -23,7 +23,9 @@ public class Parameters {
     public static final int leftFrontDriveCanId = 12;
     public static final int leftRearDriveCanId = 21;
     public static final int rearLeftSteeringCanId = 10;
-    public static final int rearRightSteeringCanId = 40;    
+    public static final int rearRightSteeringCanId = 40;  
+    public static final int motorOneLauncherCANID = 50;
+    public static final int motorTwoLauncherCANID = 60;
 
     //Relays
     public static final int compressorRelayChannel = 1;
@@ -49,5 +51,11 @@ public class Parameters {
     public static final double leftRearRev = 1.0;
     public static final double rightFrontRev = 1.0;
     public static final double rightRearRev = -1.0;
+    
+    //Shoot varibles
+    public static final double kshootGoal = 1.0;
+    public static final double kshootPass = 0.0;
+    public static final double klauncherRetractPower = -0.33;
+    public static final double kstopPower = 0.0;
       
 }
