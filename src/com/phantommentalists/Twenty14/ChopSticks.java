@@ -7,6 +7,8 @@ package com.phantommentalists.Twenty14;
  */
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Relay;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -21,6 +23,23 @@ public class ChopSticks {
     public Relay right;
     public Solenoid extendSolenoid;
     public Solenoid retractSolenoid;
+    private boolean deployed;
+    private Timer deployTimer;
+    private TimerTask TimerTask;
+
+    protected class ChopSticksTimerTask extends TimerTask {
+
+        private ChopSticks loader;
+
+        public ChopSticksTimerTask(ChopSticks l) {
+            loader = l;
+        }
+
+        public void run() {
+            deployed = true;            
+        }
+}
+    
 
     /**
      * ChopSticks()
@@ -30,10 +49,12 @@ public class ChopSticks {
     public ChopSticks() {
         left = new Relay(Parameters.leftChopStickRelayChannel);
         right = new Relay(Parameters.rightChopStickRelayChannel);
-        extendSolenoid = new Solenoid(-1);
-        retractSolenoid = new Solenoid(-1);
+        extendSolenoid = new Solenoid(Parameters.loaderOutSolenoidChannel);
+        retractSolenoid = new Solenoid(Parameters.loaderInSolenoidChannel);
         extendSolenoid.set(false);
         retractSolenoid.set(true);
+        deployTimer = null;
+        TimerTask = null;
 
     }
 
@@ -83,11 +104,11 @@ public class ChopSticks {
         }
         return false;
     }
-    
+
     /**
      * deployChopSticks()
-     * 
-     * This method deploys the ChopSticks and if they are off, turns them on. 
+     *
+     * This method deploys the ChopSticks and if they are off, turns them on.
      */
     public void deployChopSticks() {
         retractSolenoid.set(false);
@@ -95,20 +116,56 @@ public class ChopSticks {
         if (isChopSticksOff()) {
             turnOnChopSticks();
         }
+        deployTimer = new Timer();
+        TimerTask = new ChopSticksTimerTask(this);
+        deployTimer.schedule(TimerTask, Parameters.ChopSticksdeployTimeOut);
         
+
     }
+
     /**
      * retractChopSticks()
-     * 
+     *
      * This method retracts the ChopSticks and if the are on, turns them off.
      */
     public void retractChopSticks() {
         extendSolenoid.set(false);
         retractSolenoid.set(true);
         if (isChopSticksOn()) {
-            turnOffChopSticks();  
+            turnOffChopSticks();
         }
-        
+
+    }
+
+    /**
+     * isDeployed()
+     *
+     * This method returns if the ChopSticks are deployed.
+     *
+     * @return
+     */
+    public boolean isDeployed() {
+        return deployed;
+    }
+
+    /**
+     * isRetracted()
+     *
+     * This method returns if the ChopSticks are retracted.
+     *
+     * @return
+     */
+    public boolean isRetracted() {
+        return !deployed;
     }
     
+    /**
+     * processChopSticks()
+     * 
+     * This method processes the Loader.
+     */
+    public void processChopSticks() {
+        
+    }
+            
 }
