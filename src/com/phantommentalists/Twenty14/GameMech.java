@@ -16,7 +16,7 @@ public class GameMech {
     /**
      *  GameMech allocations
      * 
-     * @authors mburt001 and jcurtiss001
+     * @authors mburt001, jcurtiss001 And tstevens003
      */
     public GameMech(){
         catcher = new Catcher();
@@ -65,6 +65,5 @@ public class GameMech {
     public void shoot() {
     }
 
-    public void useTheForce() {
-    }
+    
 }
