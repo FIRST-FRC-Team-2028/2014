@@ -10,10 +10,10 @@ public class Parameters {
     public final static int leftDriveShifterLow = 2;
     public final static int rightDriveShifterHigh = 3;
     public final static int rightDriveShifterLow = 4;
-    public final static int CatcherInSolenoidChannel = -1;
-    public final static int CatcherOutSolenoidChannel = -1;
-    public static final int loaderOutSolenoidChannel = -1;
-    public static final int loaderInSolenoidChannel = -1;
+    public final static int CatcherInSolenoidChannel = 5;
+    public final static int CatcherOutSolenoidChannel = 6;
+    public static final int loaderOutSolenoidChannel = 7;
+    public static final int loaderInSolenoidChannel = 8;
     
     //CAN IDs
     public static final int frontRightSteeringCanId = 23;
@@ -22,6 +22,8 @@ public class Parameters {
     public static final int leftDriveCanId = 14;
     public static final int rearLeftSteeringCanId = 40;
     public static final int rearRightSteeringCanId = 14;
+    public static final int launcherMotorOneCANID = 50;
+    public static final int launcherMotorTwoCANID = 60;
     
     //Relays
     public static final int leftChopStickRelayChannel = -1;
