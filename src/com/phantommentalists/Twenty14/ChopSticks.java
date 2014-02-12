@@ -111,5 +111,17 @@ public class ChopSticks {
         }
         
     }
+    public boolean isDeployed()
+    {
+        return false;
+    }
+    public boolean isRetracted()
+    {
+        return false;
+    }
+    public void processChopSticks()
+    {
+        
+    }
     
 }
