@@ -11,11 +11,11 @@ public class DriveUnit {
     public Wheel rear;
     private DriveMotor driveMotor;
 
-    public DriveUnit(int frontCANID, int rearCANID, int driveMotorCANID
-            , int driveShiftHighSolenoidChannel, int driveShiftLowChannel) throws CANTimeoutException {
-        front = new Wheel(frontCANID);
-        rear = new Wheel(rearCANID);
-        driveMotor = new DriveMotor(driveMotorCANID, driveShiftHighSolenoidChannel, driveShiftLowChannel);
+    public DriveUnit(String name, int frontCANID, int rearCANID, int frontDriveMotorCANID, int rearDriveMotorCANID
+            , int driveShiftSolenoidChannel, double ForwardRev, double RearRev) throws CANTimeoutException {
+        front = new Wheel(frontCANID, "Front" + name, ForwardRev);
+        rear = new Wheel(rearCANID, "Rear" + name, RearRev);
+        driveMotor = new DriveMotor(frontDriveMotorCANID, rearDriveMotorCANID, driveShiftSolenoidChannel);
     }
     
     public void enablePositionControl() throws CANTimeoutException
@@ -55,13 +55,41 @@ public class DriveUnit {
     public double convertJoystickToPosition(double joystickValue) {
         double temp = joystickValue + 1;
         temp = temp / 2;
-        if (temp >= 0.48 && temp <= 0.52) {
+        if (temp >= 0.49 && temp <= 0.51) {
             temp = 0.5;
         }
         return temp;
     }
-    public double getPosition() throws CANTimeoutException
+    
+    public double getFrontPosition() throws CANTimeoutException 
+    {
+        return front.getPosition();
+    }
+    
+    public double getRearPosition() throws CANTimeoutException
     {
         return rear.getPosition();
+    }
+    
+    public void processDriveUnit() throws CANTimeoutException
+    {
+        front.processWheel();
+        rear.processWheel();
+    }
+    
+    /**
+     * 
+     */
+    public double getFrontSteeringCurrent() throws CANTimeoutException
+    {
+        return front.getSteeringCurrent();
+    }
+    
+    /**
+     * 
+     */
+    public double getRearSteeringCurrent() throws CANTimeoutException
+    {
+        return rear.getSteeringCurrent();
     }
 }
