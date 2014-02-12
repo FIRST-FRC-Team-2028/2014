@@ -43,12 +43,24 @@ public class AerialAssist extends SimpleRobot
 
     public void autonomous()
     {
-        int value;
         final int kDriving =0;
         final int kShooting =1;
         final int kWaitingForHot =2;
-        value = kWaitingForHot;
-        
+        int value = kDriving;
+       
+        //
+         //if (aimingsystem returns hot)
+         {
+            value = kShooting;
+            try {
+                gameMech.shoot();
+            } catch (CANTimeoutException ex) {
+                ex.printStackTrace();
+            }
+           
+           //driveForward until ultrasonic
+          }
+
         
         
     }
