@@ -83,7 +83,9 @@ public class GameMech {
         }
        
     }
-
+    public void timedShoot() throws CANTimeoutException{
+        launcher.timedShoot(1.0);
+    }
     public void shoot() throws CANTimeoutException {
         if(isCatching())
         {

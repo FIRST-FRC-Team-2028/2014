@@ -3,12 +3,21 @@ package com.phantommentalists.Twenty14;
 import edu.wpi.first.wpilibj.CANJaguar;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.can.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /*
  * Launcher allocation
  */
 public class Launcher {
 
+    public Timer launchTimer;
+    public TimerTask TimerTask;
+    public State state;
+    public CANJaguar launchMotorOne;
+    public CANJaguar launchMotorTwo;
+    public Solenoid engageSolenoid;
+    public Solenoid disengageSolenoid;
     public class State
     {
         /** State()
@@ -24,12 +33,23 @@ public class Launcher {
         public static final int kShooting = 1;
         public static final int kRearming = 2;
     }
-    public State state;
-    public CANJaguar launchMotorOne;
-    public CANJaguar launchMotorTwo;
-    public Solenoid engageSolenoid;
-    public Solenoid disengageSolenoid;
-    
+    protected class LauncherTimerTask extends TimerTask
+    {
+        private Launcher launcher;
+        public LauncherTimerTask(Launcher l)
+        {
+            launcher = l;
+        }
+        public void run()
+        {
+            try {
+                launchMotorOne.setX(0);
+                launchMotorTwo.setX(0);
+            } catch (CANTimeoutException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
     public Launcher(int motorOneCanID, int motorTwoCanID) throws CANTimeoutException
     {
         if(motorOneCanID == 0){
@@ -109,6 +129,14 @@ public class Launcher {
     */
     public boolean canReload() throws CANTimeoutException{
         return !launchMotorOne.getReverseLimitOK();
+    }
+    public void timedShoot(double shootVariable) throws CANTimeoutException{
+            launchTimer = new Timer();
+            TimerTask = new LauncherTimerTask(this);
+            launchMotorOne.setX(shootVariable);
+            launchMotorTwo.setX(shootVariable);
+            launchTimer.schedule(TimerTask, 250);
+        
     }
     /* shoot()
      *
