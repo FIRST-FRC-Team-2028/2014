@@ -1,28 +1,39 @@
 package com.phantommentalists.Twenty14;
-
-import edu.wpi.first.wpilibj.Relay;
  
+import edu.wpi.first.wpilibj.can.CANTimeoutException;
+
+
 /*
  */
 public class GameMech {
 
-    public boolean isShooting;
-    public boolean isCatcherDeployed;
-    public boolean isChopSticksDeployed;
+    public class State{
+        public State(){
+            value = kHolding;
+        }
+        public int value;
+        public static final int kHolding = 0;
+        public static final int kCatching = 1;
+        public static final int kEmpty = 2;
+    }
+    
+    private State state;
     private ChopSticks loader;
     private Catcher catcher;
     private Launcher launcher;
     
     /**
-     *  GameMech allocations
+     *  GameMech allocations11
      * 
-     * @authors mburt001 and jcurtiss001
+     * @authors Mateo, Jeremy, and Jonathan
      */
-    public GameMech(){
+    public GameMech(){ 
+        state = new State();
         catcher = new Catcher();
         loader = new ChopSticks();
+       // launcher = new Launcher();
     }
-    
+     
     /**
      * deployCatcher()
      * 
@@ -41,30 +52,53 @@ public class GameMech {
         catcher.retract();
     }            
     
-    /**
-     * turnOnChopSticks()
-     * 
-     * This method turns on both left and right ChopSticks.
-     */
-    public void turnOnChopSticks(){
-        loader.turnOnChopSticks();
-    }
-    
-    /**
-     * turnOffChopSticks()
-     * 
-     * This method turns off both left and right ChopSticks.
-     */
-    public void turnOffChopSticks(){
-        loader.turnOffChopSticks();
+//    /**
+//     * turnOnChopSticks()
+//     * 
+//     * This method turns on both left and right ChopSticks.
+//     */
+//    public void turnOnChopSticks(){
+//        loader.turnOnChopSticks();
+//    }
+//    
+//    /**
+//     * turnOffChopSticks()
+//     * 
+//     * This method turns off both left and right ChopSticks.
+//     */
+//    public void turnOffChopSticks(){
+//        loader.turnOffChopSticks();
+//    }
+
+    public void airPass() throws CANTimeoutException {
+        
     }
 
-    public void airPass() {
-    }
-
-    public void shoot() {
+    public void shoot() throws CANTimeoutException {
+        
     }
 
     public void useTheForce() {
+        
+    }
+    
+    public boolean isEmpty() 
+    {
+        return false;
+    }
+    
+    public boolean isCatching() 
+    {
+        return false;
+    }
+    
+    public boolean isHolding() 
+    {
+        return false;
+    }
+    
+    public void processGameMech()
+    {
+        
     }
 }

@@ -10,22 +10,45 @@ import edu.wpi.first.wpilibj.Solenoid;
  */
 public class DriveMotor {
 
-    public CANJaguar motor;
-    public Solenoid shiftHighSolenoid;
-    public Solenoid shiftLowSolenoid;
+    public CANJaguar frontMotor;
+    public CANJaguar rearMotor;
+    public Solenoid shiftSolenoid;
     
 
-    public DriveMotor(int driveCANID, int shiftHighChannel, int shiftLowChannel) throws CANTimeoutException {
-        motor = new CANJaguar(driveCANID, CANJaguar.ControlMode.kPercentVbus);
-        motor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
-        motor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
-        shiftHighSolenoid = new Solenoid(shiftHighChannel);
-        shiftLowSolenoid = new Solenoid(shiftLowChannel);
+    public DriveMotor(int frontDriveCANID, int rearDriveCANID, int shiftChannel) throws CANTimeoutException {
+        if (frontDriveCANID != 0)
+        {
+            frontMotor = new CANJaguar(frontDriveCANID, CANJaguar.ControlMode.kPercentVbus);
+            frontMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
+            frontMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+        }
+        else
+        {
+            frontMotor = null;
+        }
+        if (rearDriveCANID != 0)
+        {
+            rearMotor = new CANJaguar(rearDriveCANID, CANJaguar.ControlMode.kPercentVbus);
+            rearMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
+            rearMotor.configNeutralMode(CANJaguar.NeutralMode.kBrake);
+        }
+        else
+        {
+            rearMotor = null;
+        }
+        shiftSolenoid = new Solenoid(shiftChannel);
         setGear(Gear.kHigh);
     }
 
     public void set(double setpoint) throws CANTimeoutException {
-        motor.setX(setpoint);
+        if (frontMotor != null)
+        {
+            frontMotor.setX(setpoint * -1.0);
+        }
+        if (rearMotor != null)
+        {
+            rearMotor.setX(setpoint * -1.0);
+        }
     }
 
     /**
@@ -39,14 +62,15 @@ public class DriveMotor {
      */
     public void setGear(Gear gear) {
         if (gear == Gear.kLow) {
-            shiftHighSolenoid.set(false);
-        } else {
-            shiftHighSolenoid.set(true);
+            shiftSolenoid.set(false);
+        } 
+        else{
+            shiftSolenoid.set(true);
         }
     }
 
     public boolean isLowGear() {
-        if (shiftHighSolenoid.get() == false) //FIX ME!!! Verify true is really high gear
+        if (shiftSolenoid.get() == false) //FIX ME!!! Verify true is really high gear
         {
             return true;
         } else {
@@ -62,7 +86,7 @@ public class DriveMotor {
      * @return
      */
     public boolean isHighGear() {
-        if (!shiftHighSolenoid.get()) //FIX ME!!! Verify false is really low gear
+        if (!shiftSolenoid.get()) //FIX ME!!! Verify false is really low gear
         {
             return false;
         } else {
@@ -79,6 +103,36 @@ public class DriveMotor {
             return Gear.kHigh;
         }
         return Gear.kLow;
+    }
+    
+    /**
+     * 
+     */
+    public double getFrontMotorCurrent() throws CANTimeoutException
+    {
+        if(frontMotor != null)
+        {
+            return frontMotor.getOutputCurrent();
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    
+    /**
+     * 
+     */
+    public double getRearMotorCurrent() throws CANTimeoutException
+    {
+        if(rearMotor != null)
+        {
+            return rearMotor.getOutputCurrent();
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     public static class Gear {
