@@ -43,6 +43,14 @@ public class AerialAssist extends SimpleRobot
 
     public void autonomous()
     {
+        int value;
+        final int kDriving =0;
+        final int kShooting =1;
+        final int kWaitingForHot =2;
+        value = kWaitingForHot;
+        
+        
+        
     }
 
     public void operatorControl()
