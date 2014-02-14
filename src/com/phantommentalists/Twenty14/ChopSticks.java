@@ -19,6 +19,22 @@ import java.util.TimerTask;
  */
 public class ChopSticks {
 
+    /**
+     * State()
+     *
+     * This method sets the state that the loader can be in.
+     */
+    public class State {
+
+        public State() {
+            value = kRetracted;
+        }
+        public int value;
+        public static final int kRetracted = 0;
+        public static final int kDeployed = 1;
+        public static final int kPickUpBall = 2;
+    }
+    public State state;
     public Relay left;
     public Relay right;
     public Solenoid extendSolenoid;
@@ -36,10 +52,9 @@ public class ChopSticks {
         }
 
         public void run() {
-            deployed = true;            
+            deployed = true;
         }
-}
-    
+    }
 
     /**
      * ChopSticks()
@@ -119,14 +134,14 @@ public class ChopSticks {
         deployTimer = new Timer();
         TimerTask = new ChopSticksTimerTask(this);
         deployTimer.schedule(TimerTask, Parameters.ChopSticksdeployTimeOut);
-        
+
 
     }
 
     /**
      * retractChopSticks()
      *
-     * This method retracts the ChopSticks and if the are on, turns them off.
+     * This method retracts the ChopSticks and if they are on, turns them off.
      */
     public void retractChopSticks() {
         extendSolenoid.set(false);
@@ -158,14 +173,33 @@ public class ChopSticks {
     public boolean isRetracted() {
         return !deployed;
     }
-    
+
     /**
      * processChopSticks()
-     * 
-     * This method processes the Loader.
+     *
+     * Handles ChopSticks.
      */
     public void processChopSticks() {
-        
+        if (state.value == State.kRetracted) {
+            if (isDeployed()) {
+                state.value = State.kDeployed;
+            }
+            if (isChopSticksOn() && isDeployed()) {
+                state.value = State.kPickUpBall;
+            }
+        }
+        if (state.value == State.kDeployed) {
+            if (isDeployed() && isChopSticksOn()) {
+                state.value = State.kPickUpBall;
+            }
+            if (isRetracted()) {
+                state.value = State.kRetracted;
+            }
+        }
+        if (state.value == State.kPickUpBall) {
+            if (isRetracted()) {
+                state.value = State.kPickUpBall;
+            }
+        }
     }
-            
 }
