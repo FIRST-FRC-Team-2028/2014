@@ -69,16 +69,16 @@ public class AerialAssist extends SimpleRobot
                 double turnValue = (ds.getAnalogIn(1)*2)-1;
                 double crabValue = FRCMath.convertDegreesToJoystick(FRCMath.getPolarAngle(driveStick.getX(), 
                         driveStick.getY()));
-                if(!driveStick.getTrigger())
+                if(driveStick.getTrigger())
                 {
                     if (turnValue > 0.05 || turnValue < -0.05)  
                     {
-                        drive.slewDrive(driveValue, turnValue);
+                        drive.turnOnAxis(turnValue);
                     } 
                 }
                 else if(turnValue > 0.05 || turnValue < -0.05)
                 {
-                    
+                    drive.slewDrive(driveValue, turnValue);
                 }
                 else
                 {
