@@ -12,7 +12,7 @@ import java.util.TimerTask;
 public class Launcher {
 
     public Timer launchTimer;
-    public TimerTask TimerTask;
+    public TimerTask timerTask;
     public State state;
     public CANJaguar launchMotorOne;
     public CANJaguar launchMotorTwo;
@@ -42,13 +42,14 @@ public class Launcher {
         }
         public void run()
         {
-            try {
-                launchMotorOne.setX(0);
-                launchMotorTwo.setX(0);
-                System.out.println("Motors set to 0.0");
-            } catch (CANTimeoutException ex) {
+            try
+            {
+                launcherStop();
+            } catch (CANTimeoutException ex)
+            {
                 ex.printStackTrace();
             }
+            
         }
     }
     public Launcher(int motorOneCanID, int motorTwoCanID) throws CANTimeoutException
@@ -67,7 +68,7 @@ public class Launcher {
             launchMotorTwo.configNeutralMode(CANJaguar.NeutralMode.kBrake);
             launchMotorTwo.configMaxOutputVoltage(Parameters.maxMotorVoltage);
         }
-        
+     
         engageSolenoid = new Solenoid(-1);
         disengageSolenoid = new Solenoid(-1);
         engageSolenoid.set(true);
@@ -77,8 +78,31 @@ public class Launcher {
      * 
      * Handles Launcher
      */
-    public void processLauncher(){
+    public void processLauncher()throws CANTimeoutException{
         
+        
+        if (isEngaged())
+        {
+            state.value = State.kSafe;
+        }
+        else if (launchMotorOne.getBusVoltage() < 0.0)
+        {
+            if(!launchMotorOne.getForwardLimitOK())
+            {
+            state.value = State.kRearming;
+                retract();
+            }
+        }
+        else if (launchMotorOne.getBusVoltage() > 0.0)
+        {
+            state.value = State.kShooting;
+        }
+    }
+    public void launcherStop() throws CANTimeoutException{
+        launchMotorOne.setX(0.0);
+        launchMotorTwo.setX(0.0);
+        launchTimer = null;
+        timerTask = null;
     }
     /* isShooting()
      *
@@ -96,12 +120,15 @@ public class Launcher {
         return !launchMotorOne.getReverseLimitOK();
     }
     public void timedShoot(double shootVariable) throws CANTimeoutException{
-            launchTimer = new Timer();
-            TimerTask = new LauncherTimerTask(this);
+        if(launchTimer == null)
+        {
+        launchTimer = new Timer();
+        timerTask = new LauncherTimerTask(this);
             launchMotorOne.setX(shootVariable);
             launchMotorTwo.setX(shootVariable);
-            System.out.println("Motors Set to 12.0 Volts");
-            launchTimer.schedule(TimerTask, 250);
+           // System.out.println("Motors Set to 12.0 Volts");
+            launchTimer.schedule(timerTask, 80);
+        }
         
     }
     /* shoot()
@@ -126,6 +153,16 @@ public class Launcher {
          *
          * make motors retract the shooter
          */
+    public void timedRetract() throws CANTimeoutException{
+        if (launchTimer == null){
+        launchTimer = new Timer();
+        timerTask = new LauncherTimerTask(this);
+       // state.value = State.kRearming;
+        launchMotorOne.setX(-0.33);
+        launchMotorTwo.setX(-0.33);
+        launchTimer.schedule(timerTask, 50);
+        }
+    }
     public void retract() throws CANTimeoutException {
             state.value = State.kRearming;
             launchMotorOne.setX(-0.33);
@@ -178,6 +215,40 @@ public class Launcher {
         {
             engageSolenoid.set(false);
             disengageSolenoid.set(true);
+        }
+    }
+    public boolean isSafe()
+    {
+        if(state.value == State.kSafe)
+        {
+            return true;
+        }
+         else
+        {
+            return false;
+        }
+    }
+       
+    public boolean isShooting()
+    {
+        if(state.value == State.kShooting)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public boolean isRearming()
+    {
+        if(state.value == State.kRearming)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }
