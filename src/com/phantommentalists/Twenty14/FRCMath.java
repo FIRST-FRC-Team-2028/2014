@@ -21,8 +21,44 @@ public class FRCMath {
     /**
      * This method takes a radian and returns degrees
      */
-    public double ConvertRadiansToDegrees(double radians) {
-        return (radians * 180.0) / 3.1415926535898;
+    public static double ConvertRadiansToDegrees(double radians) {
+        return (radians * 180.0) / Math.PI;
+    }
+    
+    /**
+     * getPolarAngle()
+     * 
+     * This method takes the x and y values from the joystick and returns the 
+     * Angle for the direction of the drive
+     * 
+     * @param double x - the x value of the joystick
+     * @param double y - the y value of the joystick
+     */
+    public static double getPolarAngle(double x, double y)
+    {
+        return ConvertRadiansToDegrees(MathUtils.atan2(y,x));
+    }
+    
+    /**
+     * getPolarMagnitude()
+     * 
+     * This method takes coordinate plane values and returns the polar magnitude
+     * 
+     * @param x
+     * @param y
+     * @return 
+     */
+    public static double getPolarMagnitude(double x, double y)
+    {
+        return Math.sqrt(pow(x, 2) + pow(y, 2));
+    }
+    
+    /**
+     * 
+     */
+    public static double convertDegreesToJoystick(double degrees)
+    {
+        return degrees/180;
     }
 
     /**
@@ -34,7 +70,7 @@ public class FRCMath {
      * @param num a very long decimal
      * @return
      */
-    static public String Normalize(double num) {
+    public static String Normalize(double num) {
         int t = ((int) (num * 1000.0));
         double d = t / 1000.0;
         String str = "" + d;

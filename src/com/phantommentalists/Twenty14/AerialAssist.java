@@ -24,17 +24,22 @@ public class AerialAssist extends SimpleRobot
 
     public PIDController aimController;
     public PIDController turnController;
-    protected GamePadF310 driveStick;
+    protected Joystick driveStick;
     public CrabDrive drive;
     public GameMech gameMech;
+    public Compressor  compressor;
+    public DriverStation ds;
 
     public AerialAssist()
     {
-        driveStick = new GamePadF310(1);        
+        driveStick = new Joystick(1);
         try
         {
             drive = new CrabDrive();
             gameMech = null;
+            compressor = new Compressor(Parameters.compressorSwitchChannel,
+                    Parameters.compressorRelayChannel);
+            ds = DriverStation.getInstance();
         } catch (CANTimeoutException ex)
         {
             ex.printStackTrace();
@@ -48,23 +53,23 @@ public class AerialAssist extends SimpleRobot
         final int kShooting =1;
         final int kWaitingForHot =2;
         value = kWaitingForHot;
-        
-        
-        
     }
 
     public void operatorControl()
     {
         int count = 0;
+       
         try
         {
             drive.enablePositionControl();
             while (isEnabled() && isOperatorControl())
             {
-                double driveValue = driveStick.getAxisTrigger();
-                double turnValue = driveStick.getLeftThumbStickX();
-                double crabValue = driveStick.getRightThumbStickX();
-                if (crabValue > 0.05 || crabValue < -0.05)
+                double driveValue = FRCMath.getPolarMagnitude(driveStick.getX(),
+                        driveStick.getY());
+                double turnValue = (ds.getAnalogIn(1)*2)-1;
+                double crabValue = FRCMath.convertDegreesToJoystick(FRCMath.getPolarAngle(driveStick.getX(), 
+                        driveStick.getY()));
+                if (crabValue > 0.05 || crabValue < -0.05)  
                 {
                     drive.crabDrive(driveValue, crabValue);
                 } 
@@ -75,17 +80,14 @@ public class AerialAssist extends SimpleRobot
                         drive.slewDrive(driveValue, turnValue);
                     } else
                     {
-                        drive.slewDrive(driveValue, 0);
+                        drive.slewDrive(driveValue, 0); //3.14159265358979323846264338327950
                     }
                 }
-                //System.out.println("Sensor position");
-                //System.out.println(drive.getPosition());
-                // System.out.println("SetPoint");
-                // System.out.println("0.5");
                 count++;
                 if (count % 5 == 0)
                 {
                     count = 0;
+                    System.out.println("Degrees : " + crabValue);
                     drive.printTelemetry(); 
                 }
                 Timer.delay(Parameters.TIMER_DELAY);
