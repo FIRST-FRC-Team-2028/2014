@@ -33,6 +33,10 @@ public class Parameters {
     static double kJoystickDeadband = -1;
     static int kLowGearButton = -1;
     static int kHighGearButton = -1;
+    
+    //PWM Channels
+    public static final int kCameraPanChannel = 6;
+    public static final int kCameraTiltChannel = 7;
 
     //etc
     public static final double steeringProportionalValue = -350.0;
