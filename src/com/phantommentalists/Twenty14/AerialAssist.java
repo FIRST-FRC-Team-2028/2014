@@ -58,6 +58,7 @@ public class AerialAssist extends SimpleRobot
     public void operatorControl()
     {
         int count = 0;
+       
         try
         {
             drive.enablePositionControl();
@@ -79,7 +80,7 @@ public class AerialAssist extends SimpleRobot
                         drive.slewDrive(driveValue, turnValue);
                     } else
                     {
-                        drive.slewDrive(driveValue, 0);
+                        drive.slewDrive(driveValue, 0); //3.14159265358979323846264338327950
                     }
                 }
                 count++;

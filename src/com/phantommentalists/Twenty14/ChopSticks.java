@@ -31,8 +31,8 @@ public class ChopSticks {
     public ChopSticks() {
         left = new Relay(Parameters.leftChopStickRelayChannel);
         right = new Relay(Parameters.rightChopStickRelayChannel);
-        extendSolenoid = new Solenoid(-1);
-        retractSolenoid = new Solenoid(-1);
+        extendSolenoid = new Solenoid(Parameters.loaderOutSolenoidChannel);
+        retractSolenoid = new Solenoid(Parameters.loaderInSolenoidChannel);
         extendSolenoid.set(false);
         retractSolenoid.set(true);
 
@@ -109,18 +109,6 @@ public class ChopSticks {
         if (isChopSticksOn()) {
             turnOffChopSticks();  
         }
-        
-    }
-    public boolean isDeployed()
-    {
-        return false;
-    }
-    public boolean isRetracted()
-    {
-        return false;
-    }
-    public void processChopSticks()
-    {
         
     }
     

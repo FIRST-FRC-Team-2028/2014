@@ -5,7 +5,7 @@ package com.phantommentalists.Twenty14;
  */
 public class Parameters {
     // Debug
-    public final static boolean debug = true;
+    public final static boolean debug = false;
     
     //Pneumatics
     public final static int leftDriveShifter = 1;
@@ -31,7 +31,7 @@ public class Parameters {
     public static final int compressorRelayChannel = 1;
     public static final int leftChopStickRelayChannel = 2;
     public static final int rightChopStickRelayChannel = 3;
-    
+   
     //Control
     public static final double kJoyStickDeadband = 0.05;
     public static final double kSteeringDeadband = 0.05;    
@@ -48,15 +48,9 @@ public class Parameters {
     public static final double maxMotorVoltage = 12.0;
     public static final long CatcherdeployTimeOut = 500;
     
-    public static final double leftFrontRev = -1.0;
+    public static final double leftFrontRev = 1.0;
     public static final double leftRearRev = 1.0;
     public static final double rightFrontRev = 1.0;
-    public static final double rightRearRev = -1.0;
-    
-    //Shoot varibles
-    public static final double kshootGoal = 1.0;
-    public static final double kshootPass = 0.0;
-    public static final double klauncherRetractPower = -0.33;
-    public static final double kstopPower = 0.0;
+    public static final double rightRearRev = 1.0;
       
 }

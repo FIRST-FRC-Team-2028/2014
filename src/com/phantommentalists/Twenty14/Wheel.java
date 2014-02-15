@@ -95,13 +95,13 @@ public class Wheel {
      */
     public boolean setPosition(double outputValue) throws CANTimeoutException 
     {
-        if (outputValue < 0.2)
+        if (outputValue < 0.1)
         {
-            outputValue = 0.2;
+            outputValue = 0.1;
         }
-        if (outputValue > 0.8)
+        if (outputValue > 0.9)
         {
-            outputValue =0.8;
+            outputValue =0.9;
         }        
         setPoint = outputValue;
         if (isSteeringCloseEnough()) 
