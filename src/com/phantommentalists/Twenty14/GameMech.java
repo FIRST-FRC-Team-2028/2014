@@ -42,7 +42,9 @@ public class GameMech {
     public void deployCatcher(){
         catcher.deploy();
     }
-    
+    public void deployChopSticks(){
+        loader.deployChopSticks();
+    }
     /**
      * retractCatcher()
      * 
@@ -89,10 +91,12 @@ public class GameMech {
     public void shoot() throws CANTimeoutException {
         if(isCatching())
         {
+            //System.out.println("Shooting");
+            //System.out.println("StopShooting");
             launcher.shoot(Parameters.kshootGoal);  
         }
     }
-
+    
     public void useTheForce() 
     {
         

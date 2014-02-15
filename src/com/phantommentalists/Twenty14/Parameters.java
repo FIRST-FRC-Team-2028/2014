@@ -52,10 +52,13 @@ public class Parameters {
     public static final double rightFrontRev = 1.0;
     public static final double rightRearRev = -1.0;
     
+    public static final double kAutonomousSpeed = 1.0;
+    
     //Shoot varibles
     public static final double kshootGoal = 1.0;
     public static final double kshootPass = 0.0;
     public static final double klauncherRetractPower = -0.33;
     public static final double kstopPower = 0.0;
+    public static final double kShootDistance = 144.0;
       
 }

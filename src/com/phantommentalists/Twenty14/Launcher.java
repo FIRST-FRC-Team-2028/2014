@@ -45,6 +45,7 @@ public class Launcher {
             try {
                 launchMotorOne.setX(0);
                 launchMotorTwo.setX(0);
+                System.out.println("Motors set to 0.0");
             } catch (CANTimeoutException ex) {
                 ex.printStackTrace();
             }
@@ -135,6 +136,7 @@ public class Launcher {
             TimerTask = new LauncherTimerTask(this);
             launchMotorOne.setX(shootVariable);
             launchMotorTwo.setX(shootVariable);
+            System.out.println("Motors Set to 12.0 Volts");
             launchTimer.schedule(TimerTask, 250);
         
     }
