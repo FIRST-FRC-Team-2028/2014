@@ -16,11 +16,11 @@ public class AimingSystem {
     private int imageState = 0;
     private boolean busy = false;
     private boolean hot = false;
-    private int xCenter; //TODO: Add in this value
-    private int yCenter; //TODO: Add in this value
-    private int xDeadband; //TODO: Add in this value
-    private int yDeadband; //TODO: Add in this value
-    private double aspectScore; //TODO: Add in this value
+    private int xCenter; //$$TODO: Add in this value
+    private int yCenter; //$$TODO: Add in this value
+    private int xDeadband = 20; //$$TODO: Make sure this value is right
+    private int yDeadband = 20; //$$TODO: Make sure this value is right
+    private double aspectScore = 75; //$$TODO: Make sure this value is right
     
     public AimingSystem()
     {
