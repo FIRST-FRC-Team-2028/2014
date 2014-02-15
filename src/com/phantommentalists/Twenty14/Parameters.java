@@ -31,7 +31,7 @@ public class Parameters {
     public static final int compressorRelayChannel = 1;
     public static final int leftChopStickRelayChannel = 2;
     public static final int rightChopStickRelayChannel = 3;
-    
+   
     //Control
     public static final double kJoyStickDeadband = 0.05;
     public static final double kSteeringDeadband = 0.05;    
