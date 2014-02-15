@@ -27,6 +27,8 @@ public class AerialAssist extends SimpleRobot
     protected GamePadF310 driveStick;
     public CrabDrive drive;
     public GameMech gameMech;
+    public Compressor  compressor;
+    double crabValue;
 
     public AerialAssist()
     {
@@ -35,6 +37,8 @@ public class AerialAssist extends SimpleRobot
         {
             drive = new CrabDrive();
             gameMech = null;
+            compressor = new Compressor(Parameters.compressorSwitchChannel,
+                    Parameters.compressorRelayChannel);
         } catch (CANTimeoutException ex)
         {
             ex.printStackTrace();
@@ -61,31 +65,30 @@ public class AerialAssist extends SimpleRobot
             drive.enablePositionControl();
             while (isEnabled() && isOperatorControl())
             {
-                double driveValue = driveStick.getAxisTrigger();
+                double driveValue = FRCMath.getPolarMagnitude(driveStick.getRightThumbStickX(),
+                        driveStick.getRightThumbStickY());
                 double turnValue = driveStick.getLeftThumbStickX();
-                double crabValue = driveStick.getRightThumbStickX();
-                if (crabValue > 0.05 || crabValue < -0.05)
-                {
-                    drive.crabDrive(driveValue, crabValue);
-                } 
-                else
-                {
-                    if (turnValue > 0.05 || turnValue < -0.05)
-                    {
-                        drive.slewDrive(driveValue, turnValue);
-                    } else
-                    {
-                        drive.slewDrive(driveValue, 0);
-                    }
-                }
-                //System.out.println("Sensor position");
-                //System.out.println(drive.getPosition());
-                // System.out.println("SetPoint");
-                // System.out.println("0.5");
+                crabValue = FRCMath.getPolarAngle(driveStick.getRightThumbStickX(), 
+                        driveStick.getRightThumbStickY());
+//                if (crabValue > 0.05 || crabValue < -0.05)  
+//                {
+//                    drive.crabDrive(driveValue, crabValue);
+//                } 
+//                else
+//                {
+//                    if (turnValue > 0.05 || turnValue < -0.05)
+//                    {
+//                        drive.slewDrive(driveValue, turnValue);
+//                    } else
+//                    {
+//                        drive.slewDrive(driveValue, 0);
+//                    }
+//                }
                 count++;
                 if (count % 5 == 0)
                 {
                     count = 0;
+                    System.out.println("Degrees : " + crabValue);
                     drive.printTelemetry(); 
                 }
                 Timer.delay(Parameters.TIMER_DELAY);

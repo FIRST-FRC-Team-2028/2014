@@ -31,7 +31,7 @@ public class GameMech {
         state = new State();
         catcher = new Catcher();
         loader = new ChopSticks();
-       launcher = new Launcher(Parameters.motorOneLauncherCANID, Parameters.motorTwoLauncherCANID);
+       launcher = new Launcher(Parameters.launcherMotorOneCANID, Parameters.launcherMotorTwoCANID);
     }
      
     /**

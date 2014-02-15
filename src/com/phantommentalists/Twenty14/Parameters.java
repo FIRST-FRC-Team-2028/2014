@@ -23,10 +23,9 @@ public class Parameters {
     public static final int leftFrontDriveCanId = 12;
     public static final int leftRearDriveCanId = 21;
     public static final int rearLeftSteeringCanId = 10;
-    
     public static final int rearRightSteeringCanId = 40;  
-    public static final int motorOneLauncherCANID = 50;
-    public static final int motorTwoLauncherCANID = 60;
+    public static final int launcherMotorOneCANID = 50;
+    public static final int launcherMotorTwoCANID = 60;
 
     //Relays
     public static final int compressorRelayChannel = 1;
@@ -40,6 +39,7 @@ public class Parameters {
     static double kJoystickDeadband = -1;
     static int kLowGearButton = -1;
     static int kHighGearButton = -1;
+    public static final int compressorSwitchChannel = 1;
 
     //etc
     public static final double steeringProportionalValue = 600.0;
