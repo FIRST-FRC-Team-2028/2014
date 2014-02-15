@@ -27,7 +27,7 @@ public class GameMech {
      * 
      * @authors Mateo, Jeremy, and Jonathan
      */
-    public GameMech(){ 
+    public GameMech() throws CANTimeoutException{ 
         state = new State();
         catcher = new Catcher();
         loader = new ChopSticks();
