@@ -24,21 +24,22 @@ public class AerialAssist extends SimpleRobot
 
     public PIDController aimController;
     public PIDController turnController;
-    protected GamePadF310 driveStick;
+    protected Joystick driveStick;
     public CrabDrive drive;
     public GameMech gameMech;
     public Compressor  compressor;
-    double crabValue;
+    public DriverStation ds;
 
     public AerialAssist()
     {
-        driveStick = new GamePadF310(1);        
+        driveStick = new Joystick(1);
         try
         {
             drive = new CrabDrive();
             gameMech = null;
             compressor = new Compressor(Parameters.compressorSwitchChannel,
                     Parameters.compressorRelayChannel);
+            ds = DriverStation.getInstance();
         } catch (CANTimeoutException ex)
         {
             ex.printStackTrace();
@@ -52,9 +53,6 @@ public class AerialAssist extends SimpleRobot
         final int kShooting =1;
         final int kWaitingForHot =2;
         value = kWaitingForHot;
-        
-        
-        
     }
 
     public void operatorControl()
@@ -65,25 +63,25 @@ public class AerialAssist extends SimpleRobot
             drive.enablePositionControl();
             while (isEnabled() && isOperatorControl())
             {
-                double driveValue = FRCMath.getPolarMagnitude(driveStick.getRightThumbStickX(),
-                        driveStick.getRightThumbStickY());
-                double turnValue = driveStick.getLeftThumbStickX();
-                crabValue = FRCMath.getPolarAngle(driveStick.getRightThumbStickX(), 
-                        driveStick.getRightThumbStickY());
-//                if (crabValue > 0.05 || crabValue < -0.05)  
-//                {
-//                    drive.crabDrive(driveValue, crabValue);
-//                } 
-//                else
-//                {
-//                    if (turnValue > 0.05 || turnValue < -0.05)
-//                    {
-//                        drive.slewDrive(driveValue, turnValue);
-//                    } else
-//                    {
-//                        drive.slewDrive(driveValue, 0);
-//                    }
-//                }
+                double driveValue = FRCMath.getPolarMagnitude(driveStick.getX(),
+                        driveStick.getY());
+                double turnValue = ds.getAnalogIn(1);
+                double crabValue = FRCMath.convertDegreesToJoystick(FRCMath.getPolarAngle(driveStick.getX(), 
+                        driveStick.getY()));
+                if (crabValue > 0.05 || crabValue < -0.05)  
+                {
+                    drive.crabDrive(driveValue, crabValue);
+                } 
+                else
+                {
+                    if (turnValue > 0.05 || turnValue < -0.05)
+                    {
+                        drive.slewDrive(driveValue, turnValue);
+                    } else
+                    {
+                        drive.slewDrive(driveValue, 0);
+                    }
+                }
                 count++;
                 if (count % 5 == 0)
                 {

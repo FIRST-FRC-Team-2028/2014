@@ -26,10 +26,10 @@ public class FRCMath {
     }
     
     /**
-     * getPolarMagnitude()
+     * getPolarAngle()
      * 
      * This method takes the x and y values from the joystick and returns the 
-     * magnitude for the power of the drive
+     * Angle for the direction of the drive
      * 
      * @param double x - the x value of the joystick
      * @param double y - the y value of the joystick
@@ -39,9 +39,26 @@ public class FRCMath {
         return ConvertRadiansToDegrees(MathUtils.atan2(y,x));
     }
     
+    /**
+     * getPolarMagnitude()
+     * 
+     * This method takes coordinate plane values and returns the polar magnitude
+     * 
+     * @param x
+     * @param y
+     * @return 
+     */
     public static double getPolarMagnitude(double x, double y)
     {
-        return Math.sqrt(MathUtils.pow(x, 2) + MathUtils.pow(y, 2));
+        return Math.sqrt(pow(x, 2) + pow(y, 2));
+    }
+    
+    /**
+     * 
+     */
+    public static double convertDegreesToJoystick(double degrees)
+    {
+        return degrees/180;
     }
 
     /**
