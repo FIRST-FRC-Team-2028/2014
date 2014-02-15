@@ -61,7 +61,7 @@ public class CrabDrive {
      */
 
     public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        left.crabDrive(drivePower, turnAngle * -1.0);
+        left.crabDrive(drivePower, turnAngle);
         right.crabDrive(drivePower, turnAngle);
     }
     /*  slewDrive()
@@ -70,7 +70,7 @@ public class CrabDrive {
      */
 
     public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        left.slewDrive(drivePower, turnAngle * -1.0);
+        left.slewDrive(drivePower, turnAngle);
         right.slewDrive(drivePower, turnAngle);
     }
     /** setDrive()

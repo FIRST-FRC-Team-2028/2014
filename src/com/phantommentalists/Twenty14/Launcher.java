@@ -77,44 +77,8 @@ public class Launcher {
      * 
      * Handles Launcher
      */
-    public void processLauncher() throws CANTimeoutException{
-        if(state.value == State.kSafe)
-        {
-            if(!isEngaged())
-            {
-                state.value = State.kShooting;
-            }
-        }
-        if(state.value == State.kShooting)
-        {
-            if(!launchMotorOne.getForwardLimitOK())
-            {
-                state.value = State.kRearming;
-                retract();
-            }
-        }
-        if(state.value == State.kRearming)
-        {
-            if(!launchMotorOne.getReverseLimitOK())
-            {
-                state.value = State.kSafe;
-                armLauncher();
-            }
-        }
+    public void processLauncher(){
         
-        
-//        if (isEngaged())
-//        {
-//            state.value = State.kSafe;
-//        }
-//        else if (launchMotorOne.getBusVoltage() < 0.0)
-//        {
-//            state.value = State.kRearming;
-//        }
-//        else if (launchMotorOne.getBusVoltage() > 0.0)
-//        {
-//            state.value = State.kShooting;
-//        }
     }
     /* isShooting()
      *
@@ -147,6 +111,7 @@ public class Launcher {
     public void shoot(double shootVariable) throws CANTimeoutException {
         if(state.value == State.kSafe)
         {
+            state.value = State.kShooting;
             disengage();
             launchMotorOne.setX(shootVariable);
             launchMotorTwo.setX(shootVariable);
@@ -156,19 +121,15 @@ public class Launcher {
 //        else{return;}
         
     }
-    public void armLauncher() throws CANTimeoutException
-    {
-        launchMotorOne.setX(Parameters.kstopPower);
-        launchMotorTwo.setX(Parameters.kstopPower);
-        engage();
-    }
+    
         /* retract()
          *
          * make motors retract the shooter
          */
     public void retract() throws CANTimeoutException {
-            launchMotorOne.setX(Parameters.klauncherRetractPower);
-            launchMotorTwo.setX(Parameters.klauncherRetractPower); 
+            state.value = State.kRearming;
+            launchMotorOne.setX(-0.33);
+            launchMotorTwo.setX(-0.33); 
         //Keep Code may use later
 //        while(!canReload()){}
 //        engage();
@@ -217,39 +178,6 @@ public class Launcher {
         {
             engageSolenoid.set(false);
             disengageSolenoid.set(true);
-        }
-    }
-    public boolean isSafe()
-    {
-        if(state.value == State.kSafe)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public boolean isShooting()
-    {
-        if(state.value == State.kShooting)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    public boolean isRearming()
-    {
-        if(state.value == State.kRearming)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
         }
     }
 }

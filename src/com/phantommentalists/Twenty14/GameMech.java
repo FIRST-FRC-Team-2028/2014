@@ -27,11 +27,11 @@ public class GameMech {
      * 
      * @authors Mateo, Jeremy, and Jonathan
      */
-    public GameMech() throws CANTimeoutException{ 
+    public GameMech(){ 
         state = new State();
         catcher = new Catcher();
         loader = new ChopSticks();
-       launcher = new Launcher(Parameters.motorOneLauncherCANID, Parameters.motorTwoLauncherCANID);
+       // launcher = new Launcher();
     }
      
     /**
@@ -54,36 +54,26 @@ public class GameMech {
         catcher.retract();
     }            
     
-    /**
-     * turnOnChopSticks()
-     * 
-     * This method turns on both left and right ChopSticks.
-     */
-    public void turnOnChopSticks(){
-        if(isCatching())
-        {
-            loader.turnOnChopSticks();
-        }
-    }
-    
-    /**
-     * turnOffChopSticks()
-     * 
-     * This method turns off both left and right ChopSticks.
-     */
-    public void turnOffChopSticks(){
-        if(isCatching())
-        {
-            loader.turnOffChopSticks();
-        }
-    }
+//    /**
+//     * turnOnChopSticks()
+//     * 
+//     * This method turns on both left and right ChopSticks.
+//     */
+//    public void turnOnChopSticks(){
+//        loader.turnOnChopSticks();
+//    }
+//    
+//    /**
+//     * turnOffChopSticks()
+//     * 
+//     * This method turns off both left and right ChopSticks.
+//     */
+//    public void turnOffChopSticks(){
+//        loader.turnOffChopSticks();
+//    }
 
     public void airPass() throws CANTimeoutException {
-        if(isCatching())
-        {
-            launcher.shoot(Parameters.kshootPass);
-        }
-       
+        
     }
     public void timedShoot() throws CANTimeoutException{
         launcher.timedShoot(1.0);
@@ -104,68 +94,21 @@ public class GameMech {
     
     public boolean isEmpty() 
     {
-        if (state.value == State.kEmpty)
-        {
-        return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     
     public boolean isCatching() 
     {
-        if(state.value == State.kCatching)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     
     public boolean isHolding() 
     {
-        if(state.value == State.kHolding)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
     
-    public void processGameMech() throws CANTimeoutException
+    public void processGameMech()
     {
-        launcher.processLauncher();
-        loader.processChopSticks();
-        if(state.value == State.kHolding)
-        {
-            if (catcher.isDeployed() && loader.isDeployed())
-            {
-                state.value = State.kCatching;
-            }   
-        }
-        if(state.value == State.kCatching)
-        {
-            if (catcher.isRetracted() && loader.isRetracted() && launcher.isSafe())
-            {
-                state.value = State.kHolding;
-            }
-            if (launcher.isRearming())
-            {
-                state.value = State.kEmpty;
-            }
-        }
-        if(state.value == State.kEmpty)
-        {
-            if(launcher.isSafe())
-            {
-                state.value = State.kCatching;
-            }
-        }
+        
     }
 }

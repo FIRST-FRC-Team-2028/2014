@@ -113,13 +113,27 @@ public class AerialAssist extends SimpleRobot
     public void operatorControl()
     {
         int count = 0;
-        
-        while(isEnabled() && isOperatorControl())
+       
+        try
         {
             if (stick.getRawButton(1))
             {
-                try{
-                    gameMech.timedShoot();
+                double driveValue = -1.0 * driveStick.getAxisTrigger();
+                double turnValue = 0.25 * driveStick.getLeftThumbStickX();
+                double crabValue = 0.5 * driveStick.getRightThumbStickX();
+                if (crabValue > 0.05 || crabValue < -0.05)
+                {
+                    drive.crabDrive(driveValue, crabValue);
+                } 
+                else
+                {
+                    if (turnValue > 0.05 || turnValue < -0.05)
+                    {
+                        drive.slewDrive(driveValue, turnValue);
+                    } else
+                    {
+                        drive.slewDrive(driveValue, 0); //3.14159265358979323846264338327950
+                    }
                 }
                 catch(CANTimeoutException e)
                 {
