@@ -50,8 +50,6 @@ public class DriveUnit {
         //System.out.println(turnAngle);
     }
 
-//    public void axisTurn(char leftRight) {
-//    }
     public double convertJoystickToPosition(double joystickValue) {
         double temp = joystickValue + 1;
         temp = temp / 2;
