@@ -5,25 +5,25 @@ package com.phantommentalists.Twenty14;
  */
 public class Parameters {
     // Debug
-    public final static boolean debug = true;
+    public final static boolean debug = false;
     
     //Pneumatics
-    public final static int leftDriveShifterHigh = 1;
-    public final static int leftDriveShifterLow = 2;
-    public final static int rightDriveShifterHigh = 3;
-    public final static int rightDriveShifterLow = 4;
+    public final static int leftDriveShifter = 1;
+    public final static int rightDriveShifter = 2;
     public final static int CatcherInSolenoidChannel = 5;
     public final static int CatcherOutSolenoidChannel = 6;
     public static final int loaderOutSolenoidChannel = 7;
     public static final int loaderInSolenoidChannel = 8;
     
     //CAN IDs
-    public static final int frontRightSteeringCanId = 23;
-    public static final int frontLeftSteeringCanId = 10;
-    public static final int rightDriveCanId = 20;
-    public static final int leftDriveCanId = 14;
-    public static final int rearLeftSteeringCanId = 40;
-    public static final int rearRightSteeringCanId = 14;
+    public static final int frontRightSteeringCanId = 30;
+    public static final int frontLeftSteeringCanId = 20;    
+    public static final int rightFrontDriveCanId = 43;
+    public static final int rightRearDriveCanId = 34;
+    public static final int leftFrontDriveCanId = 12;
+    public static final int leftRearDriveCanId = 21;
+    public static final int rearLeftSteeringCanId = 10;
+    public static final int rearRightSteeringCanId = 40;   
     public static final int launcherMotorOneCANID = 50;
     public static final int launcherMotorTwoCANID = 60;
     
@@ -47,9 +47,9 @@ public class Parameters {
     public static final double maxMotorVoltage = 12.0;
     public static final long CatcherdeployTimeOut = 500;
     
-    public static final double leftFrontRev = -1.0;
+    public static final double leftFrontRev = 1.0;
     public static final double leftRearRev = 1.0;
     public static final double rightFrontRev = 1.0;
-    public static final double rightRearRev = -1.0;
+    public static final double rightRearRev = 1.0;
       
 }

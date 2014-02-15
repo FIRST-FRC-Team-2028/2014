@@ -48,14 +48,15 @@ public class AerialAssist extends SimpleRobot
     public void operatorControl()
     {
         int count = 0;
+       
         try
         {
             drive.enablePositionControl();
             while (isEnabled() && isOperatorControl())
             {
-                double driveValue = driveStick.getAxisTrigger();
-                double turnValue = driveStick.getLeftThumbStickX();
-                double crabValue = driveStick.getRightThumbStickX();
+                double driveValue = -1.0 * driveStick.getAxisTrigger();
+                double turnValue = 0.25 * driveStick.getLeftThumbStickX();
+                double crabValue = 0.5 * driveStick.getRightThumbStickX();
                 if (crabValue > 0.05 || crabValue < -0.05)
                 {
                     drive.crabDrive(driveValue, crabValue);
@@ -67,7 +68,7 @@ public class AerialAssist extends SimpleRobot
                         drive.slewDrive(driveValue, turnValue);
                     } else
                     {
-                        drive.slewDrive(driveValue, 0);
+                        drive.slewDrive(driveValue, 0); //3.14159265358979323846264338327950
                     }
                 }
                 //System.out.println("Sensor position");
