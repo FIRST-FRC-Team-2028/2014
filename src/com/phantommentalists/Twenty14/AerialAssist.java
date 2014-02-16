@@ -138,14 +138,14 @@ public class AerialAssist extends SimpleRobot {
                     {
                         drive.turnOnAxis(turnValue);
                     }
-                    else if (driveStick.getX() > 0.05 || driveStick.getX() < -0.05) {
-                        drive.crabDrive(driveValue, crabValue);
+                    else if (turnValue > 0.05 || turnValue < -0.05) {
+                        drive.slewDrive(driveValue, crabValue);
                     } 
                     else {
-                        if (turnValue > 0.05 || turnValue < -0.05) {
-                            drive.slewDrive(driveValue, turnValue);
+                        if (driveStick.getX() > 0.05 || driveStick.getX() < -0.05) {
+                            drive.crabDrive(driveValue, turnValue);
                         } else {
-                            drive.slewDrive(driveValue, 0); //3.14159265358979323846264338327950
+                            drive.crabDrive(driveValue, 0); //3.14159265358979323846264338327950
                         }
                     }
 
