@@ -74,6 +74,14 @@ public class AerialAssist extends SimpleRobot
         {
             try
             {
+                if (drive != null)
+                {
+                    drive.processCrabDrive();
+                }
+                if (gameMech != null)
+                {
+                    gameMech.processGameMech();
+                }
                 if (state.value == AutoStates.kHolding)
                 {
                     gameMech.deployCatcher();
@@ -111,7 +119,6 @@ public class AerialAssist extends SimpleRobot
                         System.out.println("Done");
                     }
                 }
-                gameMech.shoot();
 
             } catch (CANTimeoutException ex)
             {
@@ -134,6 +141,7 @@ public class AerialAssist extends SimpleRobot
             {
                 if (drive != null)
                 {
+                    drive.processCrabDrive();
                     double driveValue = driveGamePad.getAxisTrigger();
                     double turnValue = driveGamePad.getLeftThumbStickX();
                     double crabValue = driveGamePad.getRightThumbStickX();
