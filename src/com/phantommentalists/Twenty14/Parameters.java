@@ -10,8 +10,9 @@ public class Parameters {
     public final static boolean debug = false;
     
     //Pneumatics
-    public final static int leftDriveShifter = 1;
-    public final static int rightDriveShifter = 2;
+    public final static int driveShifter = 1;
+    public final static int launcherEngageSolenoidChannel = 3;
+    public final static int launcherDisengageSolenoidChannel = 4;
     public final static int CatcherInSolenoidChannel = 5;
     public final static int CatcherOutSolenoidChannel = 6;
     public static final int loaderOutSolenoidChannel = 7;

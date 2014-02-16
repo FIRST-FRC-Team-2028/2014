@@ -21,7 +21,7 @@ public class CrabDrive {
                 Parameters.rearLeftSteeringCanId, 
                 Parameters.leftFrontDriveCanId, 
                 Parameters.leftRearDriveCanId,
-                Parameters.leftDriveShifter,
+                Parameters.driveShifter,
                 Parameters.leftFrontRev,
                 Parameters.leftRearRev);
         right = new DriveUnit("Right", 
@@ -29,7 +29,7 @@ public class CrabDrive {
                 Parameters.rearRightSteeringCanId, 
                 Parameters.rightFrontDriveCanId,
                 Parameters.rightRearDriveCanId,
-                Parameters.rightDriveShifter,
+                Parameters.driveShifter,
                 Parameters.rightFrontRev,
                 Parameters.rightRearRev);
         
