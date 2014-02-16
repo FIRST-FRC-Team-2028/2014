@@ -67,7 +67,7 @@ public class AerialAssist extends SimpleRobot
                 double driveValue = driveStick.getMagnitude();
                 double turnValue = (((ds.getAnalogIn(1)/3.3)*2)-1) * 2;
                 double crabValue = FRCMath.convertDegreesToJoystick(driveStick.getDirectionDegrees());
-                if (crabValue > 0.05 || crabValue < -0.05)  
+                if (driveStick.getX() > 0.05 || driveStick.getX() < -0.05)  
                 {
                     drive.crabDrive(driveValue, crabValue);
                 } 
