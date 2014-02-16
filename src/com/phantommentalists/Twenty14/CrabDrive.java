@@ -79,8 +79,8 @@ public class CrabDrive {
      */
     public void turnOnAxis(double potVal) throws CANTimeoutException
     {
-        left.slewDrive(potVal, .5);
-        right.slewDrive(potVal, -.5);
+        left.slewDrive(potVal, .25);
+        right.slewDrive((potVal * -1), -.25);
         
     }
     /** setDrive()
