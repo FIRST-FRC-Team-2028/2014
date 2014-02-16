@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 public class GameMech
 {
 
+    /**
+     * 
+     */
     public class State
     {
 
@@ -116,7 +119,7 @@ public class GameMech
      */
     public void timedShoot() throws CANTimeoutException
     {
-        launcher.timedShoot(1.0);
+        launcher.timedShoot(Parameters.kShootTruss);
     }
 
     /**
@@ -185,10 +188,8 @@ public class GameMech
         if (state.value == State.kCatching)
         {
             return true;
-        } else
-        {
-            return false;
         }
+        return false;
     }
 
     /**

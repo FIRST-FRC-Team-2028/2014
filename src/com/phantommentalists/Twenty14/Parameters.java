@@ -60,7 +60,8 @@ public class Parameters {
     
     //Shoot varibles
     public static final double kshootGoal = 1.0;
-    public static final double kshootPass = 0.0;
+    public static final double kshootPass = 0.5;
+    public static final double kShootTruss = 1.0;
     public static final double klauncherRetractPower = -0.33;
     public static final double kstopPower = 0.0;
     public static final double kShootDistance = 144.0;

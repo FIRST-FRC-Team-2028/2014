@@ -136,8 +136,14 @@ public class Launcher
      */
     public void launcherStop() throws CANTimeoutException
     {
-        launchMotorOne.setX(0.0);
-        launchMotorTwo.setX(0.0);
+        if (launchMotorOne != null)
+        {
+            launchMotorOne.setX(0.0);
+        }
+        if (launchMotorTwo != null)
+        {
+            launchMotorTwo.setX(0.0);
+        }
         launchTimer = null;
         timerTask = null;
         retract();
@@ -149,7 +155,12 @@ public class Launcher
 
     public boolean isShot() throws CANTimeoutException
     {
-        return !launchMotorOne.getForwardLimitOK();
+        boolean launcherAtLimit = false;
+        if (launchMotorOne != null)
+        {
+            launcherAtLimit = !launchMotorOne.getForwardLimitOK();
+        }
+        return launcherAtLimit;
     }
     /* canReaload()
      *
@@ -173,8 +184,14 @@ public class Launcher
         {
             launchTimer = new Timer();
             timerTask = new LauncherTimerTask(this);
-            launchMotorOne.setX(shootVariable);
-            launchMotorTwo.setX(shootVariable);
+            if (launchMotorOne != null)
+            {
+                launchMotorOne.setX(shootVariable);
+            }
+            if (launchMotorTwo != null)
+            {
+                launchMotorTwo.setX(shootVariable);
+            }
             // System.out.println("Motors Set to 12.0 Volts");
             launchTimer.schedule(timerTask, 80);
         }
@@ -191,8 +208,14 @@ public class Launcher
         {
             state.value = State.kShooting;
             disengage();
-            launchMotorOne.setX(shootVariable);
-            launchMotorTwo.setX(shootVariable);
+            if (launchMotorOne != null)
+            {
+                launchMotorOne.setX(shootVariable);
+            }
+            if (launchMotorTwo != null)
+            {
+                launchMotorTwo.setX(shootVariable);
+            }
             //while(!isShot()){}
             //retract();
         }
@@ -211,8 +234,14 @@ public class Launcher
             launchTimer = new Timer();
             timerTask = new LauncherTimerTask(this);
             // state.value = State.kRearming;
-            launchMotorOne.setX(-0.33);
-            launchMotorTwo.setX(-0.33);
+            if (launchMotorOne != null)
+            {
+                launchMotorOne.setX(Parameters.klauncherRetractPower);
+            }
+            if (launchMotorTwo != null)
+            {
+                launchMotorTwo.setX(Parameters.klauncherRetractPower);
+            }
             launchTimer.schedule(timerTask, 50);
         }
     }
@@ -220,8 +249,14 @@ public class Launcher
     public void retract() throws CANTimeoutException
     {
         state.value = State.kRearming;
-        launchMotorOne.setX(Parameters.klauncherRetractPower);
-        launchMotorTwo.setX(Parameters.klauncherRetractPower);
+        if (launchMotorOne != null)
+        {
+            launchMotorOne.setX(Parameters.klauncherRetractPower);
+        }
+        if (launchMotorTwo != null)
+        {
+            launchMotorTwo.setX(Parameters.klauncherRetractPower);
+        }
         //Keep Code may use later
 //        while(!canReload()){}
 //        engage();
@@ -229,15 +264,16 @@ public class Launcher
 //        launchMotorTwo.setX(0);
 //        state.value = State.kSafe;
     }
+    
     /*  airPass()
      * 
      * shoot the ball at a lesser power 
      * for an air pass to an ally or
      * to throw of over the truss
      */
-
     public void airPass()
     {
+        //  AAAARRRRRGGGGGHHHH!!!!
     }
 
     /**
