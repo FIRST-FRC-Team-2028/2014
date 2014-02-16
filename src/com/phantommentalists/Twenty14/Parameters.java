@@ -50,15 +50,12 @@ public class Parameters {
     public static final double maxMotorVoltage = 12.0;
     public static final long CatcherdeployTimeOut = 500;
     
-    public static final Gear klow = Gear.kLow;
-    public static final Gear khigh = Gear.kHigh;
-    
     public static final double leftFrontRev = 1.0;
     public static final double leftRearRev = 1.0;
     public static final double rightFrontRev = 1.0;
     public static final double rightRearRev = 1.0;
     
-    public static final double kAutonomousSpeed = 1.0;
+    public static final double kAutonomousSpeed = 0.5;
     
     //Shoot varibles
     public static final double kshootGoal = 1.0;
@@ -66,5 +63,7 @@ public class Parameters {
     public static final double klauncherRetractPower = -0.33;
     public static final double kstopPower = 0.0;
     public static final double kShootDistance = 144.0;
-      
+    
+    // GPIO
+    public static final int kAirPressureSwitchChanel = 1;
 }

@@ -6,6 +6,9 @@
 /*----------------------------------------------------------------------------*/
 package com.phantommentalists.Twenty14;
 
+import com.phantommentalists.Twenty14.DriveMotor.Gear;
+
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SimpleRobot;
@@ -46,17 +49,19 @@ public class AerialAssist extends SimpleRobot
     public AimingSystem aimingSystem;
     public Ultrasonic ultrasonic;
     public DriverStation ds;
+    public Compressor airCompressor;
 
     public AerialAssist()
     {
         driveGamePad = new GamePadF310(1);
         gameStick = new Joystick(2);
+        airCompressor = new Compressor(Parameters.kAirPressureSwitchChanel, Parameters.compressorRelayChannel);
         try
         {
             drive = new CrabDrive();
             gameMech = new GameMech();
             aimingSystem = new AimingSystem();
-        } catch (CANTimeoutException ex) 
+        } catch (CANTimeoutException ex)
         {
             ex.printStackTrace();
         }
@@ -120,31 +125,26 @@ public class AerialAssist extends SimpleRobot
 
     public void operatorControl()
     {
+        airCompressor.start();
         int count = 0;
         try
         {
             drive.enablePositionControl();
-        } catch (CANTimeoutException ex)
-        {
-            ex.printStackTrace();
-        }
-        while (isEnabled() && isOperatorControl())
-        {
-            if (drive != null)
+            while (isEnabled() && isOperatorControl())
             {
-                try
+                if (drive != null)
                 {
-
                     double driveValue = driveGamePad.getAxisTrigger();
                     double turnValue = driveGamePad.getLeftThumbStickX();
                     double crabValue = driveGamePad.getRightThumbStickX();
-                    if(driveGamePad.getButtonLeftBumper()){
-                    drive.setGear(Parameters.klow); 
-                }
-                if(driveGamePad.getButtonRightBumper())
-                {
-                    drive.setGear(Parameters.khigh);
-                }
+                    if (driveGamePad.getButtonLeftBumper())
+                    {
+                        drive.setGear(Gear.kLow);
+                    }
+                    if (driveGamePad.getButtonRightBumper())
+                    {
+                        drive.setGear(Gear.kHigh);
+                    }
                     if (crabValue > 0.05 || crabValue < -0.05)
                     {
                         drive.crabDrive(driveValue, crabValue);
@@ -159,7 +159,7 @@ public class AerialAssist extends SimpleRobot
                         }
                     }
 
-                //System.out.println("Sensor position");
+                    //System.out.println("Sensor position");
                     //System.out.println(drive.getPosition());
                     // System.out.println("SetPoint");
                     // System.out.println("0.5");
@@ -169,75 +169,59 @@ public class AerialAssist extends SimpleRobot
                         count = 0;
                         drive.printTelemetry();
                     }
-                   
-                } catch (CANTimeoutException ex)
-                {
-                    ex.printStackTrace();
-                }
-            }
-            if(gameMech != null)
-            {
-                try
+                }           // if (drive != null)
+                if (gameMech != null)
                 {
                     gameMech.processGameMech();
                     //Shoot Button
-                    if(gameStick.getRawButton(1))
+                    if (gameStick.getRawButton(1))
                     {
-                    gameMech.shoot();
+                        gameMech.shoot();
                     }
                     //Retract Button
-                    if(gameStick.getRawButton(5))
+                    if (gameStick.getRawButton(5))
                     {
                         gameMech.retract();
                     }
                     //Deploy ChopSticks Button
-                    if(gameStick.getRawButton(2))
+                    if (gameStick.getRawButton(2))
                     {
                         gameMech.deployChopSticks();
                     }
                     //Retract ChopSticks Button
-                    if(gameStick.getRawButton(6))
+                    if (gameStick.getRawButton(6))
                     {
                         gameMech.retractChopSticks();
                     }
                     //Turn on ChopSticks Button
-                    if(gameStick.getRawButton(3))
+                    if (gameStick.getRawButton(3))
                     {
                         gameMech.turnOnChopSticks();
                     }
                     //Turn off ChopSticks Button
-                    if(gameStick.getRawButton(7))
+                    if (gameStick.getRawButton(7))
                     {
                         gameMech.turnOffChopSticks();
                     }
                     //Deploy Catcher
-                    if(gameStick.getRawButton(4))
+                    if (gameStick.getRawButton(4))
                     {
                         gameMech.deployCatcher();
                     }
                     //Retract Catcher
-                    if(gameStick.getRawButton(8))
+                    if (gameStick.getRawButton(8))
                     {
                         gameMech.retractCatcher();
                     }
-                    
-                    
-                   
-                } catch (CANTimeoutException ex)
-                {
-                    ex.printStackTrace();
-                }
-                
-            }
-            Timer.delay(Parameters.TIMER_DELAY);
-            getWatchdog().feed();
-        }
-        try
-        {
-            drive.disablePositionControl();
-        } catch (CANTimeoutException ex)
+                }           // if (gameMech != null)
+                Timer.delay(Parameters.TIMER_DELAY);
+                getWatchdog().feed();
+            }           // while
+        } // try
+        catch (CANTimeoutException ex)
         {
             ex.printStackTrace();
         }
+        airCompressor.stop();
     }
 }
