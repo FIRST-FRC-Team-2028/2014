@@ -45,6 +45,9 @@ public class GameMech {
     public void deployChopSticks(){
         loader.deployChopSticks();
     }
+    public void retractChopSticks(){
+        loader.retractChopSticks();
+    }
     /**
      * retractCatcher()
      * 
@@ -54,24 +57,15 @@ public class GameMech {
         catcher.retract();
     }            
     
-//    /**
-//     * turnOnChopSticks()
-//     * 
-//     * This method turns on both left and right ChopSticks.
-//     */
-//    public void turnOnChopSticks(){
-//        loader.turnOnChopSticks();
-//    }
-//    
-//    /**
-//     * turnOffChopSticks()
-//     * 
-//     * This method turns off both left and right ChopSticks.
-//     */
-//    public void turnOffChopSticks(){
-//        loader.turnOffChopSticks();
-//    }
-
+    /**
+     * turnOnChopSticks()
+     * 
+     * This method turns on both left and right ChopSticks.
+     */
+    public void turnOnChopSticks(){
+        loader.turnOnChopSticks();
+    }
+    
     /**
      * turnOffChopSticks()
      * 
@@ -103,6 +97,12 @@ public class GameMech {
             //System.out.println("Shooting");
             //System.out.println("StopShooting");
             launcher.shoot(Parameters.kshootGoal);  
+        }
+    }
+    public void retract() throws CANTimeoutException{
+        if(isEmpty())
+        {
+            launcher.retract();
         }
     }
     
@@ -158,7 +158,7 @@ public class GameMech {
                 state.value = State.kCatching;
             }   
         }
-          if(state.value == State.kCatching)
+        if(state.value == State.kCatching)
         {
             if (catcher.isRetracted() && loader.isRetracted() && launcher.isSafe())
             {

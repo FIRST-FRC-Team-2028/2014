@@ -39,8 +39,8 @@ public class AerialAssist extends SimpleRobot
     }
     public PIDController aimController;
     public PIDController turnController;
-    protected GamePadF310 driveStick;
-    //protected Joystick driveStick;
+    protected GamePadF310 driveGamePad;
+    protected Joystick gameStick;
     public CrabDrive drive;
     public GameMech gameMech;
     public AimingSystem aimingSystem;
@@ -49,14 +49,14 @@ public class AerialAssist extends SimpleRobot
 
     public AerialAssist()
     {
-        driveStick = new GamePadF310(1);
-        //driveStick = new Joystick(1);
+        driveGamePad = new GamePadF310(1);
+        gameStick = new Joystick(2);
         try
         {
             drive = new CrabDrive();
             gameMech = new GameMech();
             aimingSystem = new AimingSystem();
-        } catch (CANTimeoutException ex)
+        } catch (CANTimeoutException ex) 
         {
             ex.printStackTrace();
         }
@@ -135,13 +135,13 @@ public class AerialAssist extends SimpleRobot
                 try
                 {
 
-                    double driveValue = driveStick.getAxisTrigger();
-                    double turnValue = driveStick.getLeftThumbStickX();
-                    double crabValue = driveStick.getRightThumbStickX();
-                    if(driveStick.getButtonLeftBumper()){
+                    double driveValue = driveGamePad.getAxisTrigger();
+                    double turnValue = driveGamePad.getLeftThumbStickX();
+                    double crabValue = driveGamePad.getRightThumbStickX();
+                    if(driveGamePad.getButtonLeftBumper()){
                     drive.setGear(Parameters.klow); 
                 }
-                if(driveStick.getButtonRightBumper())
+                if(driveGamePad.getButtonRightBumper())
                 {
                     drive.setGear(Parameters.khigh);
                 }
@@ -169,10 +169,7 @@ public class AerialAssist extends SimpleRobot
                         count = 0;
                         drive.printTelemetry();
                     }
-                    if (gameMech != null)
-                    {
-                        gameMech.processGameMech();
-                    }
+                   
                 } catch (CANTimeoutException ex)
                 {
                     ex.printStackTrace();
@@ -182,14 +179,49 @@ public class AerialAssist extends SimpleRobot
             {
                 try
                 {
-                    if(driveStick.getButtonA())
+                    gameMech.processGameMech();
+                    //Shoot Button
+                    if(gameStick.getRawButton(1))
                     {
-                    gameMech.timedShoot();
+                    gameMech.shoot();
                     }
-                    if(driveStick.getButtonB())
+                    //Retract Button
+                    if(gameStick.getRawButton(5))
                     {
-                        gameMech.timedRetract();
+                        gameMech.retract();
                     }
+                    //Deploy ChopSticks Button
+                    if(gameStick.getRawButton(2))
+                    {
+                        gameMech.deployChopSticks();
+                    }
+                    //Retract ChopSticks Button
+                    if(gameStick.getRawButton(6))
+                    {
+                        gameMech.retractChopSticks();
+                    }
+                    //Turn on ChopSticks Button
+                    if(gameStick.getRawButton(3))
+                    {
+                        gameMech.turnOnChopSticks();
+                    }
+                    //Turn off ChopSticks Button
+                    if(gameStick.getRawButton(7))
+                    {
+                        gameMech.turnOffChopSticks();
+                    }
+                    //Deploy Catcher
+                    if(gameStick.getRawButton(4))
+                    {
+                        gameMech.deployCatcher();
+                    }
+                    //Retract Catcher
+                    if(gameStick.getRawButton(8))
+                    {
+                        gameMech.retractCatcher();
+                    }
+                    
+                    
                    
                 } catch (CANTimeoutException ex)
                 {
