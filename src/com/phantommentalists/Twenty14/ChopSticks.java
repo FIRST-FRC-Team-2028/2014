@@ -111,5 +111,17 @@ public class ChopSticks {
         }
         
     }
+    public boolean isDeployed()
+    {
+        return extendSolenoid.get();
+    }
+    public boolean isRetracted()
+    {
+        return retractSolenoid.get();
+    }
+    public void processChopSticks()
+    {
+    
+    }
     
 }

@@ -37,7 +37,7 @@ public class DriveMotor {
             rearMotor = null;
         }
         shiftSolenoid = new Solenoid(shiftChannel);
-        setGear(Gear.kHigh);
+        setGear(Gear.kLow);
     }
 
     public void set(double setpoint) throws CANTimeoutException {

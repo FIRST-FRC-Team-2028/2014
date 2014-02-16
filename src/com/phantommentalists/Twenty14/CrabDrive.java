@@ -1,5 +1,6 @@
 package com.phantommentalists.Twenty14;
 
+import com.phantommentalists.Twenty14.DriveMotor.Gear;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /*
@@ -20,7 +21,7 @@ public class CrabDrive {
                 Parameters.rearLeftSteeringCanId, 
                 Parameters.leftFrontDriveCanId, 
                 Parameters.leftRearDriveCanId,
-                Parameters.leftDriveShifter,
+                Parameters.driveShifter,
                 Parameters.leftFrontRev,
                 Parameters.leftRearRev);
         right = new DriveUnit("Right", 
@@ -28,7 +29,7 @@ public class CrabDrive {
                 Parameters.rearRightSteeringCanId, 
                 Parameters.rightFrontDriveCanId,
                 Parameters.rightRearDriveCanId,
-                Parameters.rightDriveShifter,
+                Parameters.driveShifter,
                 Parameters.rightFrontRev,
                 Parameters.rightRearRev);
         
@@ -128,7 +129,10 @@ public class CrabDrive {
         left.processDriveUnit();
         right.processDriveUnit();
     }
-    
+    public void setGear(Gear gear){
+        left.setGear(gear);
+        right.setGear(gear);
+    }
     /**
      * 
      */
