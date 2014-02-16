@@ -1,5 +1,6 @@
 package com.phantommentalists.Twenty14;
 
+import com.phantommentalists.Twenty14.DriveMotor.Gear;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /*
@@ -118,7 +119,10 @@ public class CrabDrive {
         left.processDriveUnit();
         right.processDriveUnit();
     }
-    
+    public void setGear(Gear gear){
+        left.setGear(gear);
+        right.setGear(gear);
+    }
     /**
      * 
      */

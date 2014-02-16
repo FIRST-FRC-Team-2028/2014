@@ -16,4 +16,7 @@ public class AimingSystem {
         myCamera = AxisCamera.getInstance("10.20.28.11");
         myCamera.writeResolution(AxisCamera.ResolutionT.k640x480);
     }
+    public boolean isHot(){
+        return false;
+    }
 }
