@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStationEnhancedIO;
 /*
  */
 
@@ -22,11 +23,9 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author mburt001
  */
-public class AerialAssist extends SimpleRobot
-{
+public class AerialAssist extends SimpleRobot {
 
-    private class AutoStates
-    {
+    private class AutoStates {
 
         public int value;
         public static final int kHolding = 0;
@@ -35,15 +34,15 @@ public class AerialAssist extends SimpleRobot
         public static final int kShooting = 3;
         public static final int kStopped = 4;
 
-        public AutoStates()
-        {
+        public AutoStates() {
             value = kHolding;
         }
     }
     public PIDController aimController;
     public PIDController turnController;
-    protected GamePadF310 driveGamePad;
     protected Joystick gameStick;
+    protected Joystick driveStick;
+    protected DriverStationEnhancedIO dsio;
     public CrabDrive drive;
     public GameMech gameMech;
     public AimingSystem aimingSystem;
@@ -51,24 +50,21 @@ public class AerialAssist extends SimpleRobot
     public DriverStation ds;
     public Compressor airCompressor;
 
-    public AerialAssist()
-    {
-        driveGamePad = new GamePadF310(1);
+    public AerialAssist() {
+        driveStick = new Joystick(1);
         gameStick = new Joystick(2);
         airCompressor = new Compressor(Parameters.kAirPressureSwitchChanel, Parameters.compressorRelayChannel);
-        try
-        {
+        dsio = ds.getEnhancedIO();
+        try {
             drive = new CrabDrive();
             gameMech = new GameMech();
             aimingSystem = new AimingSystem();
-        } catch (CANTimeoutException ex)
-        {
+        } catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void autonomous()
-    {
+    public void autonomous() {
         AutoStates state = new AutoStates();
         while (isEnabled() && isAutonomous())
         {
@@ -88,40 +84,31 @@ public class AerialAssist extends SimpleRobot
                     gameMech.deployChopSticks();
                     state.value = AutoStates.kWaiting;
                 }
-                if (state.value == AutoStates.kWaiting)
-                {
-                    if (aimingSystem.isHot() || ds.getMatchTime() >= 5.0)
-                    {
+                if (state.value == AutoStates.kWaiting) {
+                    if (aimingSystem.isHot() || ds.getMatchTime() >= 5.0) {
                         drive.setDrive(Parameters.kAutonomousSpeed);
                         state.value = AutoStates.kDriving;
                     }
                 }
-                if (state.value == AutoStates.kDriving)
-                {
-                    if (ultrasonic.getDistance() <= Parameters.kShootDistance)
-                    {
+                if (state.value == AutoStates.kDriving) {
+                    if (ultrasonic.getDistance() <= Parameters.kShootDistance) {
                         drive.setDrive(0.0);
                         state.value = AutoStates.kShooting;
                         gameMech.shoot();
                     }
                 }
-                if (state.value == AutoStates.kShooting)
-                {
-                    if (gameMech.isEmpty())
-                    {
+                if (state.value == AutoStates.kShooting) {
+                    if (gameMech.isEmpty()) {
                         state.value = AutoStates.kStopped;
                     }
                 }
-                if (state.value == AutoStates.kStopped)
-                {
-                    if (Parameters.debug)
-                    {
+                if (state.value == AutoStates.kStopped) {
+                    if (Parameters.debug) {
                         System.out.println("Done");
                     }
                 }
 
-            } catch (CANTimeoutException ex)
-            {
+            } catch (CANTimeoutException ex) {
                 ex.printStackTrace();
             }
             Timer.delay(Parameters.TIMER_DELAY);
@@ -130,40 +117,35 @@ public class AerialAssist extends SimpleRobot
 
     }
 
-    public void operatorControl()
-    {
+    public void operatorControl() {
         airCompressor.start();
         int count = 0;
-        try
-        {
+        try {
             drive.enablePositionControl();
-            while (isEnabled() && isOperatorControl())
-            {
-                if (drive != null)
-                {
-                    drive.processCrabDrive();
-                    double driveValue = driveGamePad.getAxisTrigger();
-                    double turnValue = driveGamePad.getLeftThumbStickX();
-                    double crabValue = driveGamePad.getRightThumbStickX();
-                    if (driveGamePad.getButtonLeftBumper())
-                    {
+            while (isEnabled() && isOperatorControl()) {
+                double driveValue = driveStick.getMagnitude();
+                double turnValue = (((ds.getAnalogIn(1) / 3.3) * 2) - 1) * 2;
+                double crabValue = FRCMath.convertDegreesToJoystick(driveStick.getDirectionDegrees());
+                if (driveStick.getX() > 0.05 || driveStick.getX() < -0.05) {
+
+                    if (driveStick.getRawButton(5)) {
                         drive.setGear(Gear.kLow);
                     }
-                    if (driveGamePad.getButtonRightBumper())
-                    {
+                    if (driveStick.getRawButton(4)) {
                         drive.setGear(Gear.kHigh);
                     }
-                    if (crabValue > 0.05 || crabValue < -0.05)
+                    if(driveStick.getTrigger())
                     {
+                        drive.turnOnAxis(turnValue);
+                    }
+                    else if (driveStick.getX() > 0.05 || driveStick.getX() < -0.05) {
                         drive.crabDrive(driveValue, crabValue);
-                    } else
-                    {
-                        if (turnValue > 0.05 || turnValue < -0.05)
-                        {
+                    } 
+                    else {
+                        if (turnValue > 0.05 || turnValue < -0.05) {
                             drive.slewDrive(driveValue, turnValue);
-                        } else
-                        {
-                            drive.crabDrive(driveValue, 0);
+                        } else {
+                            drive.slewDrive(driveValue, 0); //3.14159265358979323846264338327950
                         }
                     }
 
@@ -172,53 +154,43 @@ public class AerialAssist extends SimpleRobot
                     // System.out.println("SetPoint");
                     // System.out.println("0.5");
                     count++;
-                    if (count % 5 == 0)
-                    {
+                    if (count % 5 == 0) {
                         count = 0;
                         drive.printTelemetry();
                     }
                 }           // if (drive != null)
-                if (gameMech != null)
-                {
+                if (gameMech != null) {
                     gameMech.processGameMech();
                     //Shoot Button
-                    if (gameStick.getRawButton(1))
-                    {
+                    if (gameStick.getRawButton(1)) {
                         gameMech.shoot();
                     }
                     //Retract Button
-                    if (gameStick.getRawButton(5))
-                    {
+                    if (gameStick.getRawButton(5)) {
                         gameMech.retract();
                     }
                     //Deploy ChopSticks Button
-                    if (gameStick.getRawButton(2))
-                    {
+                    if (gameStick.getRawButton(2)) {
                         gameMech.deployChopSticks();
                     }
                     //Retract ChopSticks Button
-                    if (gameStick.getRawButton(6))
-                    {
+                    if (gameStick.getRawButton(6)) {
                         gameMech.retractChopSticks();
                     }
                     //Turn on ChopSticks Button
-                    if (gameStick.getRawButton(3))
-                    {
+                    if (gameStick.getRawButton(3)) {
                         gameMech.turnOnChopSticks();
                     }
                     //Turn off ChopSticks Button
-                    if (gameStick.getRawButton(7))
-                    {
+                    if (gameStick.getRawButton(7)) {
                         gameMech.turnOffChopSticks();
                     }
                     //Deploy Catcher
-                    if (gameStick.getRawButton(4))
-                    {
+                    if (gameStick.getRawButton(4)) {
                         gameMech.deployCatcher();
                     }
                     //Retract Catcher
-                    if (gameStick.getRawButton(8))
-                    {
+                    if (gameStick.getRawButton(8)) {
                         gameMech.retractCatcher();
                     }
                 }           // if (gameMech != null)
@@ -226,8 +198,7 @@ public class AerialAssist extends SimpleRobot
                 getWatchdog().feed();
             }           // while
         } // try
-        catch (CANTimeoutException ex)
-        {
+        catch (CANTimeoutException ex) {
             ex.printStackTrace();
         }
         airCompressor.stop();
