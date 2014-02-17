@@ -178,7 +178,7 @@ public class ChopSticks {
     /**
      * processChopSticks()
      *
-     * Handles ChopSticks.
+     * Handles ChopSticks. 
      */
     public void processChopSticks() {
         if (state.value == State.kRetracted) {

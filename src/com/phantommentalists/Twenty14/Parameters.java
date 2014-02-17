@@ -40,4 +40,5 @@ public class Parameters {
     public static final double steeringDerivativeValue = -0.05;
     public static final double maxMotorVoltage = 12.0;
     public static final long CatcherdeployTimeOut = 500;
+    public static final long ChopSticksdeployTimeOut = 500;
 }

@@ -28,7 +28,7 @@ public class Wheel {
      * @throws CANTimeoutException 
      */
     public Wheel(int steerID) throws CANTimeoutException {
-        if ()   {
+        if (steering)   {
         steeringMotor = new CANJaguar(steerID, CANJaguar.ControlMode.kPosition);
         steeringMotor.setPositionReference(CANJaguar.PositionReference.kPotentiometer);
         steeringMotor.configMaxOutputVoltage(Parameters.maxMotorVoltage);
