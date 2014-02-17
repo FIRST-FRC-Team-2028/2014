@@ -13,6 +13,7 @@ public class CrabDrive {
     
     public DriveUnit left;
     public DriveUnit right;
+    public boolean spinInPlace = false;
     
     
     public CrabDrive() throws CANTimeoutException {
@@ -21,7 +22,7 @@ public class CrabDrive {
                 Parameters.rearLeftSteeringCanId, 
                 Parameters.leftFrontDriveCanId, 
                 Parameters.leftRearDriveCanId,
-                Parameters.driveShifter,
+                Parameters.leftDriveShifter,
                 Parameters.leftFrontRev,
                 Parameters.leftRearRev);
         right = new DriveUnit("Right", 
@@ -29,7 +30,7 @@ public class CrabDrive {
                 Parameters.rearRightSteeringCanId, 
                 Parameters.rightFrontDriveCanId,
                 Parameters.rightRearDriveCanId,
-                Parameters.driveShifter,
+                Parameters.rightDriveShifter,
                 Parameters.rightFrontRev,
                 Parameters.rightRearRev);
         
@@ -73,6 +74,18 @@ public class CrabDrive {
     public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
         left.slewDrive(drivePower, turnAngle);
         right.slewDrive(drivePower, turnAngle);
+    }
+    
+    /**
+     * Spins in place
+     * @param drivePower
+     * @throws CANTimeoutException 
+     */
+    public void spinInPlace(double drivePower) throws CANTimeoutException{
+        left.setGear(Gear.kLow);
+        right.setGear(Gear.kLow);
+        left.slewDrive(drivePower, 0.25);
+        right.slewDrive(-1.0 * drivePower,-0.25);
     }
     /** setDrive()
      * 
@@ -123,6 +136,7 @@ public class CrabDrive {
         left.setGear(gear);
         right.setGear(gear);
     }
+   
     /**
      * 
      */

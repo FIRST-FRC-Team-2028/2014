@@ -83,6 +83,7 @@ public class Launcher
      */
     public Launcher(int motorOneCanID, int motorTwoCanID) throws CANTimeoutException
     {
+        state = new State();
         if (motorOneCanID == 0)
         {
             launchMotorOne = null;
@@ -120,11 +121,11 @@ public class Launcher
             disengage();
             retract();
         }
-        if (!launchMotorOne.getReverseLimitOK())
+        if (launchMotorOne != null && !launchMotorOne.getReverseLimitOK())
         {
             state.value = State.kSafe;
             engage();
-        } else if (!launchMotorOne.getForwardLimitOK())
+        } else if (launchMotorOne != null && !launchMotorOne.getForwardLimitOK())
         {
             retract();
         }

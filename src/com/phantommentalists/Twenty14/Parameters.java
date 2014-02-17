@@ -10,7 +10,8 @@ public class Parameters {
     public final static boolean debug = false;
     
     //Pneumatics
-    public final static int driveShifter = 1;
+    public final static int leftDriveShifter = 1;
+    public final static int rightDriveShifter = 2;
     public final static int launcherEngageSolenoidChannel = 3;
     public final static int launcherDisengageSolenoidChannel = 4;
     public final static int CatcherInSolenoidChannel = 5;
@@ -27,8 +28,8 @@ public class Parameters {
     public static final int leftRearDriveCanId = 21;
     public static final int rearLeftSteeringCanId = 10;
     public static final int rearRightSteeringCanId = 40;  
-    public static final int launcherMotorOneCANID = 50;
-    public static final int launcherMotorTwoCANID = 60;
+    public static final int launcherMotorOneCANID = 0;
+    public static final int launcherMotorTwoCANID = 0;
 
     //Relays
     public static final int compressorRelayChannel = 1;
@@ -57,14 +58,14 @@ public class Parameters {
     public static final double rightRearRev = 1.0;
     
     public static final double kAutonomousSpeed = 0.5;
-    
+    public static final boolean spin = false;    
     //Shoot varibles
     public static final double kshootGoal = 1.0;
     public static final double kshootPass = 0.5;
     public static final double kShootTruss = 1.0;
     public static final double klauncherRetractPower = -0.33;
-    public static final double kstopPower = 0.0;
-    public static final double kShootDistance = 144.0;
+    public static final double kstopPower = 0.0; 
+    public static final double kShootDistance = 48.0;  //$$TODO: Make sure this is accurate
     
     // GPIO
     public static final int kAirPressureSwitchChanel = 1;

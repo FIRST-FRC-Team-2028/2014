@@ -60,7 +60,7 @@ public class AerialAssist extends SimpleRobot
         {
             drive = new CrabDrive();
             gameMech = new GameMech();
-            aimingSystem = new AimingSystem();
+            //aimingSystem = new AimingSystem();
         } catch (CANTimeoutException ex)
         {
             ex.printStackTrace();
@@ -82,7 +82,7 @@ public class AerialAssist extends SimpleRobot
                 }
                 if (state.value == AutoStates.kWaiting)
                 {
-                    if (aimingSystem.isHot() || ds.getMatchTime() >= 5.0)
+                    if (aimingSystem != null && aimingSystem.isHot() || ds.getMatchTime() >= 5.0)
                     {
                         drive.setDrive(Parameters.kAutonomousSpeed);
                         state.value = AutoStates.kDriving;
@@ -134,9 +134,9 @@ public class AerialAssist extends SimpleRobot
             {
                 if (drive != null)
                 {
-                    double driveValue = driveGamePad.getAxisTrigger();
-                    double turnValue = driveGamePad.getLeftThumbStickX();
-                    double crabValue = driveGamePad.getRightThumbStickX();
+                    double driveValue = -1.0 * driveGamePad.getAxisTrigger();
+                    double turnValue = 0.25 * driveGamePad.getLeftThumbStickX();
+                    double crabValue = 0.5 * driveGamePad.getRightThumbStickX();
                     if (driveGamePad.getButtonLeftBumper())
                     {
                         drive.setGear(Gear.kLow);
@@ -145,17 +145,24 @@ public class AerialAssist extends SimpleRobot
                     {
                         drive.setGear(Gear.kHigh);
                     }
-                    if (crabValue > 0.05 || crabValue < -0.05)
+                    if (driveGamePad.getButtonY())
                     {
-                        drive.crabDrive(driveValue, crabValue);
-                    } else
+                        drive.spinInPlace(driveValue);
+                    }
+                    else
                     {
-                        if (turnValue > 0.05 || turnValue < -0.05)
+                         if (crabValue > 0.05 || crabValue < -0.05)
                         {
-                            drive.slewDrive(driveValue, turnValue);
+                            drive.crabDrive(driveValue, crabValue);
                         } else
                         {
-                            drive.crabDrive(driveValue, 0);
+                            if (turnValue > 0.05 || turnValue < -0.05)
+                            {
+                                drive.slewDrive(driveValue, turnValue);
+                            } else
+                            {
+                                drive.crabDrive(driveValue, 0);
+                            }
                         }
                     }
 

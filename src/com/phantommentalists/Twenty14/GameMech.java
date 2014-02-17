@@ -9,7 +9,7 @@ public class GameMech
 {
 
     /**
-     * 
+     *
      */
     public class State
     {
@@ -94,10 +94,7 @@ public class GameMech
      */
     public void turnOffChopSticks()
     {
-        if (isCatching())
-        {
-            loader.turnOffChopSticks();
-        }
+        loader.turnOffChopSticks();
     }
 
     /**
@@ -180,8 +177,8 @@ public class GameMech
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isCatching()
     {
@@ -193,8 +190,8 @@ public class GameMech
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public boolean isHolding()
     {
@@ -208,8 +205,8 @@ public class GameMech
     }
 
     /**
-     * 
-     * @throws CANTimeoutException 
+     *
+     * @throws CANTimeoutException
      */
     public void processGameMech() throws CANTimeoutException
     {
