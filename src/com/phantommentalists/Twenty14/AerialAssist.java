@@ -66,20 +66,15 @@ public class AerialAssist extends SimpleRobot {
 
     public void autonomous() {
         AutoStates state = new AutoStates();
-        while (isEnabled() && isAutonomous())
-        {
-            try
-            {
-                if (drive != null)
-                {
+        while (isEnabled() && isAutonomous()) {
+            try {
+                if (drive != null) {
                     drive.processCrabDrive();
                 }
-                if (gameMech != null)
-                {
+                if (gameMech != null) {
                     gameMech.processGameMech();
                 }
-                if (state.value == AutoStates.kHolding)
-                {
+                if (state.value == AutoStates.kHolding) {
                     gameMech.deployCatcher();
                     gameMech.deployChopSticks();
                     state.value = AutoStates.kWaiting;
@@ -123,30 +118,27 @@ public class AerialAssist extends SimpleRobot {
         try {
             drive.enablePositionControl();
             while (isEnabled() && isOperatorControl()) {
-                double driveValue = driveStick.getMagnitude();
+                double drivePolarValue = driveStick.getMagnitude();
+                double driveValue = driveStick.getX();
                 double turnValue = (((ds.getAnalogIn(1) / 3.3) * 2) - 1) * 2;
                 double crabValue = FRCMath.convertDegreesToJoystick(driveStick.getDirectionDegrees());
-                if (driveStick.getX() > 0.05 || driveStick.getX() < -0.05) {
+
+                if (drive != null) {
 
                     if (driveStick.getRawButton(5)) {
                         drive.setGear(Gear.kLow);
-                    }
-                    if (driveStick.getRawButton(4)) {
+                    } else if (driveStick.getRawButton(4)) {
                         drive.setGear(Gear.kHigh);
                     }
-                    if(driveStick.getTrigger())
-                    {
+
+                    if (driveStick.getTrigger()) {
                         drive.turnOnAxis(turnValue);
-                    }
-                    else if (turnValue > 0.05 || turnValue < -0.05) {
+                    } else if (turnValue > 0.05 || turnValue < -0.05) {
                         drive.slewDrive(driveValue, crabValue);
-                    } 
-                    else {
-                        if (driveStick.getX() > 0.05 || driveStick.getX() < -0.05) {
-                            drive.crabDrive(driveValue, turnValue);
-                        } else {
-                            drive.crabDrive(driveValue, 0); //3.14159265358979323846264338327950
-                        }
+                    } else if (drivePolarValue > 0.05 || drivePolarValue < -0.05) {
+                        drive.crabDrive(drivePolarValue, turnValue);
+                    } else {
+                        drive.crabDrive(drivePolarValue, 0); //3.14159265358979323846264338327950
                     }
 
                     //System.out.println("Sensor position");
@@ -157,8 +149,9 @@ public class AerialAssist extends SimpleRobot {
                     if (count % 5 == 0) {
                         count = 0;
                         drive.printTelemetry();
-                    }
-                }           // if (drive != null)
+                    }           // if (drive != null)
+                }
+
                 if (gameMech != null) {
                     gameMech.processGameMech();
                     //Shoot Button
