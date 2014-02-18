@@ -1,5 +1,6 @@
 package com.phantommentalists.Twenty14;
 
+import com.phantommentalists.Twenty14.DriveMotor.Gear;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /*
@@ -49,7 +50,9 @@ public class DriveUnit {
         rear.setPosition(convertJoystickToPosition(turnAngle));
         //System.out.println(turnAngle);
     }
-
+    public void setGear(Gear gear){
+        driveMotor.setGear(gear);
+    }
 //    public void axisTurn(char leftRight) {
 //    }
     public double convertJoystickToPosition(double joystickValue) {
