@@ -85,7 +85,7 @@ public class AerialAssist extends SimpleRobot {
                     state.value = AutoStates.kWaiting;
                 }
                 if (state.value == AutoStates.kWaiting) {
-                    if (aimingSystem.isHot() || ds.getMatchTime() >= 5.0) {
+                    if (aimingSystem.processImage() || ds.getMatchTime() >= 5.0) {
                         drive.setDrive(Parameters.kAutonomousSpeed);
                         state.value = AutoStates.kDriving;
                     }

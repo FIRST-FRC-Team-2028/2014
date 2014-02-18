@@ -2,7 +2,6 @@ package com.phantommentalists.Twenty14;
 
 import edu.wpi.first.wpilibj.camera.*;
 import edu.wpi.first.wpilibj.image.*;
-import edu.wpi.first.wpilibj.Servo;
 
 /*
  * AimingSystem allocation
@@ -10,8 +9,6 @@ import edu.wpi.first.wpilibj.Servo;
 public class AimingSystem {
 
     public AxisCamera myCamera;
-    public Servo cameraPan;
-    public Servo cameraTilt;
     public Ultrasonic myUltrasonic;
     public ColorImage image;
     public BinaryImage threshold;
@@ -34,8 +31,6 @@ public class AimingSystem {
         myCamera.writeExposurePriority(AxisCamera.ExposurePriorityT.imageQuality);
         myCamera.writeExposureControl(AxisCamera.ExposureT.hold);
         myCamera.writeWhiteBalance(AxisCamera.WhiteBalanceT.fixedIndoor);
-        cameraPan = new Servo(Parameters.kCameraPanChannel);
-        cameraTilt = new Servo(Parameters.kCameraTiltChannel);
     }
     
     public boolean processImage() {
@@ -85,14 +80,6 @@ public class AimingSystem {
             hot &= scoreAspectRatio(threshold, reports[i], i) > aspectScore;
             if (hot) return;
         }
-    }
-    
-    /**
-     * 
-     */
-    public void moveCameraNeutralPosition() {
-        cameraPan.setAngle(neutralPosition);
-        cameraTilt.setAngle(neutralPosition);
     }
     
     /**
