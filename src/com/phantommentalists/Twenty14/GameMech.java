@@ -108,7 +108,7 @@ public class GameMech
     {
         if (isCatching())
         {
-            launcher.shoot(Parameters.kshootPass);
+//            launcher.shoot(Parameters.kshootPass);
         }
 
     }
@@ -119,7 +119,7 @@ public class GameMech
      */
     public void timedShoot() throws CANTimeoutException
     {
-        launcher.timedShoot(Parameters.kShootTruss);
+//        launcher.timedShoot(Parameters.kShootTruss);
     }
 
     /**
@@ -128,7 +128,7 @@ public class GameMech
      */
     public void timedRetract() throws CANTimeoutException
     {
-        launcher.timedRetract();
+//        launcher.timedRetract();
     }
 
     /**
@@ -137,12 +137,11 @@ public class GameMech
      */
     public void shoot() throws CANTimeoutException
     {
-        if (isCatching())
-        {
+            launcher.engageSolenoid.set(false);
             //System.out.println("Shooting");
             //System.out.println("StopShooting");
-            launcher.shoot(Parameters.kshootGoal);
-        }
+            launcher.shoot(0.8);
+        
     }
 
     /**
@@ -151,10 +150,10 @@ public class GameMech
      */
     public void retract() throws CANTimeoutException
     {
-        if (isEmpty())
-        {
+        
+        //launcher.engageSolenoid.set(false);
             launcher.retract();
-        }
+        
     }
 
     /**
@@ -224,21 +223,21 @@ public class GameMech
         }
         if (state.value == State.kCatching)
         {
-            if (catcher.isRetracted() && loader.isRetracted() && launcher.isSafe())
+            if (catcher.isRetracted() && loader.isRetracted() /*&& launcher.isSafe()*/)
             {
                 state.value = State.kHolding;
             }
-            if (launcher.isRearming())
-            {
-                state.value = State.kEmpty;
-            }
+//            if (launcher.isRearming())
+//            {
+//                state.value = State.kEmpty;
+//            }
         }
-        if (state.value == State.kEmpty)
-        {
-            if (launcher.isSafe())
-            {
-                state.value = State.kCatching;
-            }
-        }
+//        if (state.value == State.kEmpty)
+//        {
+//            if (launcher.isSafe())
+//            {
+//                state.value = State.kCatching;
+//            }
+//        }
     }
 }

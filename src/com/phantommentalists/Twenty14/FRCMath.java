@@ -54,16 +54,11 @@ public class FRCMath {
     }
     
     /**
-     * convertDegreesToJoystick()
      * 
-     * This method takes a degree value and converts it to a joystick value.
-     * 
-     * @param degrees - a value ranging from 0.0 to 360.0
-     * @return - a value ranging from -1.0 to 1.0
      */
     public static double convertDegreesToJoystick(double degrees)
     {
-        return (degrees/180) - 1;
+        return degrees/180;
     }
 
     /**

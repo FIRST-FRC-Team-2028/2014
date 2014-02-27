@@ -21,7 +21,7 @@ public class CrabDrive {
                 Parameters.rearLeftSteeringCanId, 
                 Parameters.leftFrontDriveCanId, 
                 Parameters.leftRearDriveCanId,
-                Parameters.driveShifter,
+                Parameters.leftDriveShifter,
                 Parameters.leftFrontRev,
                 Parameters.leftRearRev);
         right = new DriveUnit("Right", 
@@ -29,7 +29,7 @@ public class CrabDrive {
                 Parameters.rearRightSteeringCanId, 
                 Parameters.rightFrontDriveCanId,
                 Parameters.rightRearDriveCanId,
-                Parameters.driveShifter,
+                Parameters.rightDriveShifter,
                 Parameters.rightFrontRev,
                 Parameters.rightRearRev);
         
@@ -56,23 +56,19 @@ public class CrabDrive {
         left.disablePositionControl();
     }
     
-   /**
-    * crabDrive()
-    * 
-    * Turns all the wheels to the same direction, allowing the robot to move in 
-    * a straight line in any direction.  We cannot pass between 0 and 360, so 
-    * when the angle is below 30 degrees or greater than 330 degrees, we turn 
-    * the wheel 180 degrees, and reverse the drive.
-    * 
-    * @param drivePower - a value (nominally) from 0.0 - 1.0
-    * @param turnAngle - value from -1.0 - 1.0
-    * 
-    * @throws CANTimeoutException 
-    */
+    /*   crabDrive()
+     *   
+     *   Makes all wheels turn in the same direction.
+     */
+
     public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
-        if (turnAngle < -0.833 || turnAngle > 0.833) {
+        if (turnAngle > 0.833) {
             turnAngle -= 1;
-            drivePower *= -1;
+            drivePower *= -1.0;
+        }
+        if (turnAngle < -0.833) {
+            turnAngle += 1;
+            drivePower *= -1.0;
         }
         left.crabDrive(drivePower, turnAngle);
         right.crabDrive(drivePower, turnAngle);

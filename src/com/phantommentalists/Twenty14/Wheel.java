@@ -97,11 +97,11 @@ public class Wheel {
     {
         if (outputValue < 0.1)
         {
-            outputValue = 0.1;
+            outputValue = 0.5;
         }
         if (outputValue > 0.9)
         {
-            outputValue =0.9;
+            outputValue = 0.5;
         }        
         setPoint = outputValue;
         if (isSteeringCloseEnough()) 
