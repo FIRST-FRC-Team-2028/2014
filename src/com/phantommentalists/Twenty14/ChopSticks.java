@@ -45,8 +45,8 @@ public class ChopSticks {
      * This method turns both left and right ChopSticks on.
      */
     public void turnOnChopSticks() {
-        left.set(Relay.Value.kForward);
-        right.set(Relay.Value.kReverse);
+        left.set(Relay.Value.kReverse);
+        right.set(Relay.Value.kForward);
     }
 
     /**
@@ -93,9 +93,7 @@ public class ChopSticks {
     public void deployChopSticks() {
         retractSolenoid.set(false);
         extendSolenoid.set(true);
-        if (isChopSticksOff()) {
-            turnOnChopSticks();
-        }
+        
         
     }
     /**
@@ -106,10 +104,20 @@ public class ChopSticks {
     public void retractChopSticks() {
         extendSolenoid.set(false);
         retractSolenoid.set(true);
-        if (isChopSticksOn()) {
-            turnOffChopSticks();  
-        }
+        turnOffChopSticks();
         
+    }
+    public boolean isDeployed()
+    {
+        return extendSolenoid.get();
+    }
+    public boolean isRetracted()
+    {
+        return retractSolenoid.get();
+    }
+    public void processChopSticks()
+    {
+    
     }
     
 }

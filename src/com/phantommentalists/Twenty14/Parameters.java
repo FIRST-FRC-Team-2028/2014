@@ -1,5 +1,7 @@
 package com.phantommentalists.Twenty14;
 
+import com.phantommentalists.Twenty14.DriveMotor.Gear;
+
 /*
  * Parameters allocation
  */
@@ -9,7 +11,9 @@ public class Parameters {
     
     //Pneumatics
     public final static int leftDriveShifter = 1;
-    public final static int rightDriveShifter = 2;
+    public final static int rightDriveShifter = 3;
+    public final static int launcherEngageSolenoidChannel = 2;
+    public final static int launcherDisengageSolenoidChannel = 4;
     public final static int CatcherInSolenoidChannel = 5;
     public final static int CatcherOutSolenoidChannel = 6;
     public static final int loaderOutSolenoidChannel = 7;
@@ -52,5 +56,17 @@ public class Parameters {
     public static final double leftRearRev = 1.0;
     public static final double rightFrontRev = 1.0;
     public static final double rightRearRev = 1.0;
-      
+    
+    public static final double kAutonomousSpeed = 0.5;
+    
+    //Shoot varibles
+    public static final double kshootGoal = 1.0;
+    public static final double kshootPass = 0.5;
+    public static final double kShootTruss = 1.0;
+    public static final double klauncherRetractPower = -0.4;
+    public static final double kstopPower = 0.0;
+    public static final double kShootDistance = 144.0;
+    
+    // GPIO
+    public static final int kAirPressureSwitchChanel = 1;
 }

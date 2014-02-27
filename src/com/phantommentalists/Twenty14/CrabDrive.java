@@ -1,5 +1,6 @@
 package com.phantommentalists.Twenty14;
 
+import com.phantommentalists.Twenty14.DriveMotor.Gear;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /*
@@ -61,6 +62,14 @@ public class CrabDrive {
      */
 
     public void crabDrive(double drivePower, double turnAngle) throws CANTimeoutException {
+        if (turnAngle > 0.833) {
+            turnAngle -= 1;
+            drivePower *= -1.0;
+        }
+        if (turnAngle < -0.833) {
+            turnAngle += 1;
+            drivePower *= -1.0;
+        }
         left.crabDrive(drivePower, turnAngle);
         right.crabDrive(drivePower, turnAngle);
     }
@@ -72,6 +81,16 @@ public class CrabDrive {
     public void slewDrive(double drivePower, double turnAngle) throws CANTimeoutException {
         left.slewDrive(drivePower, turnAngle);
         right.slewDrive(drivePower, turnAngle);
+    }
+    
+    /**
+     * 
+     */
+    public void turnOnAxis(double potVal) throws CANTimeoutException
+    {
+        left.slewDrive(potVal, .25);
+        right.slewDrive((potVal * -1), -.25);
+        
     }
     /** setDrive()
      * 
@@ -118,7 +137,10 @@ public class CrabDrive {
         left.processDriveUnit();
         right.processDriveUnit();
     }
-    
+    public void setGear(Gear gear){
+        left.setGear(gear);
+        right.setGear(gear);
+    }
     /**
      * 
      */

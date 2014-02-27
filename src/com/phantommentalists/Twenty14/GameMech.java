@@ -1,14 +1,21 @@
 package com.phantommentalists.Twenty14;
- 
+
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 
 /*
  */
-public class GameMech {
+public class GameMech
+{
 
-    public class State{
-        public State(){
+    /**
+     * 
+     */
+    public class State
+    {
+
+        public State()
+        {
             value = kHolding;
         }
         public int value;
@@ -16,89 +23,221 @@ public class GameMech {
         public static final int kCatching = 1;
         public static final int kEmpty = 2;
     }
-    
     private State state;
     private ChopSticks loader;
     private Catcher catcher;
     private Launcher launcher;
-    
+
     /**
-     *  GameMech allocations11
-     * 
+     * GameMech allocations11
+     *
      * @authors Mateo, Jeremy, and Jonathan
      */
-    public GameMech() throws CANTimeoutException{ 
+    public GameMech() throws CANTimeoutException
+    {
         state = new State();
         catcher = new Catcher();
         loader = new ChopSticks();
-       launcher = new Launcher(Parameters.launcherMotorOneCANID, Parameters.launcherMotorTwoCANID);
+        launcher = new Launcher(Parameters.launcherMotorOneCANID, Parameters.launcherMotorTwoCANID);
     }
-     
+
     /**
      * deployCatcher()
-     * 
-     * This method deploys the  catcher.
+     *
+     * This method deploys the catcher.
      */
-    public void deployCatcher(){
+    public void deployCatcher()
+    {
         catcher.deploy();
     }
-    
+
+    /**
+     *
+     */
+    public void deployChopSticks()
+    {
+        loader.deployChopSticks();
+    }
+
+    /**
+     *
+     */
+    public void retractChopSticks()
+    {
+        loader.retractChopSticks();
+    }
+
     /**
      * retractCatcher()
-     * 
+     *
      * This method retracts the catcher.
      */
-    public void retractCatcher(){
+    public void retractCatcher()
+    {
         catcher.retract();
-    }            
-    
-//    /**
-//     * turnOnChopSticks()
-//     * 
-//     * This method turns on both left and right ChopSticks.
-//     */
-//    public void turnOnChopSticks(){
-//        loader.turnOnChopSticks();
-//    }
-//    
-//    /**
-//     * turnOffChopSticks()
-//     * 
-//     * This method turns off both left and right ChopSticks.
-//     */
-//    public void turnOffChopSticks(){
-//        loader.turnOffChopSticks();
-//    }
-
-    public void airPass() throws CANTimeoutException {
-        
     }
 
-    public void shoot() throws CANTimeoutException {
+    /**
+     * turnOnChopSticks()
+     *
+     * This method turns on both left and right ChopSticks.
+     */
+    public void turnOnChopSticks()
+    {
+        loader.turnOnChopSticks();
+    }
+
+    /**
+     * turnOffChopSticks()
+     *
+     * This method turns off both left and right ChopSticks.
+     */
+    public void turnOffChopSticks()
+    {
+        if (isCatching())
+        {
+            loader.turnOffChopSticks();
+        }
+    }
+
+    /**
+     *
+     * @throws CANTimeoutException
+     */
+    public void airPass() throws CANTimeoutException
+    {
+        if (isCatching())
+        {
+//            launcher.shoot(Parameters.kshootPass);
+        }
+
+    }
+
+    /**
+     *
+     * @throws CANTimeoutException
+     */
+    public void timedShoot() throws CANTimeoutException
+    {
+//        launcher.timedShoot(Parameters.kShootTruss);
+    }
+
+    /**
+     *
+     * @throws CANTimeoutException
+     */
+    public void timedRetract() throws CANTimeoutException
+    {
+//        launcher.timedRetract();
+    }
+
+    /**
+     *
+     * @throws CANTimeoutException
+     */
+    public void shoot() throws CANTimeoutException
+    {
+            launcher.engageSolenoid.set(false);
+            //System.out.println("Shooting");
+            //System.out.println("StopShooting");
+            launcher.shoot(0.8);
         
     }
 
-    public void useTheForce() {
-        
-    }
-    
-    public boolean isEmpty() 
-    {
-        return false;
-    }
-    
-    public boolean isCatching() 
-    {
-        return false;
-    }
-    
-    public boolean isHolding() 
-    {
-        return false;
-    }
-    
-    public void processGameMech()
+    /**
+     *
+     * @throws CANTimeoutException
+     */
+    public void retract() throws CANTimeoutException
     {
         
+        //launcher.engageSolenoid.set(false);
+            launcher.retract();
+        
+    }
+
+    /**
+     *
+     */
+    public void useTheForce()
+    {
+    }
+
+    /**
+     *
+     * @return
+     */
+    public boolean isEmpty()
+    {
+        if (state.value == State.kEmpty)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean isCatching()
+    {
+        if (state.value == State.kCatching)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public boolean isHolding()
+    {
+        if (state.value == State.kHolding)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * 
+     * @throws CANTimeoutException 
+     */
+    public void processGameMech() throws CANTimeoutException
+    {
+        launcher.processLauncher();
+        loader.processChopSticks();
+        if (state.value == State.kHolding)
+        {
+            if (catcher.isDeployed() && loader.isDeployed())
+            {
+                state.value = State.kCatching;
+            }
+        }
+        if (state.value == State.kCatching)
+        {
+            if (catcher.isRetracted() && loader.isRetracted() /*&& launcher.isSafe()*/)
+            {
+                state.value = State.kHolding;
+            }
+//            if (launcher.isRearming())
+//            {
+//                state.value = State.kEmpty;
+//            }
+        }
+//        if (state.value == State.kEmpty)
+//        {
+//            if (launcher.isSafe())
+//            {
+//                state.value = State.kCatching;
+//            }
+//        }
     }
 }
