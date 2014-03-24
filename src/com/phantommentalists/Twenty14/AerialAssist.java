@@ -6,7 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package com.phantommentalists.Twenty14;
 
-import com.phantiommentalists.Twenty14.DriveMotor.Gear;
+import com.phantommentalists.Twenty14.DriveMotor.Gear;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
