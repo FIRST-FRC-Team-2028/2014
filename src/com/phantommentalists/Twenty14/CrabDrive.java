@@ -1,6 +1,6 @@
 package com.phantommentalists.Twenty14;
 
-import com.phantommentalists.Twenty14.DriveMotor.Gear;
+import com.phantiommentalists.Twenty14.DriveMotor.Gear;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /*
@@ -97,8 +97,8 @@ public class CrabDrive {
      * Not Sure yet
      * @param drivePower 
      */
-    public void setDrive(double drivePower) {
-        
+    public void setDrive(double drivePower) throws CANTimeoutException {
+        slewDrive(drivePower, 0.0);
     }
     /** setTurn()
      * 

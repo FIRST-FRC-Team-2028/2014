@@ -5,23 +5,21 @@ import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /*
  */
-public class GameMech
-{
+public class GameMech {
 
     /**
-     * 
+     *
      */
-    public class State
-    {
+    public class State {
 
-        public State()
-        {
-            value = kHolding;
+        public State() {
+            value = kUnknown;
         }
         public int value;
-        public static final int kHolding = 0;
-        public static final int kCatching = 1;
-        public static final int kEmpty = 2;
+        public static final int kUnknown = 0;
+        public static final int kHolding = 1;
+        public static final int kCatching = 2;
+        public static final int kEmpty = 3;
     }
     private State state;
     private ChopSticks loader;
@@ -33,8 +31,7 @@ public class GameMech
      *
      * @authors Mateo, Jeremy, and Jonathan
      */
-    public GameMech() throws CANTimeoutException
-    {
+    public GameMech() throws CANTimeoutException {
         state = new State();
         catcher = new Catcher();
         loader = new ChopSticks();
@@ -46,24 +43,21 @@ public class GameMech
      *
      * This method deploys the catcher.
      */
-    public void deployCatcher()
-    {
+    public void deployCatcher() {
         catcher.deploy();
     }
 
     /**
      *
      */
-    public void deployChopSticks()
-    {
+    public void deployChopSticks() {
         loader.deployChopSticks();
     }
 
     /**
      *
      */
-    public void retractChopSticks()
-    {
+    public void retractChopSticks() {
         loader.retractChopSticks();
     }
 
@@ -72,8 +66,7 @@ public class GameMech
      *
      * This method retracts the catcher.
      */
-    public void retractCatcher()
-    {
+    public void retractCatcher() {
         catcher.retract();
     }
 
@@ -82,8 +75,7 @@ public class GameMech
      *
      * This method turns on both left and right ChopSticks.
      */
-    public void turnOnChopSticks()
-    {
+    public void turnOnChopSticks() {
         loader.turnOnChopSticks();
     }
 
@@ -92,10 +84,8 @@ public class GameMech
      *
      * This method turns off both left and right ChopSticks.
      */
-    public void turnOffChopSticks()
-    {
-        if (isCatching())
-        {
+    public void turnOffChopSticks() {
+        if (isCatching()) {
             loader.turnOffChopSticks();
         }
     }
@@ -104,10 +94,8 @@ public class GameMech
      *
      * @throws CANTimeoutException
      */
-    public void airPass() throws CANTimeoutException
-    {
-        if (isCatching())
-        {
+    public void airPass() throws CANTimeoutException {
+        if (isCatching()) {
 //            launcher.shoot(Parameters.kshootPass);
         }
 
@@ -117,8 +105,7 @@ public class GameMech
      *
      * @throws CANTimeoutException
      */
-    public void timedShoot() throws CANTimeoutException
-    {
+    public void timedShoot() throws CANTimeoutException {
 //        launcher.timedShoot(Parameters.kShootTruss);
     }
 
@@ -126,8 +113,7 @@ public class GameMech
      *
      * @throws CANTimeoutException
      */
-    public void timedRetract() throws CANTimeoutException
-    {
+    public void timedRetract() throws CANTimeoutException {
 //        launcher.timedRetract();
     }
 
@@ -135,109 +121,113 @@ public class GameMech
      *
      * @throws CANTimeoutException
      */
-    public void shoot() throws CANTimeoutException
-    {
+    public void shoot(double power) throws CANTimeoutException {
+        if (isCatching())
+        {
             launcher.engageSolenoid.set(false);
             //System.out.println("Shooting");
             //System.out.println("StopShooting");
-            launcher.shoot(0.8);
-        
+            launcher.shoot(power);
+        }
+
+    }
+
+    public void pass() throws CANTimeoutException {
+        launcher.engageSolenoid.set(false);
+        //System.out.println("Shooting");
+        //System.out.println("StopShooting");
+        launcher.shoot(0.25);
     }
 
     /**
      *
      * @throws CANTimeoutException
      */
-    public void retract() throws CANTimeoutException
-    {
-        
+    public void retract() throws CANTimeoutException {
+
         //launcher.engageSolenoid.set(false);
-            launcher.retract();
-        
+        launcher.retract();
+
     }
 
     /**
      *
      */
-    public void useTheForce()
-    {
+    public void useTheForce() {
     }
 
     /**
      *
      * @return
      */
-    public boolean isEmpty()
-    {
-        if (state.value == State.kEmpty)
-        {
+    public boolean isEmpty() {
+        if (state.value == State.kEmpty) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public boolean isCatching()
-    {
-        if (state.value == State.kCatching)
-        {
+    public boolean isCatching() {
+        if (state.value == State.kCatching) {
             return true;
         }
         return false;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public boolean isHolding()
-    {
-        if (state.value == State.kHolding)
-        {
+    public boolean isHolding() {
+        if (state.value == State.kHolding) {
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
     /**
-     * 
-     * @throws CANTimeoutException 
+     *
+     * @throws CANTimeoutException
      */
-    public void processGameMech() throws CANTimeoutException
-    {
+    public void processGameMech() throws CANTimeoutException {
         launcher.processLauncher();
         loader.processChopSticks();
-        if (state.value == State.kHolding)
-        {
-            if (catcher.isDeployed() && loader.isDeployed())
-            {
+        if (state.value == State.kUnknown) {
+            catcher.deploy();
+            loader.deployChopSticks();
+            if (launcher.isSafe()) {
+                state.value = State.kCatching;
+            }
+        } else if (state.value == State.kHolding) {
+            if (catcher.isDeployed() && loader.isDeployed()) {
+                state.value = State.kCatching;
+            }
+        } else if (state.value == State.kCatching) {
+            if (catcher.isRetracted() && loader.isRetracted() /*&& launcher.isSafe()*/) {
+                state.value = State.kHolding;
+            }
+            if (launcher.isRearming()) {
+                state.value = State.kEmpty;
+            }
+        }
+        if (state.value == State.kEmpty) {
+            if (launcher.isSafe()) {
                 state.value = State.kCatching;
             }
         }
-        if (state.value == State.kCatching)
-        {
-            if (catcher.isRetracted() && loader.isRetracted() /*&& launcher.isSafe()*/)
-            {
-                state.value = State.kHolding;
-            }
-//            if (launcher.isRearming())
-//            {
-//                state.value = State.kEmpty;
-//            }
-        }
-//        if (state.value == State.kEmpty)
-//        {
-//            if (launcher.isSafe())
-//            {
-//                state.value = State.kCatching;
-//            }
-//        }
+    }
+
+    public boolean isLauncherSafe() {
+        return launcher.isSafe();
+    }
+
+    public boolean isLauncherEmpty() throws CANTimeoutException {
+        return launcher.isShot();
     }
 }

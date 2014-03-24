@@ -1,6 +1,6 @@
 package com.phantommentalists.Twenty14;
 
-import com.phantommentalists.Twenty14.DriveMotor.Gear;
+import com.phantiommentalists.Twenty14.DriveMotor.Gear;
 import edu.wpi.first.wpilibj.can.CANTimeoutException;
 
 /*

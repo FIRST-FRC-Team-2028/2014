@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.AnalogModule;
 
 /**
  *
- * @author David
+ * @author Hunter
  */
 public class Ultrasonic {
 
@@ -37,7 +37,7 @@ public class Ultrasonic {
      */
     public double getDistance() {
         double value = ultrasonicSensor.getVoltage(channel);
-        return (value * 2077) / 20;
+        return (value / (5.0 / 512.0));
     }
 
     /**

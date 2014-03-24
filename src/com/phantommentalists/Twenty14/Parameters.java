@@ -1,13 +1,13 @@
 package com.phantommentalists.Twenty14;
 
-import com.phantommentalists.Twenty14.DriveMotor.Gear;
+import com.phantiommentalists.Twenty14.DriveMotor.Gear;
 
 /*
  * Parameters allocation
  */
 public class Parameters {
     // Debug
-    public final static boolean debug = false;
+    public final static boolean debug = true;
     
     //Pneumatics
     public final static int leftDriveShifter = 1;
@@ -32,13 +32,14 @@ public class Parameters {
     public static final int launcherMotorTwoCANID = 60;
 
     //Relays
-    public static final int compressorRelayChannel = 1;
+    public static final int compressorRelayChannel = 4;
     public static final int leftChopStickRelayChannel = 2;
     public static final int rightChopStickRelayChannel = 3;
    
     //Control
     public static final double kJoyStickDeadband = 0.05;
-    public static final double kSteeringDeadband = 0.05;    
+    public static final double kSteeringDeadband = 0.05;
+    public static final double kRampVal = 0.05;
     public static final double TIMER_DELAY = 0.1;
     static double kJoystickDeadband = -1;
     static int kLowGearButton = -1;
@@ -57,16 +58,23 @@ public class Parameters {
     public static final double rightFrontRev = 1.0;
     public static final double rightRearRev = 1.0;
     
-    public static final double kAutonomousSpeed = 0.5;
+    public static final double kAutonomousSpeed = 0.75;
+    
+    public static final String CameraAdress = "";
     
     //Shoot varibles
     public static final double kshootGoal = 1.0;
-    public static final double kshootPass = 0.5;
-    public static final double kShootTruss = 1.0;
+    public static final double kshootAutoGoal = 0.875;
+    public static final double kshootPass = 0.1;
+    public static final double kShootTruss = 0.9;
     public static final double klauncherRetractPower = -0.4;
     public static final double kstopPower = 0.0;
-    public static final double kShootDistance = 144.0;
-    
+    public static final double kMaxShootDistance = 156.0;
+    public static final double kMinShootDistsance = 120;
     // GPIO
     public static final int kAirPressureSwitchChanel = 1;
+    public static final int klauncherReverseLimitGPIO = 2;
+    
+    //Analog
+    public static final int kUltraSonicAnalogInput = 7;
 }

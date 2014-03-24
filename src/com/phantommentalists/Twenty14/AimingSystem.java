@@ -24,14 +24,22 @@ public class AimingSystem {
     
     public AimingSystem()
     {
-        myUltrasonic = new Ultrasonic(-1);
-        myCamera = AxisCamera.getInstance("10.20.28.11");
-        myCamera.writeResolution(AxisCamera.ResolutionT.k640x480);
-        myCamera.writeExposurePriority(AxisCamera.ExposurePriorityT.imageQuality);
-        myCamera.writeExposureControl(AxisCamera.ExposureT.hold);
-        myCamera.writeWhiteBalance(AxisCamera.WhiteBalanceT.fixedIndoor);
+        myUltrasonic = new Ultrasonic(Parameters.kUltraSonicAnalogInput);
+        if(Parameters.CameraAdress != "")
+        {
+            myCamera = AxisCamera.getInstance(Parameters.CameraAdress);
+            myCamera.writeResolution(AxisCamera.ResolutionT.k640x480);
+            myCamera.writeExposurePriority(AxisCamera.ExposurePriorityT.imageQuality);
+            myCamera.writeExposureControl(AxisCamera.ExposureT.hold);
+            myCamera.writeWhiteBalance(AxisCamera.WhiteBalanceT.fixedIndoor);
+        }
     }
     public boolean isHot(){
         return false;
+    }
+    
+    public double getUltrasonicDistance()
+    {
+        return myUltrasonic.getAveragedDistance();
     }
 }

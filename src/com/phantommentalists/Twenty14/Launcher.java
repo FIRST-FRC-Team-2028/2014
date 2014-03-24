@@ -1,6 +1,7 @@
 package com.phantommentalists.Twenty14;
 
 import edu.wpi.first.wpilibj.CANJaguar;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.can.*;
 import edu.wpi.first.wpilibj.Timer;
@@ -16,6 +17,7 @@ public class Launcher
     public CANJaguar launchMotorTwo;
     public Solenoid engageSolenoid;
     public Solenoid disengageSolenoid;
+    public DigitalInput reverseLimit;
 
     /**
      *
@@ -30,7 +32,7 @@ public class Launcher
          */
         public State()
         {
-            value = kSafe;
+            value = kUnknown;
         }
         public int value;
         public static final int kUnknown = 0;
@@ -65,11 +67,13 @@ public class Launcher
             launchMotorTwo.configNeutralMode(CANJaguar.NeutralMode.kBrake);
             launchMotorTwo.configMaxOutputVoltage(Parameters.maxMotorVoltage);
         }
-//        state.value = State.kSafe;
+        state = new State();
+        state.value = State.kUnknown;
         engageSolenoid = new Solenoid(Parameters.launcherEngageSolenoidChannel);
-        //disengageSolenoid = new Solenoid(Parameters.launcherDisengageSolenoidChannel);
+        disengageSolenoid = new Solenoid(Parameters.launcherDisengageSolenoidChannel);
         engageSolenoid.set(false);
-       // disengageSolenoid.set(false);
+        disengageSolenoid.set(false);
+        reverseLimit = new DigitalInput(Parameters.klauncherReverseLimitGPIO);
     }
 
     /**
@@ -79,18 +83,26 @@ public class Launcher
      */
     public void processLauncher() throws CANTimeoutException
     {
-//        if (state.value == State.kUnknown)
-//        {
-//            disengage();
-//            retract();
-//        }
-        if (!launchMotorOne.getReverseLimitOK())
+        if (state.value == State.kUnknown)
         {
-//            state.value = State.kSafe;
+            disengage();
+            retract();
+        }
+        if (!reverseLimit.get())
+        {
+            state.value = State.kSafe;
             engage();
+            launchMotorOne.setX(0.0);
+            launchMotorTwo.setX(0.0);
         } else if (!launchMotorOne.getForwardLimitOK())
         {
+            state.value = State.kRearming;
             retract();
+        }
+        if (Parameters.debug)
+        {
+//            System.out.print("Reverse Limit = " +reverseLimit.get() + "  ");
+//            System.out.println("State = " + state.value);
         }
     }
 
@@ -148,14 +160,15 @@ public class Launcher
 //            state.value = State.kShooting;
             disengage();
             Timer.delay(0.05);
- if (launchMotorOne != null)
+             if (launchMotorOne != null)
             {
                 launchMotorOne.setX(shootVariable);
             }
             if (launchMotorTwo != null)
             {
                 launchMotorTwo.setX(shootVariable);
-            }           
+            }
+            state.value = State.kShooting;
             //while(!isShot()){}
             //retract();
 //        }
@@ -201,7 +214,7 @@ public class Launcher
      */
     protected void engage()
     {
-//            disengageSolenoid.set(true);
+            disengageSolenoid.set(true);
             engageSolenoid.set(false);
         
     }
@@ -215,7 +228,7 @@ public class Launcher
      */
     protected boolean isEngaged()
     {
-        return true;
+        return engageSolenoid.get();
     }
 
     /**
@@ -226,42 +239,40 @@ public class Launcher
     protected void disengage()
     {
         engageSolenoid.set(true);
-//        disengageSolenoid.set(false);
+        disengageSolenoid.set(false);
     }
 
     public boolean isSafe()
     {
-//        if (state.value == State.kSafe)
-//        {
-//            return true;
-//        } else
-//        {
-//            return false;
-//        }
-        return true;
+        if (state.value == State.kSafe)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
     public boolean isShooting()
     {
-//        if (state.value == State.kShooting)
-//        {
-//            return true;
-//        } else
-//        {
-//            return false;
-//        }
-        return true;
+        if (state.value == State.kShooting)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
     }
 
     public boolean isRearming()
     {
-//        if (state.value == State.kRearming)
-//        {
-//            return true;
-//        } else
-//        {
-//            return false;
-//        }
-        return true;
+        if (state.value == State.kRearming)
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+        
     }
 }
